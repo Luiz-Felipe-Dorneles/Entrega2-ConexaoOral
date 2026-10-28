@@ -1,0 +1,450 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dicionário de Dados — Conexão Oral</title>
+<style>
+:root{--tx:#1d2330;--mut:#5b6474;--bd:#c9ced8;--hd:#eef1f6;--ac:#1f4e8c;--box:#e6e8ec;--bg:#ffffff}
+@media (prefers-color-scheme: dark){:root{--tx:#e6e8ec;--mut:#a5adbb;--bd:#3a4150;--hd:#262c38;--ac:#8db4ea;--box:#262c38;--bg:#161a22}}
+*{box-sizing:border-box}
+body{font-family:Arial,Helvetica,sans-serif;color:var(--tx);background:var(--bg);max-width:1080px;margin:0 auto;padding:24px 16px 64px;line-height:1.5}
+h1{font-size:1.7rem;margin:.2em 0 .1em}h2{font-size:1.3rem;margin:2em 0 .6em;border-bottom:2px solid var(--tx);padding-bottom:4px}
+h3{font-size:1.08rem;margin:1.8em 0 .4em;color:var(--ac)}
+.sub{color:var(--mut);margin:0 0 1.2em}
+table{border-collapse:collapse;width:100%;margin:.6em 0 1em;font-size:.86rem}
+th,td{border-top:1px solid var(--bd);border-bottom:1px solid var(--bd);padding:6px 8px;text-align:left;vertical-align:top}
+th{background:var(--hd);font-weight:bold}
+code{font-size:.8rem}
+.form{background:var(--box);padding:8px 10px;font-family:Consolas,Menlo,monospace;font-size:.8rem;white-space:pre-wrap;word-break:break-word}
+.leit{margin:.5em 0}.idx{color:var(--mut);font-size:.88rem}
+nav{columns:3;font-size:.86rem;margin:.6em 0 1em}nav a{display:block;color:var(--ac);text-decoration:none}
+.tag{display:inline-block;background:var(--hd);border:1px solid var(--bd);border-radius:3px;padding:0 5px;font-size:.75rem;margin-left:6px;color:var(--tx)}
+.wrap{overflow-x:auto}
+@media (max-width:700px){nav{columns:1}}
+</style></head><body>
+<h1>Dicionário de Dados — Conexão Oral Odontologia Especializada</h1>
+<p class="sub">Entrega 2 — Modelagem de Dados (UNICID, Prof. Cid). Banco <code>conexao_oral</code>, 21 tabelas, 164 colunas. Segue o modelo do arquivo 02-03g_Exemplo_Dicionario_Dados. Gerado a partir de <code>docs/script.sql</code>: tipos e restrições são os do script.</p>
+<h2>1. Modelo conceitual</h2>
+<p>O modelo representa a operação inteira da clínica, como ela foi levantada: cadastro e Ficha de Anamnese dos pacientes, agenda e atendimento por sala e dentista, orçamentos e pagamentos particulares, guias de convênio, receitas, atestados e radiografias, pedidos de peças protéticas ao laboratório, teste da autoclave e despesas (inclusive o repasse aos dentistas). Estoque, compras e fornecedores de material ficaram de fora porque a clínica não realiza esses processos (README, seção 1.1).</p>
+<div class="wrap"><table><tr><th>Código</th><th>Entidade</th><th>Relaciona-se com</th><th>Cardinalidade</th></tr>
+<tr><td>R01</td><td>ESPECIALIDADE</td><td>DENTISTA</td><td>1:N — cada ESPECIALIDADE atua em nenhum(a) ou vários(as) DENTISTA; cada DENTISTA está ligado(a) a exatamente um(a) ESPECIALIDADE.</td></tr>
+<tr><td>R02</td><td>ESPECIALIDADE</td><td>PROCEDIMENTO</td><td>1:N — cada ESPECIALIDADE classifica nenhum(a) ou vários(as) PROCEDIMENTO; cada PROCEDIMENTO está ligado(a) a no máximo um(a) ESPECIALIDADE.</td></tr>
+<tr><td>R03</td><td>CONVENIO</td><td>PACIENTE</td><td>1:N — cada CONVENIO cobre nenhum(a) ou vários(as) PACIENTE; cada PACIENTE está ligado(a) a no máximo um(a) CONVENIO. Atributo do relacionamento: NR_CARTEIRINHA.</td></tr>
+<tr><td>R04</td><td>PACIENTE</td><td>ANAMNESE</td><td>1:1 — cada PACIENTE preenche no máximo um(a) ANAMNESE; cada ANAMNESE está ligado(a) a exatamente um(a) PACIENTE.</td></tr>
+<tr><td>R05</td><td>PACIENTE</td><td>CONSULTA</td><td>1:N — cada PACIENTE agenda nenhum(a) ou vários(as) CONSULTA; cada CONSULTA está ligado(a) a exatamente um(a) PACIENTE.</td></tr>
+<tr><td>R06</td><td>DENTISTA</td><td>CONSULTA</td><td>1:N — cada DENTISTA atende nenhum(a) ou vários(as) CONSULTA; cada CONSULTA está ligado(a) a exatamente um(a) DENTISTA.</td></tr>
+<tr><td>R07</td><td>SALA</td><td>CONSULTA</td><td>1:N — cada SALA recebe nenhum(a) ou vários(as) CONSULTA; cada CONSULTA está ligado(a) a exatamente um(a) SALA.</td></tr>
+<tr><td>R08</td><td>PACIENTE</td><td>ORCAMENTO</td><td>1:N — cada PACIENTE recebe nenhum(a) ou vários(as) ORCAMENTO; cada ORCAMENTO está ligado(a) a exatamente um(a) PACIENTE.</td></tr>
+<tr><td>R09</td><td>ORCAMENTO</td><td>ITEM_ORCAMENTO</td><td>1:N — cada ORCAMENTO contém ao menos um(a) ITEM_ORCAMENTO; cada ITEM_ORCAMENTO está ligado(a) a exatamente um(a) ORCAMENTO.</td></tr>
+<tr><td>R10</td><td>PROCEDIMENTO</td><td>ITEM_ORCAMENTO</td><td>1:N — cada PROCEDIMENTO é orçado em nenhum(a) ou vários(as) ITEM_ORCAMENTO; cada ITEM_ORCAMENTO está ligado(a) a exatamente um(a) PROCEDIMENTO.</td></tr>
+<tr><td>R11</td><td>ORCAMENTO</td><td>PAGAMENTO</td><td>1:N — cada ORCAMENTO é pago por nenhum(a) ou vários(as) PAGAMENTO; cada PAGAMENTO está ligado(a) a exatamente um(a) ORCAMENTO.</td></tr>
+<tr><td>R12</td><td>CONSULTA</td><td>GUIA</td><td>1:1 — cada CONSULTA gera no máximo um(a) GUIA; cada GUIA está ligado(a) a exatamente um(a) CONSULTA.</td></tr>
+<tr><td>R13</td><td>CONSULTA</td><td>MEDICAMENTO</td><td>N:N — cada CONSULTA receita nenhum(a) ou vários(as) MEDICAMENTO; cada MEDICAMENTO está ligado(a) a nenhum(a) ou vários(as) CONSULTA.</td></tr>
+<tr><td>R14</td><td>CONSULTA</td><td>PEDIDO_LABORATORIO</td><td>1:N — cada CONSULTA origina nenhum(a) ou vários(as) PEDIDO_LABORATORIO; cada PEDIDO_LABORATORIO está ligado(a) a exatamente um(a) CONSULTA.</td></tr>
+<tr><td>R15</td><td>LABORATORIO</td><td>PEDIDO_LABORATORIO</td><td>1:N — cada LABORATORIO executa nenhum(a) ou vários(as) PEDIDO_LABORATORIO; cada PEDIDO_LABORATORIO está ligado(a) a exatamente um(a) LABORATORIO.</td></tr>
+<tr><td>R16</td><td>DENTISTA</td><td>DESPESA</td><td>1:N — cada DENTISTA recebe repasse nenhum(a) ou vários(as) DESPESA; cada DESPESA está ligado(a) a no máximo um(a) DENTISTA.</td></tr>
+<tr><td>R17</td><td>FUNCIONARIO</td><td>TESTE_AUTOCLAVE</td><td>1:N — cada FUNCIONARIO faz nenhum(a) ou vários(as) TESTE_AUTOCLAVE; cada TESTE_AUTOCLAVE está ligado(a) a exatamente um(a) FUNCIONARIO.</td></tr>
+<tr><td>—</td><td>CONSULTA</td><td>PROCEDIMENTO (via PROCEDIMENTO_REALIZADO)</td><td>N:N — cada CONSULTA realiza nenhum ou vários PROCEDIMENTOS; cada PROCEDIMENTO aparece em nenhuma ou várias CONSULTAS. Atributos: CD_DENTE (compõe o identificador), DS_OBSERVACAO.</td></tr>
+</table></div>
+<p><b>Entidades fracas:</b> ANAMNESE (identificada pelo paciente) e ITEM_ORCAMENTO (orçamento + NR_ITEM). <b>Entidade associativa:</b> PROCEDIMENTO_REALIZADO (também guarda as radiografias e a avaliação). <b>N:N:</b> CONSULTA receita MEDICAMENTO (tabela RECEITUARIO). <b>Atributos compostos:</b> ENDERECO, DADOS_BANCARIOS, AVALIACAO_SAUDE, HISTORICO_SAUDE e ATESTADO (opcional, na CONSULTA). <b>Multivalorado:</b> TELEFONE (1,2) do paciente. Não há autorrelacionamento nem generalização/especialização.</p>
+<p><b>Especialidade</b> (ESPECIALIDADE) — Área de atuação odontológica. Hoje é digitada livremente no cadastro do dentista; as 7 em uso viram um catálogo.</p>
+<p><b>Dentista</b> (DENTISTA) — Profissional que atende os pacientes: 7 hoje, um por especialidade; 6 autônomos e a proprietária (HOF).</p>
+<p><b>Funcionario</b> (FUNCIONARIO) — Quem trabalha na clínica sem ser dentista: recepcionista, auxiliar de dentista e auxiliar de limpeza.</p>
+<p><b>Sala</b> (SALA) — Consultório com uma cadeira. Sala 01 das 14h às 18h; Sala 02 das 8h às 18h.</p>
+<p><b>Convenio</b> (CONVENIO) — Plano odontológico aceito pela clínica (5). A clínica só precisa do nome.</p>
+<p><b>Paciente</b> (PACIENTE) — Pessoa atendida, particular ou por convênio. Campos da Ficha de Anamnese (dados pessoais); do responsável legal do menor, o grupo guarda o nome.</p>
+<p><b>Telefone do paciente</b> (TELEFONE_PACIENTE) — Telefones do paciente (até dois). Resolve o atributo multivalorado TELEFONE (1,2) do DER (1FN).</p>
+<p><b>Anamnese</b> (ANAMNESE) — Ficha de Anamnese do paciente (uma por paciente). Entidade fraca: identificada pelo paciente.</p>
+<p><b>Procedimento</b> (PROCEDIMENTO) — Catálogo de procedimentos (hoje digitados livremente). Inclui a radiografia, procedimento de apoio sem especialidade.</p>
+<p><b>Orcamento</b> (ORCAMENTO) — Plano de tratamento com valores, feito pela Dra. responsável. Na ortodontia, um por mês.</p>
+<p><b>Item do orçamento</b> (ITEM_ORCAMENTO) — Procedimento previsto no orçamento, com o dente e o valor. Entidade fraca de ORCAMENTO.</p>
+<p><b>Pagamento</b> (PAGAMENTO) — Pagamento particular, lançado dentro do orçamento; um orçamento pode ter mais de um.</p>
+<p><b>Consulta</b> (CONSULTA) — Agendamento e atendimento num só registro (decisão da E1). O atestado, quando emitido, é um atributo composto opcional da consulta.</p>
+<p><b>Procedimento realizado</b> (PROCEDIMENTO_REALIZADO) — Procedimento feito na consulta e o dente (na radiografia, a observação é a avaliação da Dra.). O mesmo procedimento pode ser feito em vários dentes na mesma consulta, por isso o dente compõe o identificador.</p>
+<p><b>Guia</b> (GUIA) — Guia de convênio da consulta: assinatura, valor, envio ao site do convênio e recebimento. Paciente, convênio e procedimentos vêm da consulta.</p>
+<p><b>Medicamento</b> (MEDICAMENTO) — Lista de medicamentos que já vem no sistema, com dosagem, orientação e indicação de controlado.</p>
+<p><b>Receituário</b> (RECEITUARIO) — Medicamentos receitados em cada consulta: o relacionamento N:N receita (R13) entre CONSULTA e MEDICAMENTO. A receita não tem número nem dado próprio.</p>
+<p><b>Laboratorio</b> (LABORATORIO) — Laboratório protético (2). Contato só pelo WhatsApp; prazo padrão de 7 dias.</p>
+<p><b>Pedido ao laboratório</b> (PEDIDO_LABORATORIO) — Cada ida de uma peça protética ao laboratório (confecção, ajuste ou refinamento), pedida numa consulta.</p>
+<p><b>Teste da autoclave</b> (TESTE_AUTOCLAVE) — Teste biológico semanal da autoclave (hoje anotado em caderno).</p>
+<p><b>Despesa</b> (DESPESA) — Conta a pagar lançada no financeiro (contas da clínica, insumos, salários, repasse, laboratório, imposto, Uber, correios).</p>
+<h2>2. Fluxo de dados (visão de DFD)</h2>
+<p>Paciente entra em contato por WhatsApp ou telefone → a recepcionista localiza ou cria o PACIENTE (com o responsável legal, se for menor) e os TELEFONE_PACIENTE → registra a CONSULTA na agenda, com dentista, SALA, dia e horário (DT_HR_REGISTRO) → na véspera confirma pelo WhatsApp (DT_HR_CONFIRMACAO); quem não confirma até o fim do dia tem a consulta cancelada (motivo SEM_CONFIRMACAO) → na chegada do paciente novo, a ficha em papel é preenchida e assinada, conferida, digitada em ANAMNESE e escaneada (DS_ARQUIVO_DIGITALIZADO) → antes de entrar na sala, o particular paga o ORCAMENTO (PAGAMENTO) e o de convênio assina a GUIA → o dentista atende; a Dra. responsável registra cada PROCEDIMENTO_REALIZADO (inclusive a radiografia, que a Dra. avalia depois, em DS_OBSERVACAO) → depois do atendimento saem o RECEITUARIO (os MEDICAMENTOs da consulta) e, se pedido, o atestado (campos de ATESTADO na própria CONSULTA), e o retorno é agendado (nova CONSULTA) → se houver moldagem, o PEDIDO_LABORATORIO vai ao LABORATORIO (previsão de 7 dias), volta, e só então a prova é marcada (procedimento PROVA_PECA); ajuste ou refinamento é um novo pedido → a guia assinada é enviada ao site do CONVENIO (DT_ENVIO) e paga no dia 30 (DT_RECEBIMENTO) → o sócio lança cada DESPESA (contas, insumos, salários, repasse ao dentista, cada ida ao laboratório, Uber, correios) → a auxiliar anota o TESTE_AUTOCLAVE semanal → toda leitura ou escrita em tabela com dado de saúde fica no log de acesso do SGBD (§5), o que sustenta a auditoria e a LGPD (§6).</p>
+<h2>3. Convenções do dicionário</h2>
+<p><b>SGBD:</b> MySQL 8.0.16 ou superior (versão a partir da qual os CHECK são aplicados), mecanismo InnoDB — guarda os dados, mantém o log de transações (redo/undo), aplica as chaves estrangeiras e organiza cada tabela pelo índice primário (clusterizado).</p>
+<p><b>Codificação de caracteres:</b> utf8mb4 com collation utf8mb4_0900_ai_ci: cobre a acentuação do português em nomes, endereços e observações, e a busca não diferencia acento nem maiúscula ("Joao" encontra "João").</p>
+<p><b>Notação formal</b> (símbolos usados neste dicionário):</p><table><tr><th>Símbolo</th><th>Significado</th></tr>
+<tr><td><code>=</code></td><td>é composto de</td></tr>
+<tr><td><code>+</code></td><td>e (conecta elementos)</td></tr>
+<tr><td><code>( )</code></td><td>opcional (aceita nulo)</td></tr>
+<tr><td><code>{ }, n{ }m</code></td><td>iteração, com limite mínimo n e máximo m</td></tr>
+<tr><td><code>[ | ]</code></td><td>escolha obrigatória entre alternativas</td></tr>
+<tr><td><code>/ /</code></td><td>rótulo de um grupo repetitivo</td></tr>
+<tr><td><code>@</code></td><td>identificador (chave primária)</td></tr>
+<tr><td><code>* *</code></td><td>comentário, fora da estrutura formal</td></tr>
+</table>
+<p><b>Prefixos:</b> NM_ nome; DT_ data (DT_HR_ data e hora); HR_ hora; ID_ identificador (não sofre operação matemática — inclui documentos de órgãos externos, como ID_CPF, ID_RG e ID_CRO); CD_ código de domínio (CD_CEP, CD_DENTE); QT_ quantidade; TP_ tipo ou situação (lista fechada); IN_ indicador verdadeiro/falso; DS_ descrição ou texto livre; VL_ valor em reais (DECIMAL, sofre soma e média); NR_ número que não sofre conta (telefone, endereço, carteirinha, ordem).</p>
+<p><b>Restrições:</b> obrigatoriedade (NOT NULL), unicidade (UNIQUE), valores permitidos (CHECK) e valores padrão (DEFAULT) aparecem na coluna <i>Restrições</i> de cada tabela, com o nome da constraint do script entre colchetes. O código da regra de negócio (RNxx/RPxx, README) indica qual regra a restrição implementa. Regras que envolvem mais de uma tabela são conferidas pelas consultas de auditoria A01–A15 do script.</p>
+<p><b>Versão deste dicionário:</b> v3.1, 28/outubro/2026 — modelo enxuto, 21 tabelas (v1.0: dicionário conceitual da E1; v2.0: rascunho anterior à entrevista; v3.0, 27/10/2026: 1ª versão a partir do levantamento validado, 25 tabelas). Toda alteração de estrutura gera nova versão registrada aqui — prática que atende ao princípio de responsabilização e prestação de contas da LGPD (art. 6º, X).</p>
+<h2>4. Dicionário de dados por tabela</h2><nav>
+<a href="#ESPECIALIDADE">ESPECIALIDADE</a>
+<a href="#DENTISTA">DENTISTA</a>
+<a href="#FUNCIONARIO">FUNCIONARIO</a>
+<a href="#SALA">SALA</a>
+<a href="#CONVENIO">CONVENIO</a>
+<a href="#PACIENTE">PACIENTE</a>
+<a href="#TELEFONE_PACIENTE">TELEFONE_PACIENTE</a>
+<a href="#ANAMNESE">ANAMNESE</a>
+<a href="#PROCEDIMENTO">PROCEDIMENTO</a>
+<a href="#ORCAMENTO">ORCAMENTO</a>
+<a href="#ITEM_ORCAMENTO">ITEM_ORCAMENTO</a>
+<a href="#PAGAMENTO">PAGAMENTO</a>
+<a href="#CONSULTA">CONSULTA</a>
+<a href="#PROCEDIMENTO_REALIZADO">PROCEDIMENTO_REALIZADO</a>
+<a href="#GUIA">GUIA</a>
+<a href="#MEDICAMENTO">MEDICAMENTO</a>
+<a href="#RECEITUARIO">RECEITUARIO</a>
+<a href="#LABORATORIO">LABORATORIO</a>
+<a href="#PEDIDO_LABORATORIO">PEDIDO_LABORATORIO</a>
+<a href="#TESTE_AUTOCLAVE">TESTE_AUTOCLAVE</a>
+<a href="#DESPESA">DESPESA</a>
+</nav>
+<h3 id="ESPECIALIDADE">ESPECIALIDADE</h3>
+<div class="form">ESPECIALIDADE = @ID_ESPECIALIDADE + NM_ESPECIALIDADE</div>
+<p class="leit"><b>Leitura:</b> Catálogo pequeno e estável; o nome é único para não haver duas grafias da mesma área (hoje é digitado livremente).</p>
+<div class="wrap"><table><tr><th>Atributo</th><th>Tipo físico</th><th>Obrigatório</th><th>Restrições</th><th>Significado e relevância</th></tr>
+<tr><td>ID_ESPECIALIDADE</td><td>int</td><td>Sim (PK)</td><td>gerado automaticamente (AUTO_INCREMENT)</td><td>Código interno da especialidade; não sofre operação matemática.</td></tr>
+<tr><td>NM_ESPECIALIDADE</td><td>varchar(40)</td><td>Sim (único)</td><td>único [UQ_ESPECIALIDADE_NOME]</td><td>Nome da especialidade; aparece no faturamento por especialidade (G15).</td></tr>
+</table></div>
+<p class="idx"><b>Índices:</b> PK ID_ESPECIALIDADE (clusterizado); único em NM_ESPECIALIDADE.</p>
+<h3 id="DENTISTA">DENTISTA</h3>
+<div class="form">DENTISTA = @ID_DENTISTA + ID_ESPECIALIDADE + NM_DENTISTA + ID_CRO + DT_NASCIMENTO + NR_TELEFONE + (DS_EMAIL) + DS_CHAVE_PIX + DS_LOGRADOURO + NR_ENDERECO + (DS_COMPLEMENTO) + NM_BAIRRO + CD_CEP + TP_VINCULO + IN_ATIVO
+TP_VINCULO = [PROPRIETARIA | AUTONOMO]</div>
+<p class="leit"><b>Leitura:</b> Todo dentista tem CRO único e uma especialidade. Só o e-mail é opcional, como no cadastro do sistema. A idade, que o sistema pede, não é guardada: sai de DT_NASCIMENTO.</p>
+<div class="wrap"><table><tr><th>Atributo</th><th>Tipo físico</th><th>Obrigatório</th><th>Restrições</th><th>Significado e relevância</th></tr>
+<tr><td>ID_DENTISTA</td><td>int</td><td>Sim (PK)</td><td>gerado automaticamente (AUTO_INCREMENT)</td><td>Código interno do dentista.</td></tr>
+<tr><td>ID_ESPECIALIDADE</td><td>int</td><td>Sim</td><td>referencia ESPECIALIDADE.ID_ESPECIALIDADE [FK_DENTISTA_ESPECIALIDADE]</td><td>Especialidade em que o dentista atua (uma por dentista, conforme o levantamento).</td></tr>
+<tr><td>NM_DENTISTA</td><td>varchar(100)</td><td>Sim</td><td>—</td><td>Nome do dentista.</td></tr>
+<tr><td>ID_CRO</td><td>varchar(10)</td><td>Sim (único)</td><td>único [UQ_DENTISTA_CRO] — RN25<br><code>REGEXP_LIKE(ID_CRO, &#x27;^[0-9]{4,8}$&#x27;)</code> [CK_DENTISTA_CRO]</td><td>Número de inscrição no Conselho Regional de Odontologia; não se repete (RN25).</td></tr>
+<tr><td>DT_NASCIMENTO</td><td>date</td><td>Sim</td><td>—</td><td>Data de nascimento. A idade não é guardada: é calculada a partir desta data (atributo derivado).</td></tr>
+<tr><td>NR_TELEFONE</td><td>varchar(11)</td><td>Sim</td><td><code>REGEXP_LIKE(NR_TELEFONE, &#x27;^[0-9]{10,11}$&#x27;)</code> [CK_DENTISTA_TELEFONE]</td><td>Telefone ou WhatsApp com DDD, só dígitos.</td></tr>
+<tr><td>DS_EMAIL</td><td>varchar(100)</td><td>Não</td><td>—</td><td>E-mail do dentista; único campo opcional do cadastro.</td></tr>
+<tr><td>DS_CHAVE_PIX</td><td>varchar(100)</td><td>Sim</td><td>—</td><td>Chave PIX usada para pagar o repasse (o repasse é sempre por PIX).</td></tr>
+<tr><td>DS_LOGRADOURO</td><td>varchar(100)</td><td>Sim</td><td>—</td><td>Rua ou avenida do endereço (parte do atributo composto ENDERECO).</td></tr>
+<tr><td>NR_ENDERECO</td><td>varchar(10)</td><td>Sim</td><td>—</td><td>Número do imóvel; texto porque pode ter letra (&quot;120A&quot;) e não sofre conta.</td></tr>
+<tr><td>DS_COMPLEMENTO</td><td>varchar(40)</td><td>Não</td><td>—</td><td>Complemento do endereço (apartamento, bloco); opcional, como no cadastro do sistema.</td></tr>
+<tr><td>NM_BAIRRO</td><td>varchar(60)</td><td>Sim</td><td>—</td><td>Bairro do endereço.</td></tr>
+<tr><td>CD_CEP</td><td>char(8)</td><td>Sim</td><td><code>REGEXP_LIKE(CD_CEP, &#x27;^[0-9]{8}$&#x27;)</code> [CK_DENTISTA_CEP]</td><td>CEP com 8 dígitos, sem traço. A cidade não é guardada: depende do CEP (evita dependência transitiva) e a ficha não pede cidade.</td></tr>
+<tr><td>TP_VINCULO</td><td>varchar(12)</td><td>Sim</td><td>valores permitidos: PROPRIETARIA, AUTONOMO [CK_DENTISTA_VINCULO]<br>padrão: &#x27;AUTONOMO&#x27;</td><td>PROPRIETARIA (dona da clínica, atua em HOF, sem repasse) ou AUTONOMO (recebe repasse).</td></tr>
+<tr><td>IN_ATIVO</td><td>boolean (tinyint(1))</td><td>Sim</td><td>padrão: verdadeiro</td><td>Indica se o registro está em uso; desativar em vez de apagar preserva o histórico.</td></tr>
+</table></div>
+<p class="idx"><b>Índices:</b> PK ID_DENTISTA (clusterizado); único em ID_CRO; índice da FK ID_ESPECIALIDADE (o InnoDB cria um se nenhum índice existente começar por essa coluna).</p>
+<h3 id="FUNCIONARIO">FUNCIONARIO</h3>
+<div class="form">FUNCIONARIO = @ID_FUNCIONARIO + NM_FUNCIONARIO + TP_FUNCAO + DT_NASCIMENTO + TP_SEXO + NR_TELEFONE + DS_LOGRADOURO + NR_ENDERECO + (DS_COMPLEMENTO) + NM_BAIRRO + CD_CEP + NM_BANCO + NR_AGENCIA + NR_CONTA + DT_ADMISSAO + (DT_DESLIGAMENTO)
+TP_FUNCAO = [RECEPCIONISTA | AUXILIAR DE DENTISTA | AUXILIAR DE LIMPEZA]
+TP_SEXO = [M | F]</div>
+<p class="leit"><b>Leitura:</b> Os oito campos do cadastro são obrigatórios, e nenhum é único entre funcionários. DT_DESLIGAMENTO vem entre ( ) porque só existe para quem saiu.</p>
+<div class="wrap"><table><tr><th>Atributo</th><th>Tipo físico</th><th>Obrigatório</th><th>Restrições</th><th>Significado e relevância</th></tr>
+<tr><td>ID_FUNCIONARIO</td><td>int</td><td>Sim (PK)</td><td>gerado automaticamente (AUTO_INCREMENT)</td><td>Código interno do funcionário.</td></tr>
+<tr><td>NM_FUNCIONARIO</td><td>varchar(100)</td><td>Sim</td><td>—</td><td>Nome do funcionário.</td></tr>
+<tr><td>TP_FUNCAO</td><td>varchar(20)</td><td>Sim</td><td>valores permitidos: RECEPCIONISTA, AUXILIAR DE DENTISTA, AUXILIAR DE LIMPEZA [CK_FUNCIONARIO_FUNCAO]</td><td>Função na clínica (no sistema é digitada livremente; aqui vira lista fechada para não haver grafias diferentes).</td></tr>
+<tr><td>DT_NASCIMENTO</td><td>date</td><td>Sim</td><td>—</td><td>Data de nascimento. A idade não é guardada: é calculada a partir desta data (atributo derivado).</td></tr>
+<tr><td>TP_SEXO</td><td>char(1)</td><td>Sim</td><td>valores permitidos: M, F [CK_FUNCIONARIO_SEXO]</td><td>Sexo, como no cadastro do sistema: M ou F.</td></tr>
+<tr><td>NR_TELEFONE</td><td>varchar(11)</td><td>Sim</td><td><code>REGEXP_LIKE(NR_TELEFONE, &#x27;^[0-9]{10,11}$&#x27;)</code> [CK_FUNCIONARIO_TELEFONE]</td><td>Telefone ou WhatsApp com DDD, só dígitos.</td></tr>
+<tr><td>DS_LOGRADOURO</td><td>varchar(100)</td><td>Sim</td><td>—</td><td>Rua ou avenida do endereço (parte do atributo composto ENDERECO).</td></tr>
+<tr><td>NR_ENDERECO</td><td>varchar(10)</td><td>Sim</td><td>—</td><td>Número do imóvel; texto porque pode ter letra (&quot;120A&quot;) e não sofre conta.</td></tr>
+<tr><td>DS_COMPLEMENTO</td><td>varchar(40)</td><td>Não</td><td>—</td><td>Complemento do endereço (apartamento, bloco); opcional, como no cadastro do sistema.</td></tr>
+<tr><td>NM_BAIRRO</td><td>varchar(60)</td><td>Sim</td><td>—</td><td>Bairro do endereço.</td></tr>
+<tr><td>CD_CEP</td><td>char(8)</td><td>Sim</td><td><code>REGEXP_LIKE(CD_CEP, &#x27;^[0-9]{8}$&#x27;)</code> [CK_FUNCIONARIO_CEP]</td><td>CEP com 8 dígitos, sem traço. A cidade não é guardada: depende do CEP (evita dependência transitiva) e a ficha não pede cidade.</td></tr>
+<tr><td>NM_BANCO</td><td>varchar(40)</td><td>Sim</td><td>—</td><td>Banco da conta de pagamento (parte do atributo composto DADOS_BANCARIOS).</td></tr>
+<tr><td>NR_AGENCIA</td><td>varchar(6)</td><td>Sim</td><td>—</td><td>Agência bancária.</td></tr>
+<tr><td>NR_CONTA</td><td>varchar(15)</td><td>Sim</td><td>—</td><td>Número da conta com dígito.</td></tr>
+<tr><td>DT_ADMISSAO</td><td>date</td><td>Sim</td><td><code>DT_DESLIGAMENTO IS NULL OR DT_DESLIGAMENTO &gt;= DT_ADMISSAO</code> [CK_FUNCIONARIO_DESLIGAMENTO]</td><td>Data de admissão.</td></tr>
+<tr><td>DT_DESLIGAMENTO</td><td>date</td><td>Não</td><td><code>DT_DESLIGAMENTO IS NULL OR DT_DESLIGAMENTO &gt;= DT_ADMISSAO</code> [CK_FUNCIONARIO_DESLIGAMENTO]</td><td>Data de saída; vazia enquanto o funcionário está na clínica. Quem saiu continua cadastrado (histórico dos testes da autoclave).</td></tr>
+</table></div>
+<p class="idx"><b>Índices:</b> PK ID_FUNCIONARIO (clusterizado).</p>
+<h3 id="SALA">SALA</h3>
+<div class="form">SALA = @ID_SALA + NM_SALA + HR_ABERTURA + HR_FECHAMENTO</div>
+<p class="leit"><b>Leitura:</b> Cada sala tem um horário de uso próprio dentro do funcionamento da clínica (RP01).</p>
+<div class="wrap"><table><tr><th>Atributo</th><th>Tipo físico</th><th>Obrigatório</th><th>Restrições</th><th>Significado e relevância</th></tr>
+<tr><td>ID_SALA</td><td>int</td><td>Sim (PK)</td><td>gerado automaticamente (AUTO_INCREMENT)</td><td>Código interno da sala.</td></tr>
+<tr><td>NM_SALA</td><td>varchar(20)</td><td>Sim (único)</td><td>único [UQ_SALA_NOME]</td><td>Nome da sala como aparece na agenda (Sala 01, Sala 02).</td></tr>
+<tr><td>HR_ABERTURA</td><td>time</td><td>Sim</td><td><code>HR_ABERTURA &gt;= &#x27;08:00:00&#x27; AND HR_FECHAMENTO &lt;= &#x27;18:00:00&#x27; AND HR_ABERTURA &lt; HR_FECHAMENTO</code> [CK_SALA_HORARIO] — RP01, RN11</td><td>Hora em que a sala começa a ser usada (Sala 01: 14h; Sala 02: 8h).</td></tr>
+<tr><td>HR_FECHAMENTO</td><td>time</td><td>Sim</td><td><code>HR_ABERTURA &gt;= &#x27;08:00:00&#x27; AND HR_FECHAMENTO &lt;= &#x27;18:00:00&#x27; AND HR_ABERTURA &lt; HR_FECHAMENTO</code> [CK_SALA_HORARIO] — RP01, RN11</td><td>Hora em que a sala para de ser usada (18h). Base da auditoria A09 e da ocupação (G20).</td></tr>
+</table></div>
+<p class="idx"><b>Índices:</b> PK ID_SALA (clusterizado); único em NM_SALA.</p>
+<h3 id="CONVENIO">CONVENIO</h3>
+<div class="form">CONVENIO = @ID_CONVENIO + NM_CONVENIO + IN_ATIVO</div>
+<p class="leit"><b>Leitura:</b> Só o nome: a clínica não precisa de nenhum outro dado do convênio.</p>
+<div class="wrap"><table><tr><th>Atributo</th><th>Tipo físico</th><th>Obrigatório</th><th>Restrições</th><th>Significado e relevância</th></tr>
+<tr><td>ID_CONVENIO</td><td>int</td><td>Sim (PK)</td><td>gerado automaticamente (AUTO_INCREMENT)</td><td>Código interno do convênio.</td></tr>
+<tr><td>NM_CONVENIO</td><td>varchar(40)</td><td>Sim (único)</td><td>único [UQ_CONVENIO_NOME]</td><td>Nome do convênio (Porto Seguro, Hapvida, SulAmérica, Dentalpar, MetLife). Substitui o nome digitado livremente na ficha do paciente.</td></tr>
+<tr><td>IN_ATIVO</td><td>boolean (tinyint(1))</td><td>Sim</td><td>padrão: verdadeiro</td><td>Indica se o registro está em uso; desativar em vez de apagar preserva o histórico.</td></tr>
+</table></div>
+<p class="idx"><b>Índices:</b> PK ID_CONVENIO (clusterizado); único em NM_CONVENIO.</p>
+<h3 id="PACIENTE">PACIENTE<span class="tag">dado sensível — LGPD</span></h3>
+<div class="form">PACIENTE = @ID_PACIENTE + NM_PACIENTE + DT_NASCIMENTO + TP_SEXO + ID_CPF + ID_RG + DS_PROFISSAO + TP_ESTADO_CIVIL + DS_LOGRADOURO + NR_ENDERECO + (DS_COMPLEMENTO) + NM_BAIRRO + CD_CEP + DS_EMAIL + (ID_CONVENIO) + (NR_CARTEIRINHA) + (NM_RESPONSAVEL_LEGAL) + DT_CADASTRO
+TP_SEXO = [M | F]
+TP_ESTADO_CIVIL = [SOLTEIRO | CASADO | DIVORCIADO | VIUVO | UNIAO ESTAVEL]</div>
+<p class="leit"><b>Leitura:</b> CPF obrigatório e único. Carteirinha e convênio vêm juntos ou não vêm (RN24). O responsável legal é guardado pelo nome, como na ficha da criança (RN02); menor sem responsável é apontado pela auditoria A02.</p>
+<div class="wrap"><table><tr><th>Atributo</th><th>Tipo físico</th><th>Obrigatório</th><th>Restrições</th><th>Significado e relevância</th></tr>
+<tr><td>ID_PACIENTE</td><td>int</td><td>Sim (PK)</td><td>gerado automaticamente (AUTO_INCREMENT)</td><td>Código interno do paciente (o CPF é o identificador natural, protegido por UNIQUE).</td></tr>
+<tr><td>NM_PACIENTE</td><td>varchar(100)</td><td>Sim</td><td>—</td><td>Nome completo do paciente.</td></tr>
+<tr><td>DT_NASCIMENTO</td><td>date</td><td>Sim</td><td>—</td><td>Data de nascimento. A idade não é guardada: é calculada a partir desta data (atributo derivado).</td></tr>
+<tr><td>TP_SEXO</td><td>char(1)</td><td>Sim</td><td>valores permitidos: M, F [CK_PACIENTE_SEXO]</td><td>Sexo, como no cadastro do sistema: M ou F.</td></tr>
+<tr><td>ID_CPF</td><td>char(11)</td><td>Sim (único)</td><td>único [UQ_PACIENTE_CPF] — RN25<br><code>REGEXP_LIKE(ID_CPF, &#x27;^[0-9]{11}$&#x27;)</code> [CK_PACIENTE_CPF]</td><td>CPF com 11 dígitos; obrigatório e sem repetição, como no Simples Dental (RN25).</td></tr>
+<tr><td>ID_RG</td><td>varchar(14)</td><td>Sim</td><td>—</td><td>RG do paciente.</td></tr>
+<tr><td>DS_PROFISSAO</td><td>varchar(60)</td><td>Sim</td><td>—</td><td>Profissão declarada na ficha.</td></tr>
+<tr><td>TP_ESTADO_CIVIL</td><td>varchar(15)</td><td>Sim</td><td>valores permitidos: SOLTEIRO, CASADO, DIVORCIADO, VIUVO, UNIAO ESTAVEL [CK_PACIENTE_ESTADO_CIVIL]</td><td>Estado civil declarado na ficha.</td></tr>
+<tr><td>DS_LOGRADOURO</td><td>varchar(100)</td><td>Sim</td><td>—</td><td>Rua ou avenida do endereço (parte do atributo composto ENDERECO).</td></tr>
+<tr><td>NR_ENDERECO</td><td>varchar(10)</td><td>Sim</td><td>—</td><td>Número do imóvel; texto porque pode ter letra (&quot;120A&quot;) e não sofre conta.</td></tr>
+<tr><td>DS_COMPLEMENTO</td><td>varchar(40)</td><td>Não</td><td>—</td><td>Complemento do endereço (apartamento, bloco); opcional, como no cadastro do sistema.</td></tr>
+<tr><td>NM_BAIRRO</td><td>varchar(60)</td><td>Sim</td><td>—</td><td>Bairro do endereço.</td></tr>
+<tr><td>CD_CEP</td><td>char(8)</td><td>Sim</td><td><code>REGEXP_LIKE(CD_CEP, &#x27;^[0-9]{8}$&#x27;)</code> [CK_PACIENTE_CEP]</td><td>CEP com 8 dígitos, sem traço. A cidade não é guardada: depende do CEP (evita dependência transitiva) e a ficha não pede cidade.</td></tr>
+<tr><td>DS_EMAIL</td><td>varchar(100)</td><td>Sim</td><td>—</td><td>E-mail de contato.</td></tr>
+<tr><td>ID_CONVENIO</td><td>int</td><td>Não</td><td>único em conjunto com NR_CARTEIRINHA [UQ_PACIENTE_CARTEIRINHA]<br>referencia CONVENIO.ID_CONVENIO [FK_PACIENTE_CONVENIO]<br><code>(ID_CONVENIO IS NULL) = (NR_CARTEIRINHA IS NULL)</code> [CK_PACIENTE_CONVENIO] — RN24</td><td>Convênio do paciente; vazio para particular (RN24).</td></tr>
+<tr><td>NR_CARTEIRINHA</td><td>varchar(20)</td><td>Não</td><td>único em conjunto com ID_CONVENIO [UQ_PACIENTE_CARTEIRINHA]<br><code>(ID_CONVENIO IS NULL) = (NR_CARTEIRINHA IS NULL)</code> [CK_PACIENTE_CONVENIO] — RN24</td><td>Número da carteirinha do convênio; só para paciente de convênio (RN24). Atributo do relacionamento PACIENTE–CONVENIO. A unicidade por convênio é suposição do grupo (o levantamento deixou &quot;a levantar&quot;).</td></tr>
+<tr><td>NM_RESPONSAVEL_LEGAL</td><td>varchar(100)</td><td>Não</td><td>—</td><td>Nome do responsável legal do menor, como na ficha da criança; se o pai ou a mãe também é paciente, é o nome dele (RN02). Vazio para maior de idade.</td></tr>
+<tr><td>DT_CADASTRO</td><td>date</td><td>Sim</td><td>padrão: data atual</td><td>Data do cadastro no sistema.</td></tr>
+</table></div>
+<p class="idx"><b>Índices:</b> PK ID_PACIENTE (clusterizado); único em ID_CPF; único em ID_CONVENIO, NR_CARTEIRINHA; índice da FK ID_CONVENIO (o InnoDB cria um se nenhum índice existente começar por essa coluna).</p>
+<h3 id="TELEFONE_PACIENTE">TELEFONE_PACIENTE<span class="tag">dado sensível — LGPD</span></h3>
+<div class="form">TELEFONE_PACIENTE = @ID_PACIENTE + @NR_ORDEM + NR_TELEFONE
+PACIENTE = ... + 1{TELEFONE}2 + ...   *multivalorado: no máximo dois telefones*
+NR_ORDEM = [1 | 2]</div>
+<p class="leit"><b>Leitura:</b> Atributo multivalorado levado para tabela própria (1FN). NR_ORDEM só aceita 1 ou 2, o que garante no máximo dois telefones por paciente.</p>
+<div class="wrap"><table><tr><th>Atributo</th><th>Tipo físico</th><th>Obrigatório</th><th>Restrições</th><th>Significado e relevância</th></tr>
+<tr><td>ID_PACIENTE</td><td>int</td><td>Sim (PK)</td><td>único em conjunto com NR_TELEFONE [UQ_TELEFONE_PACIENTE]<br>referencia PACIENTE.ID_PACIENTE [FK_TELEFONE_PACIENTE] — apagado junto com o registro pai (ON DELETE CASCADE)</td><td>Paciente dono do telefone.</td></tr>
+<tr><td>NR_ORDEM</td><td>tinyint</td><td>Sim (PK)</td><td>valores permitidos: 1, 2 [CK_TELEFONE_ORDEM]</td><td>1 = telefone principal, 2 = segundo telefone; o sistema aceita até dois.</td></tr>
+<tr><td>NR_TELEFONE</td><td>varchar(11)</td><td>Sim</td><td>único em conjunto com ID_PACIENTE [UQ_TELEFONE_PACIENTE]<br><code>REGEXP_LIKE(NR_TELEFONE, &#x27;^[0-9]{10,11}$&#x27;)</code> [CK_TELEFONE_NUMERO]</td><td>Telefone ou WhatsApp com DDD, só dígitos.</td></tr>
+</table></div>
+<p class="idx"><b>Índices:</b> PK ID_PACIENTE, NR_ORDEM (clusterizado); único em ID_PACIENTE, NR_TELEFONE.</p>
+<h3 id="ANAMNESE">ANAMNESE<span class="tag">dado sensível — LGPD</span></h3>
+<div class="form">ANAMNESE = @ID_PACIENTE + DT_PREENCHIMENTO + TP_ASSINANTE + DS_ARQUIVO_DIGITALIZADO + IN_BEM_DE_SAUDE + IN_TRATAMENTO_MEDICO + IN_ALERGIA_MEDICAMENTO + IN_DOENCA_GRAVE + IN_USA_MEDICAMENTO + IN_DIFICULDADE_ABRIR_BOCA + QT_ESCOVACOES_DIA + IN_DESMAIOS + IN_REACAO_ANESTESICO + IN_USOU_APARELHO + IN_GRAVIDA_AMAMENTANDO + IN_DIABETES + IN_HIPERTENSAO + IN_HEPATITE + IN_PROBLEMA_RESPIRATORIO + IN_PROBLEMA_CARDIACO + IN_COMPLICACAO_TRATAMENTO + (DS_OBSERVACOES)
+TP_ASSINANTE = [PACIENTE | RESPONSAVEL]</div>
+<p class="leit"><b>Leitura:</b> Uma ficha por paciente (1:1). As respostas de saúde deixam de existir só na imagem escaneada (P04): cada pergunta da ficha é uma coluna. A imagem continua guardada como respaldo (RP03).</p>
+<div class="wrap"><table><tr><th>Atributo</th><th>Tipo físico</th><th>Obrigatório</th><th>Restrições</th><th>Significado e relevância</th></tr>
+<tr><td>ID_PACIENTE</td><td>int</td><td>Sim (PK)</td><td>referencia PACIENTE.ID_PACIENTE [FK_ANAMNESE_PACIENTE]</td><td>Paciente da ficha (chave primária e estrangeira: uma ficha por paciente).</td></tr>
+<tr><td>DT_PREENCHIMENTO</td><td>date</td><td>Sim</td><td>—</td><td>Dia em que o paciente preencheu e assinou a ficha (na chegada, antes do 1º atendimento — RN01).</td></tr>
+<tr><td>TP_ASSINANTE</td><td>varchar(11)</td><td>Sim</td><td>valores permitidos: PACIENTE, RESPONSAVEL [CK_ANAMNESE_ASSINANTE] — RN02</td><td>Quem assinou: PACIENTE ou RESPONSAVEL (obrigatório para menor — RN02).</td></tr>
+<tr><td>DS_ARQUIVO_DIGITALIZADO</td><td>varchar(200)</td><td>Sim</td><td>—</td><td>Caminho da ficha escaneada com a assinatura; o papel é descartado (RP03).</td></tr>
+<tr><td>IN_BEM_DE_SAUDE</td><td>boolean (tinyint(1))</td><td>Sim</td><td>—</td><td>Pergunta da ficha: está bem de saúde no momento?</td></tr>
+<tr><td>IN_TRATAMENTO_MEDICO</td><td>boolean (tinyint(1))</td><td>Sim</td><td>—</td><td>Está em tratamento médico?</td></tr>
+<tr><td>IN_ALERGIA_MEDICAMENTO</td><td>boolean (tinyint(1))</td><td>Sim</td><td>—</td><td>Tem alergia a algum medicamento? (alerta em G12)</td></tr>
+<tr><td>IN_DOENCA_GRAVE</td><td>boolean (tinyint(1))</td><td>Sim</td><td>—</td><td>Possui alguma doença grave?</td></tr>
+<tr><td>IN_USA_MEDICAMENTO</td><td>boolean (tinyint(1))</td><td>Sim</td><td>—</td><td>Está tomando algum medicamento?</td></tr>
+<tr><td>IN_DIFICULDADE_ABRIR_BOCA</td><td>boolean (tinyint(1))</td><td>Sim</td><td>—</td><td>Sente dificuldade em abrir a boca?</td></tr>
+<tr><td>QT_ESCOVACOES_DIA</td><td>tinyint</td><td>Sim</td><td><code>QT_ESCOVACOES_DIA BETWEEN 0 AND 10</code> [CK_ANAMNESE_ESCOVACOES]</td><td>Quantas vezes por dia escova os dentes.</td></tr>
+<tr><td>IN_DESMAIOS</td><td>boolean (tinyint(1))</td><td>Sim</td><td>—</td><td>Costuma desmaiar com frequência?</td></tr>
+<tr><td>IN_REACAO_ANESTESICO</td><td>boolean (tinyint(1))</td><td>Sim</td><td>—</td><td>Já teve reação ao tomar anestésico? (alerta em G12)</td></tr>
+<tr><td>IN_USOU_APARELHO</td><td>boolean (tinyint(1))</td><td>Sim</td><td>—</td><td>Já usou aparelho ortodôntico?</td></tr>
+<tr><td>IN_GRAVIDA_AMAMENTANDO</td><td>boolean (tinyint(1))</td><td>Sim</td><td>—</td><td>Está grávida ou amamentando? (alerta em G12)</td></tr>
+<tr><td>IN_DIABETES</td><td>boolean (tinyint(1))</td><td>Sim</td><td>—</td><td>Tem diabetes?</td></tr>
+<tr><td>IN_HIPERTENSAO</td><td>boolean (tinyint(1))</td><td>Sim</td><td>—</td><td>Tem pressão alta?</td></tr>
+<tr><td>IN_HEPATITE</td><td>boolean (tinyint(1))</td><td>Sim</td><td>—</td><td>Tem ou já teve hepatite?</td></tr>
+<tr><td>IN_PROBLEMA_RESPIRATORIO</td><td>boolean (tinyint(1))</td><td>Sim</td><td>—</td><td>Possui algum problema respiratório?</td></tr>
+<tr><td>IN_PROBLEMA_CARDIACO</td><td>boolean (tinyint(1))</td><td>Sim</td><td>—</td><td>Tem ou já teve problema cardíaco?</td></tr>
+<tr><td>IN_COMPLICACAO_TRATAMENTO</td><td>boolean (tinyint(1))</td><td>Sim</td><td>—</td><td>Já teve complicação em tratamento odontológico?</td></tr>
+<tr><td>DS_OBSERVACOES</td><td>varchar(500)</td><td>Não</td><td>—</td><td>Campo Observações da ficha (ex.: qual medicamento usa, qual alergia).</td></tr>
+</table></div>
+<p class="idx"><b>Índices:</b> PK ID_PACIENTE (clusterizado).</p>
+<h3 id="PROCEDIMENTO">PROCEDIMENTO</h3>
+<div class="form">PROCEDIMENTO = @ID_PROCEDIMENTO + (ID_ESPECIALIDADE) + NM_PROCEDIMENTO + TP_PROCEDIMENTO + IN_ATIVO
+TP_PROCEDIMENTO = [CLINICO | PROVA_PECA | RADIOGRAFIA]</div>
+<p class="leit"><b>Leitura:</b> Catálogo que substitui o procedimento digitado livremente; o nome é único. O tipo separa a radiografia (único sem especialidade) e a prova de peça (usada na auditoria A04) dos procedimentos clínicos.</p>
+<div class="wrap"><table><tr><th>Atributo</th><th>Tipo físico</th><th>Obrigatório</th><th>Restrições</th><th>Significado e relevância</th></tr>
+<tr><td>ID_PROCEDIMENTO</td><td>int</td><td>Sim (PK)</td><td>gerado automaticamente (AUTO_INCREMENT)</td><td>Código interno do procedimento.</td></tr>
+<tr><td>ID_ESPECIALIDADE</td><td>int</td><td>Não</td><td>referencia ESPECIALIDADE.ID_ESPECIALIDADE [FK_PROCEDIMENTO_ESPECIALIDADE]<br><code>(TP_PROCEDIMENTO = &#x27;RADIOGRAFIA&#x27;) = (ID_ESPECIALIDADE IS NULL)</code> [CK_PROCEDIMENTO_ESPECIALIDADE]</td><td>Especialidade a que o procedimento pertence; vazia só na radiografia, procedimento de apoio feito pela auxiliar para todas as especialidades.</td></tr>
+<tr><td>NM_PROCEDIMENTO</td><td>varchar(80)</td><td>Sim (único)</td><td>único [UQ_PROCEDIMENTO_NOME]</td><td>Nome do procedimento (sem código TUSS: a clínica não usa lista nem código).</td></tr>
+<tr><td>TP_PROCEDIMENTO</td><td>varchar(11)</td><td>Sim</td><td>valores permitidos: CLINICO, PROVA_PECA, RADIOGRAFIA [CK_PROCEDIMENTO_TIPO]<br><code>(TP_PROCEDIMENTO = &#x27;RADIOGRAFIA&#x27;) = (ID_ESPECIALIDADE IS NULL)</code> [CK_PROCEDIMENTO_ESPECIALIDADE]<br>padrão: &#x27;CLINICO&#x27;</td><td>CLINICO (padrão), PROVA_PECA (prova ou instalação de peça protética — base da auditoria A04, RN06) ou RADIOGRAFIA (sem especialidade; a avaliação vai na observação do procedimento realizado — RN22).</td></tr>
+<tr><td>IN_ATIVO</td><td>boolean (tinyint(1))</td><td>Sim</td><td>padrão: verdadeiro</td><td>Indica se o registro está em uso; desativar em vez de apagar preserva o histórico.</td></tr>
+</table></div>
+<p class="idx"><b>Índices:</b> PK ID_PROCEDIMENTO (clusterizado); único em NM_PROCEDIMENTO; índice da FK ID_ESPECIALIDADE (o InnoDB cria um se nenhum índice existente começar por essa coluna).</p>
+<h3 id="ORCAMENTO">ORCAMENTO<span class="tag">dado sensível — LGPD</span></h3>
+<div class="form">ORCAMENTO = @ID_ORCAMENTO + ID_PACIENTE + DT_ORCAMENTO + DS_ORCAMENTO + TP_SITUACAO
+TP_SITUACAO = [EM ABERTO | APROVADO | CONCLUIDO | REPROVADO]</div>
+<p class="leit"><b>Leitura:</b> O orçamento pertence a um paciente e tem ao menos um item; o total é derivado (soma dos itens). Os &quot;tratamentos&quot; do sistema não viram tabela: para a clínica, procedimento e tratamento são a mesma coisa.</p>
+<div class="wrap"><table><tr><th>Atributo</th><th>Tipo físico</th><th>Obrigatório</th><th>Restrições</th><th>Significado e relevância</th></tr>
+<tr><td>ID_ORCAMENTO</td><td>int</td><td>Sim (PK)</td><td>gerado automaticamente (AUTO_INCREMENT)</td><td>Código interno do orçamento.</td></tr>
+<tr><td>ID_PACIENTE</td><td>int</td><td>Sim</td><td>referencia PACIENTE.ID_PACIENTE [FK_ORCAMENTO_PACIENTE]</td><td>Paciente do orçamento.</td></tr>
+<tr><td>DT_ORCAMENTO</td><td>date</td><td>Sim</td><td>—</td><td>Data em que o orçamento foi feito e mostrado ao paciente.</td></tr>
+<tr><td>DS_ORCAMENTO</td><td>varchar(150)</td><td>Sim</td><td>—</td><td>Descrição que aparece na lista de orçamentos do sistema.</td></tr>
+<tr><td>TP_SITUACAO</td><td>varchar(10)</td><td>Sim</td><td>valores permitidos: EM ABERTO, APROVADO, CONCLUIDO, REPROVADO [CK_ORCAMENTO_SITUACAO]<br>padrão: &#x27;EM ABERTO&#x27;</td><td>Situação que o sistema mostra na lista de orçamentos. O levantamento só registrou &quot;Em aberto&quot;; APROVADO (em andamento), CONCLUIDO (tratamento terminado) e REPROVADO (não aceito) são suposição do grupo, a confirmar no retorno. O valor total não é guardado: é a soma dos itens.</td></tr>
+</table></div>
+<p class="idx"><b>Índices:</b> PK ID_ORCAMENTO (clusterizado); índice da FK ID_PACIENTE (o InnoDB cria um se nenhum índice existente começar por essa coluna).</p>
+<h3 id="ITEM_ORCAMENTO">ITEM_ORCAMENTO<span class="tag">dado sensível — LGPD</span></h3>
+<div class="form">ITEM_ORCAMENTO = @ID_ORCAMENTO + @NR_ITEM + ID_PROCEDIMENTO + CD_DENTE + VL_ITEM
+ORCAMENTO = ... + 1{ /ITEM_ORCAMENTO/ }n   *grupo repetitivo levado para tabela própria*</div>
+<p class="leit"><b>Leitura:</b> Entidade fraca: só existe dentro do orçamento (apagar um orçamento em aberto apaga os itens — CASCADE).</p>
+<div class="wrap"><table><tr><th>Atributo</th><th>Tipo físico</th><th>Obrigatório</th><th>Restrições</th><th>Significado e relevância</th></tr>
+<tr><td>ID_ORCAMENTO</td><td>int</td><td>Sim (PK)</td><td>referencia ORCAMENTO.ID_ORCAMENTO [FK_ITEM_ORCAMENTO_ORCAMENTO] — apagado junto com o registro pai (ON DELETE CASCADE)</td><td>Orçamento a que o item pertence.</td></tr>
+<tr><td>NR_ITEM</td><td>tinyint</td><td>Sim (PK)</td><td><code>NR_ITEM &gt;= 1</code> [CK_ITEM_ORCAMENTO_NR]</td><td>Número do item dentro do orçamento (identificador parcial da entidade fraca).</td></tr>
+<tr><td>ID_PROCEDIMENTO</td><td>int</td><td>Sim</td><td>referencia PROCEDIMENTO.ID_PROCEDIMENTO [FK_ITEM_ORCAMENTO_PROCEDIMENTO]</td><td>Procedimento previsto.</td></tr>
+<tr><td>CD_DENTE</td><td>varchar(3)</td><td>Sim</td><td><code>REGEXP_LIKE(CD_DENTE, &#x27;^([1-4][1-8]|SUP|INF|GER)$&#x27;)</code> [CK_ITEM_ORCAMENTO_DENTE]</td><td>Dente na notação FDI (11 a 48) ou região: SUP (arcada superior), INF (arcada inferior), GER (boca toda ou face).</td></tr>
+<tr><td>VL_ITEM</td><td>decimal(10,2)</td><td>Sim</td><td><code>VL_ITEM &gt; 0</code> [CK_ITEM_ORCAMENTO_VALOR]</td><td>Valor do procedimento no orçamento (o valor fica só no orçamento, como na clínica).</td></tr>
+</table></div>
+<p class="idx"><b>Índices:</b> PK ID_ORCAMENTO, NR_ITEM (clusterizado); índice da FK ID_PROCEDIMENTO (o InnoDB cria um se nenhum índice existente começar por essa coluna).</p>
+<h3 id="PAGAMENTO">PAGAMENTO</h3>
+<div class="form">PAGAMENTO = @ID_PAGAMENTO + ID_ORCAMENTO + DT_PAGAMENTO + VL_PAGAMENTO + TP_FORMA_PAGAMENTO + QT_PARCELAS
+TP_FORMA_PAGAMENTO = [DEBITO | CREDITO]</div>
+<p class="leit"><b>Leitura:</b> Todo pagamento é de um orçamento. Débito só à vista; crédito em 3 ou 6 vezes sem juros (RN14).</p>
+<div class="wrap"><table><tr><th>Atributo</th><th>Tipo físico</th><th>Obrigatório</th><th>Restrições</th><th>Significado e relevância</th></tr>
+<tr><td>ID_PAGAMENTO</td><td>int</td><td>Sim (PK)</td><td>gerado automaticamente (AUTO_INCREMENT)</td><td>Código interno do pagamento.</td></tr>
+<tr><td>ID_ORCAMENTO</td><td>int</td><td>Sim</td><td>referencia ORCAMENTO.ID_ORCAMENTO [FK_PAGAMENTO_ORCAMENTO]</td><td>Orçamento pago. Paciente, procedimentos e especialidade vêm do orçamento e não são repetidos no pagamento (3FN).</td></tr>
+<tr><td>DT_PAGAMENTO</td><td>date</td><td>Sim</td><td>—</td><td>Data do pagamento (antes de o paciente entrar na sala — RN07).</td></tr>
+<tr><td>VL_PAGAMENTO</td><td>decimal(10,2)</td><td>Sim</td><td><code>VL_PAGAMENTO &gt; 0</code> [CK_PAGAMENTO_VALOR]</td><td>Valor pago.</td></tr>
+<tr><td>TP_FORMA_PAGAMENTO</td><td>varchar(7)</td><td>Sim</td><td>valores permitidos: DEBITO, CREDITO [CK_PAGAMENTO_FORMA] — RN14<br><code>(TP_FORMA_PAGAMENTO = &#x27;DEBITO&#x27; AND QT_PARCELAS = 1) OR (TP_FORMA_PAGAMENTO = &#x27;CREDITO&#x27; AND QT_PARCELAS IN (3, 6))</code> [CK_PAGAMENTO_PARCELAS] — RN14</td><td>DEBITO ou CREDITO (RN14). Pagamento à vista no crédito não foi citado no levantamento: a confirmar no retorno.</td></tr>
+<tr><td>QT_PARCELAS</td><td>tinyint</td><td>Sim</td><td><code>(TP_FORMA_PAGAMENTO = &#x27;DEBITO&#x27; AND QT_PARCELAS = 1) OR (TP_FORMA_PAGAMENTO = &#x27;CREDITO&#x27; AND QT_PARCELAS IN (3, 6))</code> [CK_PAGAMENTO_PARCELAS] — RN14<br>padrão: 1</td><td>Número de parcelas: 1 no débito; 3 ou 6 no crédito, sem juros (RN14).</td></tr>
+</table></div>
+<p class="idx"><b>Índices:</b> PK ID_PAGAMENTO (clusterizado); índice da FK ID_ORCAMENTO (o InnoDB cria um se nenhum índice existente começar por essa coluna).</p>
+<h3 id="CONSULTA">CONSULTA<span class="tag">dado sensível — LGPD</span></h3>
+<div class="form">CONSULTA = @ID_CONSULTA + ID_PACIENTE + ID_DENTISTA + ID_SALA + DT_HR_INICIO + QT_DURACAO_MIN + TP_ATENDIMENTO + TP_SITUACAO + (TP_MOTIVO_CANCELAMENTO) + DT_HR_REGISTRO + (DT_HR_CONFIRMACAO) + (DS_OBSERVACAO) + (TP_ATESTADO) + (QT_DIAS_ATESTADO) + (DS_CID_ATESTADO)
+ATESTADO = TP_ATESTADO + (QT_DIAS_ATESTADO) + (DS_CID_ATESTADO)   *atributo composto opcional (0,1)*
+TP_ATENDIMENTO = [PARTICULAR | CONVENIO]
+TP_SITUACAO = [CONFIRMAR | CONFIRMADA | EM ATENDIMENTO | FINALIZADO | CANCELADA]
+TP_MOTIVO_CANCELAMENTO = [AVISO_PACIENTE | SEM_CONFIRMACAO | FALTA | SEM_REGISTRO]</div>
+<p class="leit"><b>Leitura:</b> Toda consulta tem paciente, dentista, sala, dia e horário (RN04). Cancelada exige motivo (RN12). O atestado é um atributo composto opcional: os três campos ficam vazios ou seguem o tipo, e só em consulta finalizada (RN21).</p>
+<div class="wrap"><table><tr><th>Atributo</th><th>Tipo físico</th><th>Obrigatório</th><th>Restrições</th><th>Significado e relevância</th></tr>
+<tr><td>ID_CONSULTA</td><td>int</td><td>Sim (PK)</td><td>gerado automaticamente (AUTO_INCREMENT)</td><td>Código interno da consulta.</td></tr>
+<tr><td>ID_PACIENTE</td><td>int</td><td>Sim</td><td>referencia PACIENTE.ID_PACIENTE [FK_CONSULTA_PACIENTE] — RN04</td><td>Paciente atendido (obrigatório — RN04).</td></tr>
+<tr><td>ID_DENTISTA</td><td>int</td><td>Sim</td><td>referencia DENTISTA.ID_DENTISTA [FK_CONSULTA_DENTISTA] — RN04</td><td>Dentista que atende (obrigatório — RN04).</td></tr>
+<tr><td>ID_SALA</td><td>int</td><td>Sim</td><td>referencia SALA.ID_SALA [FK_CONSULTA_SALA]</td><td>Sala em que a consulta acontece.</td></tr>
+<tr><td>DT_HR_INICIO</td><td>datetime</td><td>Sim</td><td><code>DAYOFWEEK(DT_HR_INICIO) BETWEEN 2 AND 6</code> [CK_CONSULTA_DIA_UTIL] — RP01<br><code>TIME(DT_HR_INICIO) &gt;= &#x27;08:00:00&#x27; AND TIME(DATE_ADD(DT_HR_INICIO, INTERVAL QT_DURACAO_MIN MINUTE)) &lt;= &#x27;18:00:00&#x27;</code> [CK_CONSULTA_HORARIO] — RP01<br><code>DT_HR_CONFIRMACAO IS NULL OR (DT_HR_CONFIRMACAO &gt;= DT_HR_REGISTRO AND DT_HR_CONFIRMACAO &lt;= DT_HR_INICIO)</code> [CK_CONSULTA_CONFIRMACAO] — RN13</td><td>Dia e horário da consulta (seg a sex, 8h às 18h — RP01).</td></tr>
+<tr><td>QT_DURACAO_MIN</td><td>tinyint</td><td>Sim</td><td><code>TIME(DT_HR_INICIO) &gt;= &#x27;08:00:00&#x27; AND TIME(DATE_ADD(DT_HR_INICIO, INTERVAL QT_DURACAO_MIN MINUTE)) &lt;= &#x27;18:00:00&#x27;</code> [CK_CONSULTA_HORARIO] — RP01<br><code>QT_DURACAO_MIN BETWEEN 45 AND 60</code> [CK_CONSULTA_DURACAO]<br>padrão: 45</td><td>Duração em minutos: de 45 a 60, conforme o procedimento.</td></tr>
+<tr><td>TP_ATENDIMENTO</td><td>varchar(10)</td><td>Sim</td><td>valores permitidos: PARTICULAR, CONVENIO [CK_CONSULTA_ATENDIMENTO]</td><td>PARTICULAR ou CONVENIO; cada consulta é paga por um dos dois, nunca pelos dois (RN09).</td></tr>
+<tr><td>TP_SITUACAO</td><td>varchar(14)</td><td>Sim</td><td>valores permitidos: CONFIRMAR, CONFIRMADA, EM ATENDIMENTO, FINALIZADO, CANCELADA [CK_CONSULTA_SITUACAO]<br><code>(TP_SITUACAO = &#x27;CANCELADA&#x27;) = (TP_MOTIVO_CANCELAMENTO IS NOT NULL)</code> [CK_CONSULTA_MOTIVO] — RN12<br><code> (TP_ATESTADO IS NULL AND QT_DIAS_ATESTADO IS NULL AND DS_CID_ATESTADO IS NULL) OR (TP_ATESTADO IS NOT NULL AND TP_SITUACAO = &#x27;FINALIZADO&#x27; AND ((TP_ATESTADO = &#x27;PRESENCA&#x27; AND QT_DIAS_ATESTADO IS NULL) OR (TP_ATESTADO = &#x27;DIAS&#x27; AND QT_DIAS_ATESTADO IS NOT NULL AND QT_DIAS_ATESTADO BETWEEN 1 AND 30)))</code> [CK_CONSULTA_ATESTADO] — RN21<br>padrão: &#x27;CONFIRMAR&#x27;</td><td>Situações do sistema: CONFIRMAR, CONFIRMADA, EM ATENDIMENTO, FINALIZADO, CANCELADA.</td></tr>
+<tr><td>TP_MOTIVO_CANCELAMENTO</td><td>varchar(15)</td><td>Não</td><td><code>(TP_SITUACAO = &#x27;CANCELADA&#x27;) = (TP_MOTIVO_CANCELAMENTO IS NOT NULL)</code> [CK_CONSULTA_MOTIVO] — RN12<br>valores permitidos: AVISO_PACIENTE, SEM_CONFIRMACAO, FALTA, SEM_REGISTRO [CK_CONSULTA_MOTIVO_VALOR] — RN12, RN13, P01, P05<br><code>TP_MOTIVO_CANCELAMENTO IS NULL OR TP_MOTIVO_CANCELAMENTO &lt;&gt; &#x27;SEM_CONFIRMACAO&#x27; OR DT_HR_CONFIRMACAO IS NULL</code> [CK_CONSULTA_SEM_CONFIRMACAO] — RN13</td><td>Novo: separa AVISO_PACIENTE (24h), SEM_CONFIRMACAO, FALTA (sem aviso) e SEM_REGISTRO (combinada e não registrada — P01). Hoje o sistema mostra tudo como &quot;cancelado&quot; (P05).</td></tr>
+<tr><td>DT_HR_REGISTRO</td><td>datetime</td><td>Sim</td><td><code>DT_HR_CONFIRMACAO IS NULL OR (DT_HR_CONFIRMACAO &gt;= DT_HR_REGISTRO AND DT_HR_CONFIRMACAO &lt;= DT_HR_INICIO)</code> [CK_CONSULTA_CONFIRMACAO] — RN13<br>padrão: data e hora atuais<br>obrigatório — RN03</td><td>Quando a consulta foi registrada na agenda (RN03, P01).</td></tr>
+<tr><td>DT_HR_CONFIRMACAO</td><td>datetime</td><td>Não</td><td><code>DT_HR_CONFIRMACAO IS NULL OR (DT_HR_CONFIRMACAO &gt;= DT_HR_REGISTRO AND DT_HR_CONFIRMACAO &lt;= DT_HR_INICIO)</code> [CK_CONSULTA_CONFIRMACAO] — RN13<br><code>TP_MOTIVO_CANCELAMENTO IS NULL OR TP_MOTIVO_CANCELAMENTO &lt;&gt; &#x27;SEM_CONFIRMACAO&#x27; OR DT_HR_CONFIRMACAO IS NULL</code> [CK_CONSULTA_SEM_CONFIRMACAO] — RN13</td><td>Quando o paciente confirmou (véspera, por WhatsApp — RN13).</td></tr>
+<tr><td>DS_OBSERVACAO</td><td>varchar(300)</td><td>Não</td><td>—</td><td>Observações da consulta; uso raro.</td></tr>
+<tr><td>TP_ATESTADO</td><td>varchar(8)</td><td>Não</td><td><code> (TP_ATESTADO IS NULL AND QT_DIAS_ATESTADO IS NULL AND DS_CID_ATESTADO IS NULL) OR (TP_ATESTADO IS NOT NULL AND TP_SITUACAO = &#x27;FINALIZADO&#x27; AND ((TP_ATESTADO = &#x27;PRESENCA&#x27; AND QT_DIAS_ATESTADO IS NULL) OR (TP_ATESTADO = &#x27;DIAS&#x27; AND QT_DIAS_ATESTADO IS NOT NULL AND QT_DIAS_ATESTADO BETWEEN 1 AND 30)))</code> [CK_CONSULTA_ATESTADO] — RN21</td><td>Atestado emitido nesta consulta (atributo composto opcional ATESTADO): PRESENCA ou DIAS; vazio se não houve atestado. Só em consulta FINALIZADO (RN21). Suposição do grupo, a confirmar no retorno: no de presença, data e horas são as da consulta (DT_HR_INICIO e QT_DURACAO_MIN).</td></tr>
+<tr><td>QT_DIAS_ATESTADO</td><td>tinyint</td><td>Não</td><td><code> (TP_ATESTADO IS NULL AND QT_DIAS_ATESTADO IS NULL AND DS_CID_ATESTADO IS NULL) OR (TP_ATESTADO IS NOT NULL AND TP_SITUACAO = &#x27;FINALIZADO&#x27; AND ((TP_ATESTADO = &#x27;PRESENCA&#x27; AND QT_DIAS_ATESTADO IS NULL) OR (TP_ATESTADO = &#x27;DIAS&#x27; AND QT_DIAS_ATESTADO IS NOT NULL AND QT_DIAS_ATESTADO BETWEEN 1 AND 30)))</code> [CK_CONSULTA_ATESTADO] — RN21</td><td>Número de dias do atestado de dias (1 a 30); vazio no de presença (RN21).</td></tr>
+<tr><td>DS_CID_ATESTADO</td><td>varchar(100)</td><td>Não</td><td><code> (TP_ATESTADO IS NULL AND QT_DIAS_ATESTADO IS NULL AND DS_CID_ATESTADO IS NULL) OR (TP_ATESTADO IS NOT NULL AND TP_SITUACAO = &#x27;FINALIZADO&#x27; AND ((TP_ATESTADO = &#x27;PRESENCA&#x27; AND QT_DIAS_ATESTADO IS NULL) OR (TP_ATESTADO = &#x27;DIAS&#x27; AND QT_DIAS_ATESTADO IS NOT NULL AND QT_DIAS_ATESTADO BETWEEN 1 AND 30)))</code> [CK_CONSULTA_ATESTADO] — RN21</td><td>CID do atestado, opcional, até 100 caracteres.</td></tr>
+</table></div>
+<p class="idx"><b>Índices:</b> PK ID_CONSULTA (clusterizado); índice da FK ID_PACIENTE (o InnoDB cria um se nenhum índice existente começar por essa coluna); índice da FK ID_DENTISTA (o InnoDB cria um se nenhum índice existente começar por essa coluna); índice da FK ID_SALA (o InnoDB cria um se nenhum índice existente começar por essa coluna); IX_CONSULTA_DENTISTA_INICIO (ID_DENTISTA, DT_HR_INICIO) — agenda por dentista, por sala e histórico do paciente (RNF04); IX_CONSULTA_SALA_INICIO (ID_SALA, DT_HR_INICIO) — agenda por dentista, por sala e histórico do paciente (RNF04); IX_CONSULTA_PACIENTE_INICIO (ID_PACIENTE, DT_HR_INICIO) — agenda por dentista, por sala e histórico do paciente (RNF04).</p>
+<h3 id="PROCEDIMENTO_REALIZADO">PROCEDIMENTO_REALIZADO<span class="tag">dado sensível — LGPD</span></h3>
+<div class="form">PROCEDIMENTO_REALIZADO = @ID_CONSULTA + @ID_PROCEDIMENTO + @CD_DENTE + (DS_OBSERVACAO)</div>
+<p class="leit"><b>Leitura:</b> Entidade associativa CONSULTA x PROCEDIMENTO: o mesmo procedimento pode ser feito em vários dentes na mesma consulta, por isso o dente faz parte da chave. Também guarda as radiografias e a avaliação da Dra. (RN22).</p>
+<div class="wrap"><table><tr><th>Atributo</th><th>Tipo físico</th><th>Obrigatório</th><th>Restrições</th><th>Significado e relevância</th></tr>
+<tr><td>ID_CONSULTA</td><td>int</td><td>Sim (PK)</td><td>referencia CONSULTA.ID_CONSULTA [FK_PROC_REALIZADO_CONSULTA]</td><td>Consulta em que o procedimento foi feito.</td></tr>
+<tr><td>ID_PROCEDIMENTO</td><td>int</td><td>Sim (PK)</td><td>referencia PROCEDIMENTO.ID_PROCEDIMENTO [FK_PROC_REALIZADO_PROCEDIMENTO]</td><td>Procedimento feito.</td></tr>
+<tr><td>CD_DENTE</td><td>varchar(3)</td><td>Sim (PK)</td><td><code>REGEXP_LIKE(CD_DENTE, &#x27;^([1-4][1-8]|SUP|INF|GER)$&#x27;)</code> [CK_PROC_REALIZADO_DENTE]</td><td>Dente ou região do procedimento; compõe a chave porque o mesmo procedimento pode ser feito em vários dentes na mesma consulta.</td></tr>
+<tr><td>DS_OBSERVACAO</td><td>varchar(500)</td><td>Não</td><td>—</td><td>Observação do procedimento. Na radiografia, é a avaliação registrada pela Dra. responsável; vazia = radiografia ainda não avaliada (RN22, A15).</td></tr>
+</table></div>
+<p class="idx"><b>Índices:</b> PK ID_CONSULTA, ID_PROCEDIMENTO, CD_DENTE (clusterizado); índice da FK ID_PROCEDIMENTO (o InnoDB cria um se nenhum índice existente começar por essa coluna).</p>
+<h3 id="GUIA">GUIA<span class="tag">dado sensível — LGPD</span></h3>
+<div class="form">GUIA = @ID_GUIA + ID_CONSULTA + DT_EMISSAO + (DT_HR_ASSINATURA) + (DT_ENVIO) + VL_GUIA + (DT_RECEBIMENTO)</div>
+<p class="leit"><b>Leitura:</b> Uma guia por consulta (UNIQUE). Só é enviada depois de assinada (RN05) e só é recebida depois de enviada; o convênio vem do paciente da consulta.</p>
+<div class="wrap"><table><tr><th>Atributo</th><th>Tipo físico</th><th>Obrigatório</th><th>Restrições</th><th>Significado e relevância</th></tr>
+<tr><td>ID_GUIA</td><td>int</td><td>Sim (PK)</td><td>gerado automaticamente (AUTO_INCREMENT)</td><td>Código interno da guia.</td></tr>
+<tr><td>ID_CONSULTA</td><td>int</td><td>Sim (único)</td><td>único [UQ_GUIA_CONSULTA] — RN09<br>referencia CONSULTA.ID_CONSULTA [FK_GUIA_CONSULTA]</td><td>Consulta de convênio da guia (uma guia por consulta — UNIQUE). Paciente, convênio (pelo cadastro do paciente) e procedimentos vêm da consulta e não são repetidos na guia (3FN).</td></tr>
+<tr><td>DT_EMISSAO</td><td>date</td><td>Sim</td><td><code>(DT_HR_ASSINATURA IS NULL OR DATE(DT_HR_ASSINATURA) &gt;= DT_EMISSAO) AND (DT_ENVIO IS NULL OR DT_ENVIO &gt;= DATE(DT_HR_ASSINATURA)) AND (DT_RECEBIMENTO IS NULL OR DT_RECEBIMENTO &gt;= DT_ENVIO)</code> [CK_GUIA_DATAS]</td><td>Data de emissão no sistema do convênio.</td></tr>
+<tr><td>DT_HR_ASSINATURA</td><td>datetime</td><td>Não</td><td><code>DT_ENVIO IS NULL OR DT_HR_ASSINATURA IS NOT NULL</code> [CK_GUIA_ENVIO_ASSINADA] — RN05<br><code>(DT_HR_ASSINATURA IS NULL OR DATE(DT_HR_ASSINATURA) &gt;= DT_EMISSAO) AND (DT_ENVIO IS NULL OR DT_ENVIO &gt;= DATE(DT_HR_ASSINATURA)) AND (DT_RECEBIMENTO IS NULL OR DT_RECEBIMENTO &gt;= DT_ENVIO)</code> [CK_GUIA_DATAS]</td><td>Quando o paciente assinou; desde outubro/2026, antes de entrar na sala (RN05, P02).</td></tr>
+<tr><td>DT_ENVIO</td><td>date</td><td>Não</td><td><code>DT_ENVIO IS NULL OR DT_HR_ASSINATURA IS NOT NULL</code> [CK_GUIA_ENVIO_ASSINADA] — RN05<br><code>DT_RECEBIMENTO IS NULL OR DT_ENVIO IS NOT NULL</code> [CK_GUIA_RECEBIMENTO_ENVIADA]<br><code>(DT_HR_ASSINATURA IS NULL OR DATE(DT_HR_ASSINATURA) &gt;= DT_EMISSAO) AND (DT_ENVIO IS NULL OR DT_ENVIO &gt;= DATE(DT_HR_ASSINATURA)) AND (DT_RECEBIMENTO IS NULL OR DT_RECEBIMENTO &gt;= DT_ENVIO)</code> [CK_GUIA_DATAS]</td><td>Dia em que a guia assinada foi anexada no site do convênio (só depois da assinatura — RN05).</td></tr>
+<tr><td>VL_GUIA</td><td>decimal(10,2)</td><td>Sim</td><td><code>VL_GUIA &gt; 0</code> [CK_GUIA_VALOR]</td><td>Valor que o convênio vai pagar.</td></tr>
+<tr><td>DT_RECEBIMENTO</td><td>date</td><td>Não</td><td><code>DT_RECEBIMENTO IS NULL OR DT_ENVIO IS NOT NULL</code> [CK_GUIA_RECEBIMENTO_ENVIADA]<br><code>(DT_HR_ASSINATURA IS NULL OR DATE(DT_HR_ASSINATURA) &gt;= DT_EMISSAO) AND (DT_ENVIO IS NULL OR DT_ENVIO &gt;= DATE(DT_HR_ASSINATURA)) AND (DT_RECEBIMENTO IS NULL OR DT_RECEBIMENTO &gt;= DT_ENVIO)</code> [CK_GUIA_DATAS]</td><td>Dia em que o convênio pagou (regra do dia 15/dia 30 — RP04).</td></tr>
+</table></div>
+<p class="idx"><b>Índices:</b> PK ID_GUIA (clusterizado); único em ID_CONSULTA; índice da FK ID_CONSULTA (o InnoDB cria um se nenhum índice existente começar por essa coluna).</p>
+<h3 id="MEDICAMENTO">MEDICAMENTO</h3>
+<div class="form">MEDICAMENTO = @ID_MEDICAMENTO + NM_MEDICAMENTO + DS_DOSAGEM + DS_ORIENTACAO + IN_CONTROLADO</div>
+<p class="leit"><b>Leitura:</b> Lista do sistema; o nome é único.</p>
+<div class="wrap"><table><tr><th>Atributo</th><th>Tipo físico</th><th>Obrigatório</th><th>Restrições</th><th>Significado e relevância</th></tr>
+<tr><td>ID_MEDICAMENTO</td><td>int</td><td>Sim (PK)</td><td>gerado automaticamente (AUTO_INCREMENT)</td><td>Código interno do medicamento.</td></tr>
+<tr><td>NM_MEDICAMENTO</td><td>varchar(80)</td><td>Sim (único)</td><td>único [UQ_MEDICAMENTO_NOME]</td><td>Nome e concentração do medicamento.</td></tr>
+<tr><td>DS_DOSAGEM</td><td>varchar(60)</td><td>Sim</td><td>—</td><td>Dosagem cadastrada (a recepcionista não altera).</td></tr>
+<tr><td>DS_ORIENTACAO</td><td>varchar(200)</td><td>Sim</td><td>—</td><td>Orientação de uso cadastrada.</td></tr>
+<tr><td>IN_CONTROLADO</td><td>boolean (tinyint(1))</td><td>Sim</td><td>padrão: falso</td><td>Indica receita controlada; o tipo da receita vem daqui (não é guardado na receita: 3FN).</td></tr>
+</table></div>
+<p class="idx"><b>Índices:</b> PK ID_MEDICAMENTO (clusterizado); único em NM_MEDICAMENTO.</p>
+<h3 id="RECEITUARIO">RECEITUARIO<span class="tag">dado sensível — LGPD</span></h3>
+<div class="form">RECEITUARIO = @ID_CONSULTA + @ID_MEDICAMENTO
+CONSULTA = ... + 0{ID_MEDICAMENTO}n   *relacionamento N:N receita*</div>
+<p class="leit"><b>Leitura:</b> Relacionamento N:N CONSULTA x MEDICAMENTO, sem atributos próprios: a receita não tem número, a data é a da consulta e o tipo vem do medicamento. A chave é o par consulta + medicamento.</p>
+<div class="wrap"><table><tr><th>Atributo</th><th>Tipo físico</th><th>Obrigatório</th><th>Restrições</th><th>Significado e relevância</th></tr>
+<tr><td>ID_CONSULTA</td><td>int</td><td>Sim (PK)</td><td>referencia CONSULTA.ID_CONSULTA [FK_RECEITUARIO_CONSULTA]</td><td>Consulta realizada em que a receita foi feita (RN10); a data da receita é a da consulta.</td></tr>
+<tr><td>ID_MEDICAMENTO</td><td>int</td><td>Sim (PK)</td><td>referencia MEDICAMENTO.ID_MEDICAMENTO [FK_RECEITUARIO_MEDICAMENTO]</td><td>Medicamento receitado; dosagem, orientação e indicação de controlado vêm do medicamento (2FN). Mais de um medicamento na mesma consulta é aceito (a confirmar no retorno).</td></tr>
+</table></div>
+<p class="idx"><b>Índices:</b> PK ID_CONSULTA, ID_MEDICAMENTO (clusterizado); índice da FK ID_MEDICAMENTO (o InnoDB cria um se nenhum índice existente começar por essa coluna).</p>
+<h3 id="LABORATORIO">LABORATORIO</h3>
+<div class="form">LABORATORIO = @ID_LABORATORIO + NM_LABORATORIO + NR_WHATSAPP + QT_DIAS_PRAZO</div>
+<p class="leit"><b>Leitura:</b> Dois laboratórios, prazo padrão de 7 dias (DEFAULT).</p>
+<div class="wrap"><table><tr><th>Atributo</th><th>Tipo físico</th><th>Obrigatório</th><th>Restrições</th><th>Significado e relevância</th></tr>
+<tr><td>ID_LABORATORIO</td><td>int</td><td>Sim (PK)</td><td>gerado automaticamente (AUTO_INCREMENT)</td><td>Código interno do laboratório.</td></tr>
+<tr><td>NM_LABORATORIO</td><td>varchar(60)</td><td>Sim (único)</td><td>único [UQ_LABORATORIO_NOME]</td><td>Nome do laboratório (Inove, Wilson).</td></tr>
+<tr><td>NR_WHATSAPP</td><td>varchar(11)</td><td>Sim</td><td><code>REGEXP_LIKE(NR_WHATSAPP, &#x27;^[0-9]{10,11}$&#x27;)</code> [CK_LABORATORIO_WHATSAPP]</td><td>WhatsApp do laboratório, único canal de contato.</td></tr>
+<tr><td>QT_DIAS_PRAZO</td><td>tinyint</td><td>Sim</td><td><code>QT_DIAS_PRAZO BETWEEN 1 AND 60</code> [CK_LABORATORIO_PRAZO] — RN26<br>padrão: 7</td><td>Prazo padrão de entrega em dias (7 nos dois laboratórios — RN26).</td></tr>
+</table></div>
+<p class="idx"><b>Índices:</b> PK ID_LABORATORIO (clusterizado); único em NM_LABORATORIO.</p>
+<h3 id="PEDIDO_LABORATORIO">PEDIDO_LABORATORIO<span class="tag">dado sensível — LGPD</span></h3>
+<div class="form">PEDIDO_LABORATORIO = @ID_PEDIDO + ID_CONSULTA + ID_LABORATORIO + TP_PEDIDO + DS_PECA + CD_DENTE + DT_ENVIO + DT_PREVISTA + (DT_CHEGADA)
+TP_PEDIDO = [CONFECCAO | AJUSTE | REFINAMENTO]</div>
+<p class="leit"><b>Leitura:</b> Cada ida ao laboratório é um pedido, com um único laboratório (RN08); previsão e chegada não podem ser antes do envio. A despesa do laboratório é lançada em DESPESA (categoria LABORATORIO).</p>
+<div class="wrap"><table><tr><th>Atributo</th><th>Tipo físico</th><th>Obrigatório</th><th>Restrições</th><th>Significado e relevância</th></tr>
+<tr><td>ID_PEDIDO</td><td>int</td><td>Sim (PK)</td><td>gerado automaticamente (AUTO_INCREMENT)</td><td>Código interno do pedido (cada ida de uma peça ao laboratório).</td></tr>
+<tr><td>ID_CONSULTA</td><td>int</td><td>Sim</td><td>referencia CONSULTA.ID_CONSULTA [FK_PEDIDO_CONSULTA]</td><td>Consulta em que o pedido nasceu (moldagem, ou prova que pediu ajuste); dela vêm paciente e dentista (não repetidos: 3FN).</td></tr>
+<tr><td>ID_LABORATORIO</td><td>int</td><td>Sim</td><td>referencia LABORATORIO.ID_LABORATORIO [FK_PEDIDO_LABORATORIO] — RN08</td><td>Laboratório que recebe o pedido (um só — RN08).</td></tr>
+<tr><td>TP_PEDIDO</td><td>varchar(11)</td><td>Sim</td><td>valores permitidos: CONFECCAO, AJUSTE, REFINAMENTO [CK_PEDIDO_TIPO]<br>padrão: &#x27;CONFECCAO&#x27;</td><td>CONFECCAO (padrão), AJUSTE ou REFINAMENTO: a peça pode voltar ao laboratório mais de uma vez.</td></tr>
+<tr><td>DS_PECA</td><td>varchar(100)</td><td>Sim</td><td>—</td><td>Tipo e descrição da peça.</td></tr>
+<tr><td>CD_DENTE</td><td>varchar(3)</td><td>Sim</td><td><code>REGEXP_LIKE(CD_DENTE, &#x27;^([1-4][1-8]|SUP|INF|GER)$&#x27;)</code> [CK_PEDIDO_DENTE]</td><td>Dente na notação FDI (11 a 48) ou região: SUP (arcada superior), INF (arcada inferior), GER (boca toda ou face).</td></tr>
+<tr><td>DT_ENVIO</td><td>date</td><td>Sim</td><td><code>DT_PREVISTA &gt;= DT_ENVIO AND (DT_CHEGADA IS NULL OR DT_CHEGADA &gt;= DT_ENVIO)</code> [CK_PEDIDO_DATAS] — P03, RN26</td><td>Dia em que a peça saiu (Uber ou motoboy do laboratório).</td></tr>
+<tr><td>DT_PREVISTA</td><td>date</td><td>Sim</td><td><code>DT_PREVISTA &gt;= DT_ENVIO AND (DT_CHEGADA IS NULL OR DT_CHEGADA &gt;= DT_ENVIO)</code> [CK_PEDIDO_DATAS] — P03, RN26</td><td>Previsão de chegada: envio + prazo do laboratório (7 dias — RN26). Guardada porque pode ser renegociada (U03) (P03).</td></tr>
+<tr><td>DT_CHEGADA</td><td>date</td><td>Não</td><td><code>DT_PREVISTA &gt;= DT_ENVIO AND (DT_CHEGADA IS NULL OR DT_CHEGADA &gt;= DT_ENVIO)</code> [CK_PEDIDO_DATAS] — P03, RN26</td><td>Dia em que a peça voltou à clínica; vazio enquanto está no laboratório (G11).</td></tr>
+</table></div>
+<p class="idx"><b>Índices:</b> PK ID_PEDIDO (clusterizado); índice da FK ID_CONSULTA (o InnoDB cria um se nenhum índice existente começar por essa coluna); índice da FK ID_LABORATORIO (o InnoDB cria um se nenhum índice existente começar por essa coluna).</p>
+<h3 id="TESTE_AUTOCLAVE">TESTE_AUTOCLAVE</h3>
+<div class="form">TESTE_AUTOCLAVE = @ID_TESTE + ID_FUNCIONARIO + DT_TESTE + TP_RESULTADO + (DS_OBSERVACAO)
+TP_RESULTADO = [APROVADO | REPROVADO]</div>
+<p class="leit"><b>Leitura:</b> Um teste por dia no máximo; teste reprovado exige observação.</p>
+<div class="wrap"><table><tr><th>Atributo</th><th>Tipo físico</th><th>Obrigatório</th><th>Restrições</th><th>Significado e relevância</th></tr>
+<tr><td>ID_TESTE</td><td>int</td><td>Sim (PK)</td><td>gerado automaticamente (AUTO_INCREMENT)</td><td>Código interno do teste.</td></tr>
+<tr><td>ID_FUNCIONARIO</td><td>int</td><td>Sim</td><td>referencia FUNCIONARIO.ID_FUNCIONARIO [FK_TESTE_FUNCIONARIO]</td><td>Auxiliar que fez o teste.</td></tr>
+<tr><td>DT_TESTE</td><td>date</td><td>Sim (único)</td><td>único [UQ_TESTE_DATA] — RN23</td><td>Data do teste biológico (semanal — RN23).</td></tr>
+<tr><td>TP_RESULTADO</td><td>varchar(9)</td><td>Sim</td><td>valores permitidos: APROVADO, REPROVADO [CK_TESTE_RESULTADO]<br><code>TP_RESULTADO = &#x27;APROVADO&#x27; OR DS_OBSERVACAO IS NOT NULL</code> [CK_TESTE_REPROVADO] — RN23</td><td>APROVADO ou REPROVADO.</td></tr>
+<tr><td>DS_OBSERVACAO</td><td>varchar(200)</td><td>Não</td><td><code>TP_RESULTADO = &#x27;APROVADO&#x27; OR DS_OBSERVACAO IS NOT NULL</code> [CK_TESTE_REPROVADO] — RN23</td><td>Obrigatória quando reprovado: o que foi feito (regra proposta pelo grupo; o resultado e a observação não foram levantados).</td></tr>
+</table></div>
+<p class="idx"><b>Índices:</b> PK ID_TESTE (clusterizado); único em DT_TESTE; índice da FK ID_FUNCIONARIO (o InnoDB cria um se nenhum índice existente começar por essa coluna).</p>
+<h3 id="DESPESA">DESPESA</h3>
+<div class="form">DESPESA = @ID_DESPESA + DS_TITULO + TP_CATEGORIA + VL_DESPESA + DT_VENCIMENTO + (DT_PAGAMENTO) + TP_FORMA_PAGAMENTO + DS_DESPESA + (ID_DENTISTA)
+TP_CATEGORIA = [INTERNET | AGUA | LUZ | CONDOMINIO | INSUMOS | REPASSE | SALARIO | IMPOSTO | LABORATORIO | TRANSPORTE | CORREIOS]
+TP_FORMA_PAGAMENTO = [PIX | BOLETO]</div>
+<p class="leit"><b>Leitura:</b> Repasse aponta o dentista e é sempre por PIX (RN17); as demais categorias não apontam nada (a de laboratório cita o número do pedido na descrição).</p>
+<div class="wrap"><table><tr><th>Atributo</th><th>Tipo físico</th><th>Obrigatório</th><th>Restrições</th><th>Significado e relevância</th></tr>
+<tr><td>ID_DESPESA</td><td>int</td><td>Sim (PK)</td><td>gerado automaticamente (AUTO_INCREMENT)</td><td>Código interno da despesa.</td></tr>
+<tr><td>DS_TITULO</td><td>varchar(80)</td><td>Sim</td><td>—</td><td>Título do lançamento.</td></tr>
+<tr><td>TP_CATEGORIA</td><td>varchar(12)</td><td>Sim</td><td>valores permitidos: INTERNET, AGUA, LUZ, CONDOMINIO, INSUMOS, REPASSE, SALARIO, IMPOSTO, LABORATORIO, TRANSPORTE, CORREIOS [CK_DESPESA_CATEGORIA]<br><code>(TP_CATEGORIA = &#x27;REPASSE&#x27;) = (ID_DENTISTA IS NOT NULL)</code> [CK_DESPESA_REPASSE] — RN17<br><code>TP_CATEGORIA &lt;&gt; &#x27;REPASSE&#x27; OR TP_FORMA_PAGAMENTO = &#x27;PIX&#x27;</code> [CK_DESPESA_REPASSE_PIX] — RN17</td><td>Categoria (no sistema é digitada livremente; aqui é lista fechada para permitir o total por categoria — G19).</td></tr>
+<tr><td>VL_DESPESA</td><td>decimal(10,2)</td><td>Sim</td><td><code>VL_DESPESA &gt; 0</code> [CK_DESPESA_VALOR]</td><td>Valor da despesa.</td></tr>
+<tr><td>DT_VENCIMENTO</td><td>date</td><td>Sim</td><td>—</td><td>Data de vencimento.</td></tr>
+<tr><td>DT_PAGAMENTO</td><td>date</td><td>Não</td><td>—</td><td>Data em que foi paga; vazia = conta a pagar em aberto (G17). No sistema o campo é obrigatório; aqui fica vazio até o pagamento (a confirmar no retorno).</td></tr>
+<tr><td>TP_FORMA_PAGAMENTO</td><td>varchar(6)</td><td>Sim</td><td>valores permitidos: PIX, BOLETO [CK_DESPESA_FORMA] — RN18<br><code>TP_CATEGORIA &lt;&gt; &#x27;REPASSE&#x27; OR TP_FORMA_PAGAMENTO = &#x27;PIX&#x27;</code> [CK_DESPESA_REPASSE_PIX] — RN17</td><td>PIX ou BOLETO (RN18).</td></tr>
+<tr><td>DS_DESPESA</td><td>varchar(200)</td><td>Sim</td><td>—</td><td>Descrição do lançamento.</td></tr>
+<tr><td>ID_DENTISTA</td><td>int</td><td>Não</td><td>referencia DENTISTA.ID_DENTISTA [FK_DESPESA_DENTISTA]<br><code>(TP_CATEGORIA = &#x27;REPASSE&#x27;) = (ID_DENTISTA IS NOT NULL)</code> [CK_DESPESA_REPASSE] — RN17</td><td>Dentista que recebeu o repasse; só na categoria REPASSE (RN17).</td></tr>
+</table></div>
+<p class="idx"><b>Índices:</b> PK ID_DESPESA (clusterizado); índice da FK ID_DENTISTA (o InnoDB cria um se nenhum índice existente começar por essa coluna).</p>
+<h2>5. Log de acesso (metadado operacional)</h2>
+<p>Hoje o Simples Dental não mostra quem alterou um agendamento (P01). No banco, cada pessoa que usa o sistema — a recepcionista, a Dra. responsável e o sócio — acessa com um usuário próprio do SGBD, ligado ao seu papel (§6). As tabelas ficam sob o plugin de auditoria do MySQL (<code>audit_log</code>, na edição Enterprise, ou um plugin compatível na Community), configurado para gravar em JSON no arquivo definido por <code>audit_log_file</code>, fora do diretório de dados e com acesso restrito. Na falta do plugin, a alternativa é o log geral (<code>general_log=ON</code>, <code>log_output=TABLE</code>), consultável em <code>mysql.general_log</code>. Assim o log identifica quem leu ou alterou cada registro (RNF07), inclusive quem registrou, confirmou ou cancelou cada consulta. O papel de Auditoria é um usuário só de leitura (GRANT SELECT), usado em conferências e fiscalizações. A retenção do log é de no mínimo 6 meses (prazo de guarda de registros de acesso adotado como referência pelo Marco Civil da Internet), independente da retenção dos dados. Além do log, o próprio modelo guarda as datas que contam a história de cada registro: DT_HR_REGISTRO e DT_HR_CONFIRMACAO na CONSULTA, DT_HR_ASSINATURA, DT_ENVIO e DT_RECEBIMENTO na GUIA, DT_ENVIO e DT_CHEGADA no PEDIDO_LABORATORIO e DT_PAGAMENTO na DESPESA.</p>
+<h2>6. Acesso por operação e conformidade com a LGPD (metadado administrativo)</h2>
+<p>Papéis, conforme o levantamento: <b>Recepção</b> (recepcionista: agenda, cadastro de pacientes, receituário e atestado), <b>Clínica</b> (Dra. responsável: acesso total, registra procedimentos e orçamentos e avalia radiografias), <b>Financeiro</b> (sócio: acesso total, com foco no financeiro) e <b>Auditoria</b> (usuário somente leitura do SGBD). A auxiliar de dentista e os seis dentistas autônomos não acessam o sistema; o teste da autoclave anotado pela auxiliar é lançado pela recepção.</p>
+<div class="wrap"><table><tr><th>Tabela</th><th>LER</th><th>INSERIR</th><th>ATUALIZAR</th><th>APAGAR</th></tr>
+<tr><td>ESPECIALIDADE</td><td>Todos</td><td>Clínica</td><td>Clínica</td><td>Nenhum papel</td></tr>
+<tr><td>DENTISTA</td><td>Todos</td><td>Clínica, Financeiro</td><td>Clínica, Financeiro</td><td>Nenhum papel — inativação</td></tr>
+<tr><td>FUNCIONARIO</td><td>Clínica, Financeiro, Auditoria</td><td>Financeiro</td><td>Financeiro</td><td>Nenhum papel — desligamento</td></tr>
+<tr><td>SALA</td><td>Todos</td><td>Clínica</td><td>Clínica</td><td>Nenhum papel</td></tr>
+<tr><td>CONVENIO</td><td>Todos</td><td>Clínica, Financeiro</td><td>Clínica, Financeiro</td><td>Nenhum papel — inativação</td></tr>
+<tr><td>PACIENTE</td><td>Recepção, Clínica, Financeiro, Auditoria</td><td>Recepção</td><td>Recepção</td><td>Clínica — só cadastro duplicado sem histórico (D04)</td></tr>
+<tr><td>TELEFONE_PACIENTE</td><td>Recepção, Clínica, Financeiro, Auditoria</td><td>Recepção</td><td>Recepção</td><td>Recepção</td></tr>
+<tr><td>ANAMNESE</td><td>Recepção, Clínica, Financeiro, Auditoria</td><td>Recepção (digitação da ficha)</td><td>Recepção, Clínica</td><td>Nenhum papel</td></tr>
+<tr><td>PROCEDIMENTO</td><td>Todos</td><td>Clínica</td><td>Clínica</td><td>Nenhum papel — inativação</td></tr>
+<tr><td>ORCAMENTO</td><td>Recepção, Clínica, Financeiro, Auditoria</td><td>Clínica</td><td>Clínica</td><td>Nenhum papel — situação REPROVADO</td></tr>
+<tr><td>ITEM_ORCAMENTO</td><td>Recepção, Clínica, Financeiro, Auditoria</td><td>Clínica</td><td>Clínica</td><td>Clínica — só em orçamento EM ABERTO sem pagamento</td></tr>
+<tr><td>PAGAMENTO</td><td>Recepção, Clínica, Financeiro, Auditoria</td><td>Recepção, Clínica, Financeiro</td><td>Financeiro</td><td>Nenhum papel</td></tr>
+<tr><td>CONSULTA</td><td>Recepção, Clínica, Financeiro, Auditoria</td><td>Recepção, Clínica</td><td>Recepção (agenda e atestado), Clínica</td><td>Nenhum papel — cancelamento com motivo</td></tr>
+<tr><td>PROCEDIMENTO_REALIZADO</td><td>Recepção, Clínica, Financeiro, Auditoria</td><td>Clínica</td><td>Clínica (avaliação da radiografia)</td><td>Nenhum papel</td></tr>
+<tr><td>GUIA</td><td>Recepção, Clínica, Financeiro, Auditoria</td><td>Recepção</td><td>Recepção, Financeiro</td><td>Nenhum papel</td></tr>
+<tr><td>MEDICAMENTO</td><td>Todos</td><td>Nenhum papel — lista do sistema</td><td>Nenhum papel</td><td>Nenhum papel</td></tr>
+<tr><td>RECEITUARIO</td><td>Recepção, Clínica, Auditoria</td><td>Recepção (conteúdo definido pela Dra.)</td><td>Nenhum papel — emite-se nova</td><td>Nenhum papel</td></tr>
+<tr><td>LABORATORIO</td><td>Todos</td><td>Clínica, Financeiro</td><td>Clínica, Financeiro</td><td>Nenhum papel</td></tr>
+<tr><td>PEDIDO_LABORATORIO</td><td>Recepção, Clínica, Financeiro, Auditoria</td><td>Recepção (com ordem da Dra. — RN19)</td><td>Recepção (chegada, nova previsão)</td><td>Nenhum papel</td></tr>
+<tr><td>TESTE_AUTOCLAVE</td><td>Recepção, Clínica, Auditoria</td><td>Recepção</td><td>Nenhum papel</td><td>Nenhum papel</td></tr>
+<tr><td>DESPESA</td><td>Clínica, Financeiro, Auditoria</td><td>Financeiro</td><td>Financeiro</td><td>Financeiro — só lançamento duplicado não pago (D03)</td></tr>
+</table></div>
+<p>ANAMNESE, CONSULTA, GUIA, ITEM_ORCAMENTO, ORCAMENTO, PACIENTE, PEDIDO_LABORATORIO, PROCEDIMENTO_REALIZADO, RECEITUARIO, TELEFONE_PACIENTE carregam dado pessoal; os de saúde (ficha, procedimentos e radiografias, receitas, atestados, peças protéticas) são dado pessoal sensível (LGPD, art. 5º, II). O tratamento se ampara na tutela da saúde, em procedimento feito por profissionais de saúde (art. 11, II, "f"), e na execução do contrato de prestação do serviço. Hoje a Ficha de Anamnese traz uma declaração assinada pelo paciente e não há termo de consentimento separado (RP02). Podem abrir a ficha a Dra. responsável, a recepcionista e o sócio — os mesmos três papéis que acessam o banco —, e toda leitura fica no log (§5). O histórico é guardado sem prazo de exclusão, como hoje no Simples Dental; por isso nenhuma tabela clínica tem papel com permissão de APAGAR registro clínico. Só se apagam telefone desativado, item de orçamento ainda não pago, despesa lançada em duplicidade e cadastro de paciente duplicado sem histórico (D01–D04 do script). FUNCIONARIO, DENTISTA e as tabelas financeiras são dados cadastrais e contábeis comuns, sujeitos às mesmas regras de acesso e log.</p>
+</body></html>

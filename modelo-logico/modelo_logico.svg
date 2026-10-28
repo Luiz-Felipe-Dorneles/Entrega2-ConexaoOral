@@ -1,0 +1,642 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2440" height="1460" viewBox="0 0 2440 1460">
+<rect width="100%" height="100%" fill="#ffffff"/>
+<g transform="translate(-20,-70)">
+<polyline points="2230.0,580.0 2230.0,506.0" fill="none" stroke="#000000" stroke-width="1.0" stroke-linejoin="miter"/>
+<polyline points="410.7,440.0 170.0,440.0 170.0,211.0" fill="none" stroke="#000000" stroke-width="1.0" stroke-linejoin="miter"/>
+<polyline points="282.9,601.5 410.7,601.5" fill="none" stroke="#000000" stroke-width="1.0" stroke-linejoin="miter"/>
+<polyline points="560.0,800.0 560.0,738.0" fill="none" stroke="#000000" stroke-width="1.0" stroke-linejoin="miter"/>
+<polyline points="1919.7,474.0 2101.4,474.0" fill="none" stroke="#000000" stroke-width="1.0" stroke-linejoin="miter"/>
+<polyline points="960.0,235.0 960.0,310.0 620.0,310.0 620.0,400.0" fill="none" stroke="#000000" stroke-width="1.0" stroke-linejoin="miter"/>
+<polyline points="1660.8,176.0 1132.7,176.0" fill="none" stroke="#000000" stroke-width="1.0" stroke-linejoin="miter"/>
+<polyline points="1790.0,235.0 1790.0,430.0" fill="none" stroke="#000000" stroke-width="1.0" stroke-linejoin="miter"/>
+<polyline points="703.5,176.0 887.3,176.0" fill="none" stroke="#000000" stroke-width="1.0" stroke-linejoin="miter"/>
+<polyline points="853.1,500.0 709.3,500.0" fill="none" stroke="#000000" stroke-width="1.0" stroke-linejoin="miter"/>
+<polyline points="1166.9,606.0 2100.0,606.0" fill="none" stroke="#000000" stroke-width="1.0" stroke-linejoin="miter"/>
+<polyline points="900.0,687.0 900.0,820.0" fill="none" stroke="#000000" stroke-width="1.0" stroke-linejoin="miter"/>
+<polyline points="1290.3,500.0 1166.9,500.0" fill="none" stroke="#000000" stroke-width="1.0" stroke-linejoin="miter"/>
+<polyline points="1549.7,500.0 1660.3,500.0" fill="none" stroke="#000000" stroke-width="1.0" stroke-linejoin="miter"/>
+<polyline points="1130.0,820.0 1130.0,687.0" fill="none" stroke="#000000" stroke-width="1.0" stroke-linejoin="miter"/>
+<polyline points="1560.0,800.0 1560.0,668.0 1166.9,668.0" fill="none" stroke="#000000" stroke-width="1.0" stroke-linejoin="miter"/>
+<polyline points="1560.0,866.0 1560.0,960.0" fill="none" stroke="#000000" stroke-width="1.0" stroke-linejoin="miter"/>
+<polyline points="1060.0,1230.0 1060.0,687.0" fill="none" stroke="#000000" stroke-width="1.0" stroke-linejoin="miter"/>
+<polyline points="1134.1,1300.0 1435.9,1300.0" fill="none" stroke="#000000" stroke-width="1.0" stroke-linejoin="miter"/>
+<polyline points="434.9,1350.0 300.3,1350.0" fill="none" stroke="#000000" stroke-width="1.0" stroke-linejoin="miter"/>
+<polyline points="2230.0,1000.0 2230.0,867.0" fill="none" stroke="#000000" stroke-width="1.0" stroke-linejoin="miter"/>
+<rect x="2101.4" y="440.0" width="257.2" height="66.0" fill="#ffffff" stroke="#000000" stroke-width="1.1"/>
+<line x1="2101.4" y1="466.0" x2="2358.6" y2="466.0" stroke="#000000" stroke-width="1.0" stroke-linecap="square"/>
+<rect x="2100.0" y="580.0" width="260.0" height="287.0" fill="#ffffff" stroke="#000000" stroke-width="1.1"/>
+<line x1="2100.0" y1="606.0" x2="2360.0" y2="606.0" stroke="#000000" stroke-width="1.0" stroke-linecap="square"/>
+<rect x="39.7" y="1200.0" width="260.7" height="304.0" fill="#ffffff" stroke="#000000" stroke-width="1.1"/>
+<line x1="39.7" y1="1226.0" x2="300.3" y2="1226.0" stroke="#000000" stroke-width="1.0" stroke-linecap="square"/>
+<rect x="777.3" y="820.0" width="245.3" height="100.0" fill="#ffffff" stroke="#000000" stroke-width="1.1"/>
+<line x1="777.3" y1="846.0" x2="1022.7" y2="846.0" stroke="#000000" stroke-width="1.0" stroke-linecap="square"/>
+<rect x="55.8" y="128.0" width="228.4" height="83.0" fill="#ffffff" stroke="#000000" stroke-width="1.1"/>
+<line x1="55.8" y1="154.0" x2="284.2" y2="154.0" stroke="#000000" stroke-width="1.0" stroke-linecap="square"/>
+<rect x="410.7" y="400.0" width="298.7" height="338.0" fill="#ffffff" stroke="#000000" stroke-width="1.1"/>
+<line x1="410.7" y1="426.0" x2="709.3" y2="426.0" stroke="#000000" stroke-width="1.0" stroke-linecap="square"/>
+<rect x="57.1" y="560.0" width="225.8" height="83.0" fill="#ffffff" stroke="#000000" stroke-width="1.1"/>
+<line x1="57.1" y1="586.0" x2="282.9" y2="586.0" stroke="#000000" stroke-width="1.0" stroke-linecap="square"/>
+<rect x="394.4" y="800.0" width="331.2" height="406.0" fill="#ffffff" stroke="#000000" stroke-width="1.1"/>
+<line x1="394.4" y1="826.0" x2="725.6" y2="826.0" stroke="#000000" stroke-width="1.0" stroke-linecap="square"/>
+<rect x="1660.3" y="430.0" width="259.4" height="117.0" fill="#ffffff" stroke="#000000" stroke-width="1.1"/>
+<line x1="1660.3" y1="456.0" x2="1919.7" y2="456.0" stroke="#000000" stroke-width="1.0" stroke-linecap="square"/>
+<rect x="887.3" y="118.0" width="245.4" height="117.0" fill="#ffffff" stroke="#000000" stroke-width="1.1"/>
+<line x1="887.3" y1="144.0" x2="1132.7" y2="144.0" stroke="#000000" stroke-width="1.0" stroke-linecap="square"/>
+<rect x="1660.8" y="118.0" width="258.4" height="117.0" fill="#ffffff" stroke="#000000" stroke-width="1.1"/>
+<line x1="1660.8" y1="144.0" x2="1919.2" y2="144.0" stroke="#000000" stroke-width="1.0" stroke-linecap="square"/>
+<rect x="416.5" y="110.0" width="287.0" height="134.0" fill="#ffffff" stroke="#000000" stroke-width="1.1"/>
+<line x1="416.5" y1="136.0" x2="703.5" y2="136.0" stroke="#000000" stroke-width="1.0" stroke-linecap="square"/>
+<rect x="853.1" y="400.0" width="313.9" height="287.0" fill="#ffffff" stroke="#000000" stroke-width="1.1"/>
+<line x1="853.1" y1="426.0" x2="1166.9" y2="426.0" stroke="#000000" stroke-width="1.0" stroke-linecap="square"/>
+<rect x="1290.3" y="452.0" width="259.4" height="100.0" fill="#ffffff" stroke="#000000" stroke-width="1.1"/>
+<line x1="1290.3" y1="478.0" x2="1549.7" y2="478.0" stroke="#000000" stroke-width="1.0" stroke-linecap="square"/>
+<rect x="1098.0" y="820.0" width="263.9" height="151.0" fill="#ffffff" stroke="#000000" stroke-width="1.1"/>
+<line x1="1098.0" y1="846.0" x2="1362.0" y2="846.0" stroke="#000000" stroke-width="1.0" stroke-linecap="square"/>
+<rect x="1430.9" y="960.0" width="258.2" height="117.0" fill="#ffffff" stroke="#000000" stroke-width="1.1"/>
+<line x1="1430.9" y1="986.0" x2="1689.1" y2="986.0" stroke="#000000" stroke-width="1.0" stroke-linecap="square"/>
+<rect x="1464.4" y="800.0" width="191.1" height="66.0" fill="#ffffff" stroke="#000000" stroke-width="1.1"/>
+<line x1="1464.4" y1="826.0" x2="1655.6" y2="826.0" stroke="#000000" stroke-width="1.0" stroke-linecap="square"/>
+<rect x="1435.9" y="1262.0" width="248.2" height="100.0" fill="#ffffff" stroke="#000000" stroke-width="1.1"/>
+<line x1="1435.9" y1="1288.0" x2="1684.1" y2="1288.0" stroke="#000000" stroke-width="1.0" stroke-linecap="square"/>
+<rect x="885.9" y="1230.0" width="248.3" height="185.0" fill="#ffffff" stroke="#000000" stroke-width="1.1"/>
+<line x1="885.9" y1="1256.0" x2="1134.1" y2="1256.0" stroke="#000000" stroke-width="1.0" stroke-linecap="square"/>
+<rect x="434.9" y="1300.0" width="250.1" height="117.0" fill="#ffffff" stroke="#000000" stroke-width="1.1"/>
+<line x1="434.9" y1="1326.0" x2="685.1" y2="1326.0" stroke="#000000" stroke-width="1.0" stroke-linecap="square"/>
+<rect x="2086.0" y="1000.0" width="288.0" height="185.0" fill="#ffffff" stroke="#000000" stroke-width="1.1"/>
+<line x1="2086.0" y1="1026.0" x2="2374.0" y2="1026.0" stroke="#000000" stroke-width="1.0" stroke-linecap="square"/>
+<text x="2230.0" y="457.5" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#000000" text-anchor="middle">ESPECIALIDADE</text>
+<circle cx="2109.4" cy="475.0" r="3.4" fill="#f4c20d" stroke="#000000" stroke-width="0.8"/>
+<circle cx="2109.4" cy="475.0" r="1.1" fill="#ffffff" stroke="#000000" stroke-width="0"/>
+<path d="M2112.6,475.0 H2120.4 M2117.9,475.0 V478.0 M2120.0,475.0 V477.3" stroke="#000000" stroke-width="1.2" fill="none"/>
+<text x="2145.4" y="479.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">ID_ESPECIALIDADE</text>
+<text x="2350.6" y="479.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">INT</text>
+<text x="2145.4" y="496.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">NM_ESPECIALIDADE</text>
+<text x="2350.6" y="496.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">VARCHAR(40)</text>
+<text x="2230.0" y="597.5" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#000000" text-anchor="middle">DENTISTA</text>
+<circle cx="2108.0" cy="615.0" r="3.4" fill="#f4c20d" stroke="#000000" stroke-width="0.8"/>
+<circle cx="2108.0" cy="615.0" r="1.1" fill="#ffffff" stroke="#000000" stroke-width="0"/>
+<path d="M2111.2,615.0 H2119.0 M2116.5,615.0 V618.0 M2118.6,615.0 V617.3" stroke="#000000" stroke-width="1.2" fill="none"/>
+<text x="2144.0" y="619.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">ID_DENTISTA</text>
+<text x="2352.0" y="619.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">INT</text>
+<circle cx="2108.0" cy="632.0" r="3.4" fill="#b8bec6" stroke="#000000" stroke-width="0.8"/>
+<circle cx="2108.0" cy="632.0" r="1.1" fill="#ffffff" stroke="#000000" stroke-width="0"/>
+<path d="M2111.2,632.0 H2119.0 M2116.5,632.0 V635.0 M2118.6,632.0 V634.3" stroke="#000000" stroke-width="1.2" fill="none"/>
+<text x="2144.0" y="636.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">ID_ESPECIALIDADE</text>
+<text x="2352.0" y="636.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">INT</text>
+<text x="2144.0" y="653.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">NM_DENTISTA</text>
+<text x="2352.0" y="653.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">VARCHAR(100)</text>
+<text x="2144.0" y="670.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">ID_CRO</text>
+<text x="2352.0" y="670.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">VARCHAR(10)</text>
+<text x="2144.0" y="687.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">DT_NASCIMENTO</text>
+<text x="2352.0" y="687.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">DATE</text>
+<text x="2144.0" y="704.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">NR_TELEFONE</text>
+<text x="2352.0" y="704.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">VARCHAR(11)</text>
+<text x="2144.0" y="721.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">DS_EMAIL</text>
+<text x="2352.0" y="721.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">VARCHAR(100)</text>
+<text x="2144.0" y="738.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">DS_CHAVE_PIX</text>
+<text x="2352.0" y="738.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">VARCHAR(100)</text>
+<text x="2144.0" y="755.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">DS_LOGRADOURO</text>
+<text x="2352.0" y="755.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">VARCHAR(100)</text>
+<text x="2144.0" y="772.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">NR_ENDERECO</text>
+<text x="2352.0" y="772.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">VARCHAR(10)</text>
+<text x="2144.0" y="789.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">DS_COMPLEMENTO</text>
+<text x="2352.0" y="789.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">VARCHAR(40)</text>
+<text x="2144.0" y="806.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">NM_BAIRRO</text>
+<text x="2352.0" y="806.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">VARCHAR(60)</text>
+<text x="2144.0" y="823.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">CD_CEP</text>
+<text x="2352.0" y="823.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">CHAR(8)</text>
+<text x="2144.0" y="840.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">TP_VINCULO</text>
+<text x="2352.0" y="840.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">VARCHAR(12)</text>
+<text x="2144.0" y="857.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">IN_ATIVO</text>
+<text x="2352.0" y="857.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">BOOLEAN</text>
+<text x="170.0" y="1217.5" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#000000" text-anchor="middle">FUNCIONARIO</text>
+<circle cx="47.7" cy="1235.0" r="3.4" fill="#f4c20d" stroke="#000000" stroke-width="0.8"/>
+<circle cx="47.7" cy="1235.0" r="1.1" fill="#ffffff" stroke="#000000" stroke-width="0"/>
+<path d="M50.9,1235.0 H58.7 M56.2,1235.0 V1238.0 M58.3,1235.0 V1237.3" stroke="#000000" stroke-width="1.2" fill="none"/>
+<text x="83.7" y="1239.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">ID_FUNCIONARIO</text>
+<text x="292.3" y="1239.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">INT</text>
+<text x="83.7" y="1256.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">NM_FUNCIONARIO</text>
+<text x="292.3" y="1256.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">VARCHAR(100)</text>
+<text x="83.7" y="1273.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">TP_FUNCAO</text>
+<text x="292.3" y="1273.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">VARCHAR(20)</text>
+<text x="83.7" y="1290.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">DT_NASCIMENTO</text>
+<text x="292.3" y="1290.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">DATE</text>
+<text x="83.7" y="1307.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">TP_SEXO</text>
+<text x="292.3" y="1307.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">CHAR(1)</text>
+<text x="83.7" y="1324.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">NR_TELEFONE</text>
+<text x="292.3" y="1324.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">VARCHAR(11)</text>
+<text x="83.7" y="1341.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">DS_LOGRADOURO</text>
+<text x="292.3" y="1341.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">VARCHAR(100)</text>
+<text x="83.7" y="1358.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">NR_ENDERECO</text>
+<text x="292.3" y="1358.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">VARCHAR(10)</text>
+<text x="83.7" y="1375.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">DS_COMPLEMENTO</text>
+<text x="292.3" y="1375.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">VARCHAR(40)</text>
+<text x="83.7" y="1392.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">NM_BAIRRO</text>
+<text x="292.3" y="1392.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">VARCHAR(60)</text>
+<text x="83.7" y="1409.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">CD_CEP</text>
+<text x="292.3" y="1409.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">CHAR(8)</text>
+<text x="83.7" y="1426.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">NM_BANCO</text>
+<text x="292.3" y="1426.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">VARCHAR(40)</text>
+<text x="83.7" y="1443.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">NR_AGENCIA</text>
+<text x="292.3" y="1443.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">VARCHAR(6)</text>
+<text x="83.7" y="1460.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">NR_CONTA</text>
+<text x="292.3" y="1460.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">VARCHAR(15)</text>
+<text x="83.7" y="1477.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">DT_ADMISSAO</text>
+<text x="292.3" y="1477.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">DATE</text>
+<text x="83.7" y="1494.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">DT_DESLIGAMENTO</text>
+<text x="292.3" y="1494.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">DATE</text>
+<text x="900.0" y="837.5" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#000000" text-anchor="middle">SALA</text>
+<circle cx="785.3" cy="855.0" r="3.4" fill="#f4c20d" stroke="#000000" stroke-width="0.8"/>
+<circle cx="785.3" cy="855.0" r="1.1" fill="#ffffff" stroke="#000000" stroke-width="0"/>
+<path d="M788.5,855.0 H796.3 M793.8,855.0 V858.0 M795.9,855.0 V857.3" stroke="#000000" stroke-width="1.2" fill="none"/>
+<text x="821.3" y="859.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">ID_SALA</text>
+<text x="1014.7" y="859.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">INT</text>
+<text x="821.3" y="876.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">NM_SALA</text>
+<text x="1014.7" y="876.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">VARCHAR(20)</text>
+<text x="821.3" y="893.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">HR_ABERTURA</text>
+<text x="1014.7" y="893.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">TIME</text>
+<text x="821.3" y="910.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">HR_FECHAMENTO</text>
+<text x="1014.7" y="910.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">TIME</text>
+<text x="170.0" y="145.5" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#000000" text-anchor="middle">CONVENIO</text>
+<circle cx="63.8" cy="163.0" r="3.4" fill="#f4c20d" stroke="#000000" stroke-width="0.8"/>
+<circle cx="63.8" cy="163.0" r="1.1" fill="#ffffff" stroke="#000000" stroke-width="0"/>
+<path d="M67.0,163.0 H74.8 M72.3,163.0 V166.0 M74.4,163.0 V165.3" stroke="#000000" stroke-width="1.2" fill="none"/>
+<text x="99.8" y="167.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">ID_CONVENIO</text>
+<text x="276.2" y="167.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">INT</text>
+<text x="99.8" y="184.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">NM_CONVENIO</text>
+<text x="276.2" y="184.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">VARCHAR(40)</text>
+<text x="99.8" y="201.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">IN_ATIVO</text>
+<text x="276.2" y="201.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">BOOLEAN</text>
+<text x="560.0" y="417.5" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#000000" text-anchor="middle">PACIENTE</text>
+<circle cx="418.7" cy="435.0" r="3.4" fill="#f4c20d" stroke="#000000" stroke-width="0.8"/>
+<circle cx="418.7" cy="435.0" r="1.1" fill="#ffffff" stroke="#000000" stroke-width="0"/>
+<path d="M421.9,435.0 H429.7 M427.2,435.0 V438.0 M429.3,435.0 V437.3" stroke="#000000" stroke-width="1.2" fill="none"/>
+<text x="454.7" y="439.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">ID_PACIENTE</text>
+<text x="701.3" y="439.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">INT</text>
+<text x="454.7" y="456.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">NM_PACIENTE</text>
+<text x="701.3" y="456.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">VARCHAR(100)</text>
+<text x="454.7" y="473.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">DT_NASCIMENTO</text>
+<text x="701.3" y="473.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">DATE</text>
+<text x="454.7" y="490.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">TP_SEXO</text>
+<text x="701.3" y="490.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">CHAR(1)</text>
+<text x="454.7" y="507.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">ID_CPF</text>
+<text x="701.3" y="507.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">CHAR(11)</text>
+<text x="454.7" y="524.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">ID_RG</text>
+<text x="701.3" y="524.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">VARCHAR(14)</text>
+<text x="454.7" y="541.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">DS_PROFISSAO</text>
+<text x="701.3" y="541.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">VARCHAR(60)</text>
+<text x="454.7" y="558.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">TP_ESTADO_CIVIL</text>
+<text x="701.3" y="558.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">VARCHAR(15)</text>
+<text x="454.7" y="575.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">DS_LOGRADOURO</text>
+<text x="701.3" y="575.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">VARCHAR(100)</text>
+<text x="454.7" y="592.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">NR_ENDERECO</text>
+<text x="701.3" y="592.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">VARCHAR(10)</text>
+<text x="454.7" y="609.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">DS_COMPLEMENTO</text>
+<text x="701.3" y="609.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">VARCHAR(40)</text>
+<text x="454.7" y="626.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">NM_BAIRRO</text>
+<text x="701.3" y="626.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">VARCHAR(60)</text>
+<text x="454.7" y="643.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">CD_CEP</text>
+<text x="701.3" y="643.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">CHAR(8)</text>
+<text x="454.7" y="660.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">DS_EMAIL</text>
+<text x="701.3" y="660.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">VARCHAR(100)</text>
+<circle cx="418.7" cy="673.0" r="3.4" fill="#b8bec6" stroke="#000000" stroke-width="0.8"/>
+<circle cx="418.7" cy="673.0" r="1.1" fill="#ffffff" stroke="#000000" stroke-width="0"/>
+<path d="M421.9,673.0 H429.7 M427.2,673.0 V676.0 M429.3,673.0 V675.3" stroke="#000000" stroke-width="1.2" fill="none"/>
+<text x="454.7" y="677.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">ID_CONVENIO</text>
+<text x="701.3" y="677.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">INT</text>
+<text x="454.7" y="694.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">NR_CARTEIRINHA</text>
+<text x="701.3" y="694.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">VARCHAR(20)</text>
+<text x="454.7" y="711.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">NM_RESPONSAVEL_LEGAL</text>
+<text x="701.3" y="711.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">VARCHAR(100)</text>
+<text x="454.7" y="728.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">DT_CADASTRO</text>
+<text x="701.3" y="728.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">DATE</text>
+<text x="170.0" y="577.5" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#000000" text-anchor="middle">TELEFONE_PACIENTE</text>
+<circle cx="65.1" cy="595.0" r="3.4" fill="#f4c20d" stroke="#000000" stroke-width="0.8"/>
+<circle cx="65.1" cy="595.0" r="1.1" fill="#ffffff" stroke="#000000" stroke-width="0"/>
+<path d="M68.3,595.0 H76.1 M73.6,595.0 V598.0 M75.7,595.0 V597.3" stroke="#000000" stroke-width="1.2" fill="none"/>
+<circle cx="81.1" cy="595.0" r="3.4" fill="#b8bec6" stroke="#000000" stroke-width="0.8"/>
+<circle cx="81.1" cy="595.0" r="1.1" fill="#ffffff" stroke="#000000" stroke-width="0"/>
+<path d="M84.3,595.0 H92.1 M89.6,595.0 V598.0 M91.7,595.0 V597.3" stroke="#000000" stroke-width="1.2" fill="none"/>
+<text x="101.1" y="599.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">ID_PACIENTE</text>
+<text x="274.9" y="599.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">INT</text>
+<circle cx="65.1" cy="612.0" r="3.4" fill="#f4c20d" stroke="#000000" stroke-width="0.8"/>
+<circle cx="65.1" cy="612.0" r="1.1" fill="#ffffff" stroke="#000000" stroke-width="0"/>
+<path d="M68.3,612.0 H76.1 M73.6,612.0 V615.0 M75.7,612.0 V614.3" stroke="#000000" stroke-width="1.2" fill="none"/>
+<text x="101.1" y="616.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">NR_ORDEM</text>
+<text x="274.9" y="616.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">TINYINT</text>
+<text x="101.1" y="633.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">NR_TELEFONE</text>
+<text x="274.9" y="633.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">VARCHAR(11)</text>
+<text x="560.0" y="817.5" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#000000" text-anchor="middle">ANAMNESE</text>
+<circle cx="402.4" cy="835.0" r="3.4" fill="#f4c20d" stroke="#000000" stroke-width="0.8"/>
+<circle cx="402.4" cy="835.0" r="1.1" fill="#ffffff" stroke="#000000" stroke-width="0"/>
+<path d="M405.6,835.0 H413.4 M410.9,835.0 V838.0 M413.0,835.0 V837.3" stroke="#000000" stroke-width="1.2" fill="none"/>
+<circle cx="418.4" cy="835.0" r="3.4" fill="#b8bec6" stroke="#000000" stroke-width="0.8"/>
+<circle cx="418.4" cy="835.0" r="1.1" fill="#ffffff" stroke="#000000" stroke-width="0"/>
+<path d="M421.6,835.0 H429.4 M426.9,835.0 V838.0 M429.0,835.0 V837.3" stroke="#000000" stroke-width="1.2" fill="none"/>
+<text x="438.4" y="839.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">ID_PACIENTE</text>
+<text x="717.6" y="839.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">INT</text>
+<text x="438.4" y="856.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">DT_PREENCHIMENTO</text>
+<text x="717.6" y="856.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">DATE</text>
+<text x="438.4" y="873.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">TP_ASSINANTE</text>
+<text x="717.6" y="873.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">VARCHAR(11)</text>
+<text x="438.4" y="890.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">DS_ARQUIVO_DIGITALIZADO</text>
+<text x="717.6" y="890.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">VARCHAR(200)</text>
+<text x="438.4" y="907.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">IN_BEM_DE_SAUDE</text>
+<text x="717.6" y="907.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">BOOLEAN</text>
+<text x="438.4" y="924.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">IN_TRATAMENTO_MEDICO</text>
+<text x="717.6" y="924.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">BOOLEAN</text>
+<text x="438.4" y="941.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">IN_ALERGIA_MEDICAMENTO</text>
+<text x="717.6" y="941.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">BOOLEAN</text>
+<text x="438.4" y="958.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">IN_DOENCA_GRAVE</text>
+<text x="717.6" y="958.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">BOOLEAN</text>
+<text x="438.4" y="975.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">IN_USA_MEDICAMENTO</text>
+<text x="717.6" y="975.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">BOOLEAN</text>
+<text x="438.4" y="992.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">IN_DIFICULDADE_ABRIR_BOCA</text>
+<text x="717.6" y="992.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">BOOLEAN</text>
+<text x="438.4" y="1009.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">QT_ESCOVACOES_DIA</text>
+<text x="717.6" y="1009.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">TINYINT</text>
+<text x="438.4" y="1026.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">IN_DESMAIOS</text>
+<text x="717.6" y="1026.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">BOOLEAN</text>
+<text x="438.4" y="1043.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">IN_REACAO_ANESTESICO</text>
+<text x="717.6" y="1043.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">BOOLEAN</text>
+<text x="438.4" y="1060.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">IN_USOU_APARELHO</text>
+<text x="717.6" y="1060.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">BOOLEAN</text>
+<text x="438.4" y="1077.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">IN_GRAVIDA_AMAMENTANDO</text>
+<text x="717.6" y="1077.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">BOOLEAN</text>
+<text x="438.4" y="1094.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">IN_DIABETES</text>
+<text x="717.6" y="1094.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">BOOLEAN</text>
+<text x="438.4" y="1111.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">IN_HIPERTENSAO</text>
+<text x="717.6" y="1111.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">BOOLEAN</text>
+<text x="438.4" y="1128.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">IN_HEPATITE</text>
+<text x="717.6" y="1128.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">BOOLEAN</text>
+<text x="438.4" y="1145.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">IN_PROBLEMA_RESPIRATORIO</text>
+<text x="717.6" y="1145.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">BOOLEAN</text>
+<text x="438.4" y="1162.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">IN_PROBLEMA_CARDIACO</text>
+<text x="717.6" y="1162.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">BOOLEAN</text>
+<text x="438.4" y="1179.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">IN_COMPLICACAO_TRATAMENTO</text>
+<text x="717.6" y="1179.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">BOOLEAN</text>
+<text x="438.4" y="1196.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">DS_OBSERVACOES</text>
+<text x="717.6" y="1196.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">VARCHAR(500)</text>
+<text x="1790.0" y="447.5" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#000000" text-anchor="middle">PROCEDIMENTO</text>
+<circle cx="1668.3" cy="465.0" r="3.4" fill="#f4c20d" stroke="#000000" stroke-width="0.8"/>
+<circle cx="1668.3" cy="465.0" r="1.1" fill="#ffffff" stroke="#000000" stroke-width="0"/>
+<path d="M1671.5,465.0 H1679.3 M1676.8,465.0 V468.0 M1678.9,465.0 V467.3" stroke="#000000" stroke-width="1.2" fill="none"/>
+<text x="1704.3" y="469.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">ID_PROCEDIMENTO</text>
+<text x="1911.7" y="469.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">INT</text>
+<circle cx="1668.3" cy="482.0" r="3.4" fill="#b8bec6" stroke="#000000" stroke-width="0.8"/>
+<circle cx="1668.3" cy="482.0" r="1.1" fill="#ffffff" stroke="#000000" stroke-width="0"/>
+<path d="M1671.5,482.0 H1679.3 M1676.8,482.0 V485.0 M1678.9,482.0 V484.3" stroke="#000000" stroke-width="1.2" fill="none"/>
+<text x="1704.3" y="486.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">ID_ESPECIALIDADE</text>
+<text x="1911.7" y="486.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">INT</text>
+<text x="1704.3" y="503.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">NM_PROCEDIMENTO</text>
+<text x="1911.7" y="503.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">VARCHAR(80)</text>
+<text x="1704.3" y="520.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">TP_PROCEDIMENTO</text>
+<text x="1911.7" y="520.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">VARCHAR(11)</text>
+<text x="1704.3" y="537.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">IN_ATIVO</text>
+<text x="1911.7" y="537.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">BOOLEAN</text>
+<text x="1010.0" y="135.5" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#000000" text-anchor="middle">ORCAMENTO</text>
+<circle cx="895.3" cy="153.0" r="3.4" fill="#f4c20d" stroke="#000000" stroke-width="0.8"/>
+<circle cx="895.3" cy="153.0" r="1.1" fill="#ffffff" stroke="#000000" stroke-width="0"/>
+<path d="M898.5,153.0 H906.3 M903.8,153.0 V156.0 M905.9,153.0 V155.3" stroke="#000000" stroke-width="1.2" fill="none"/>
+<text x="931.3" y="157.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">ID_ORCAMENTO</text>
+<text x="1124.7" y="157.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">INT</text>
+<circle cx="895.3" cy="170.0" r="3.4" fill="#b8bec6" stroke="#000000" stroke-width="0.8"/>
+<circle cx="895.3" cy="170.0" r="1.1" fill="#ffffff" stroke="#000000" stroke-width="0"/>
+<path d="M898.5,170.0 H906.3 M903.8,170.0 V173.0 M905.9,170.0 V172.3" stroke="#000000" stroke-width="1.2" fill="none"/>
+<text x="931.3" y="174.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">ID_PACIENTE</text>
+<text x="1124.7" y="174.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">INT</text>
+<text x="931.3" y="191.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">DT_ORCAMENTO</text>
+<text x="1124.7" y="191.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">DATE</text>
+<text x="931.3" y="208.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">DS_ORCAMENTO</text>
+<text x="1124.7" y="208.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">VARCHAR(150)</text>
+<text x="931.3" y="225.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">TP_SITUACAO</text>
+<text x="1124.7" y="225.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">VARCHAR(10)</text>
+<text x="1790.0" y="135.5" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#000000" text-anchor="middle">ITEM_ORCAMENTO</text>
+<circle cx="1668.8" cy="153.0" r="3.4" fill="#f4c20d" stroke="#000000" stroke-width="0.8"/>
+<circle cx="1668.8" cy="153.0" r="1.1" fill="#ffffff" stroke="#000000" stroke-width="0"/>
+<path d="M1672.0,153.0 H1679.8 M1677.3,153.0 V156.0 M1679.4,153.0 V155.3" stroke="#000000" stroke-width="1.2" fill="none"/>
+<circle cx="1684.8" cy="153.0" r="3.4" fill="#b8bec6" stroke="#000000" stroke-width="0.8"/>
+<circle cx="1684.8" cy="153.0" r="1.1" fill="#ffffff" stroke="#000000" stroke-width="0"/>
+<path d="M1688.0,153.0 H1695.8 M1693.3,153.0 V156.0 M1695.4,153.0 V155.3" stroke="#000000" stroke-width="1.2" fill="none"/>
+<text x="1704.8" y="157.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">ID_ORCAMENTO</text>
+<text x="1911.2" y="157.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">INT</text>
+<circle cx="1668.8" cy="170.0" r="3.4" fill="#f4c20d" stroke="#000000" stroke-width="0.8"/>
+<circle cx="1668.8" cy="170.0" r="1.1" fill="#ffffff" stroke="#000000" stroke-width="0"/>
+<path d="M1672.0,170.0 H1679.8 M1677.3,170.0 V173.0 M1679.4,170.0 V172.3" stroke="#000000" stroke-width="1.2" fill="none"/>
+<text x="1704.8" y="174.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">NR_ITEM</text>
+<text x="1911.2" y="174.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">TINYINT</text>
+<circle cx="1668.8" cy="187.0" r="3.4" fill="#b8bec6" stroke="#000000" stroke-width="0.8"/>
+<circle cx="1668.8" cy="187.0" r="1.1" fill="#ffffff" stroke="#000000" stroke-width="0"/>
+<path d="M1672.0,187.0 H1679.8 M1677.3,187.0 V190.0 M1679.4,187.0 V189.3" stroke="#000000" stroke-width="1.2" fill="none"/>
+<text x="1704.8" y="191.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">ID_PROCEDIMENTO</text>
+<text x="1911.2" y="191.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">INT</text>
+<text x="1704.8" y="208.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">CD_DENTE</text>
+<text x="1911.2" y="208.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">VARCHAR(3)</text>
+<text x="1704.8" y="225.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">VL_ITEM</text>
+<text x="1911.2" y="225.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">DECIMAL(10,2)</text>
+<text x="560.0" y="127.5" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#000000" text-anchor="middle">PAGAMENTO</text>
+<circle cx="424.5" cy="145.0" r="3.4" fill="#f4c20d" stroke="#000000" stroke-width="0.8"/>
+<circle cx="424.5" cy="145.0" r="1.1" fill="#ffffff" stroke="#000000" stroke-width="0"/>
+<path d="M427.7,145.0 H435.5 M433.0,145.0 V148.0 M435.1,145.0 V147.3" stroke="#000000" stroke-width="1.2" fill="none"/>
+<text x="460.5" y="149.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">ID_PAGAMENTO</text>
+<text x="695.5" y="149.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">INT</text>
+<circle cx="424.5" cy="162.0" r="3.4" fill="#b8bec6" stroke="#000000" stroke-width="0.8"/>
+<circle cx="424.5" cy="162.0" r="1.1" fill="#ffffff" stroke="#000000" stroke-width="0"/>
+<path d="M427.7,162.0 H435.5 M433.0,162.0 V165.0 M435.1,162.0 V164.3" stroke="#000000" stroke-width="1.2" fill="none"/>
+<text x="460.5" y="166.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">ID_ORCAMENTO</text>
+<text x="695.5" y="166.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">INT</text>
+<text x="460.5" y="183.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">DT_PAGAMENTO</text>
+<text x="695.5" y="183.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">DATE</text>
+<text x="460.5" y="200.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">VL_PAGAMENTO</text>
+<text x="695.5" y="200.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">DECIMAL(10,2)</text>
+<text x="460.5" y="217.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">TP_FORMA_PAGAMENTO</text>
+<text x="695.5" y="217.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">VARCHAR(7)</text>
+<text x="460.5" y="234.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">QT_PARCELAS</text>
+<text x="695.5" y="234.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">TINYINT</text>
+<text x="1010.0" y="417.5" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#000000" text-anchor="middle">CONSULTA</text>
+<circle cx="861.1" cy="435.0" r="3.4" fill="#f4c20d" stroke="#000000" stroke-width="0.8"/>
+<circle cx="861.1" cy="435.0" r="1.1" fill="#ffffff" stroke="#000000" stroke-width="0"/>
+<path d="M864.3,435.0 H872.1 M869.6,435.0 V438.0 M871.7,435.0 V437.3" stroke="#000000" stroke-width="1.2" fill="none"/>
+<text x="897.1" y="439.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">ID_CONSULTA</text>
+<text x="1158.9" y="439.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">INT</text>
+<circle cx="861.1" cy="452.0" r="3.4" fill="#b8bec6" stroke="#000000" stroke-width="0.8"/>
+<circle cx="861.1" cy="452.0" r="1.1" fill="#ffffff" stroke="#000000" stroke-width="0"/>
+<path d="M864.3,452.0 H872.1 M869.6,452.0 V455.0 M871.7,452.0 V454.3" stroke="#000000" stroke-width="1.2" fill="none"/>
+<text x="897.1" y="456.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">ID_PACIENTE</text>
+<text x="1158.9" y="456.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">INT</text>
+<circle cx="861.1" cy="469.0" r="3.4" fill="#b8bec6" stroke="#000000" stroke-width="0.8"/>
+<circle cx="861.1" cy="469.0" r="1.1" fill="#ffffff" stroke="#000000" stroke-width="0"/>
+<path d="M864.3,469.0 H872.1 M869.6,469.0 V472.0 M871.7,469.0 V471.3" stroke="#000000" stroke-width="1.2" fill="none"/>
+<text x="897.1" y="473.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">ID_DENTISTA</text>
+<text x="1158.9" y="473.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">INT</text>
+<circle cx="861.1" cy="486.0" r="3.4" fill="#b8bec6" stroke="#000000" stroke-width="0.8"/>
+<circle cx="861.1" cy="486.0" r="1.1" fill="#ffffff" stroke="#000000" stroke-width="0"/>
+<path d="M864.3,486.0 H872.1 M869.6,486.0 V489.0 M871.7,486.0 V488.3" stroke="#000000" stroke-width="1.2" fill="none"/>
+<text x="897.1" y="490.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">ID_SALA</text>
+<text x="1158.9" y="490.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">INT</text>
+<text x="897.1" y="507.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">DT_HR_INICIO</text>
+<text x="1158.9" y="507.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">DATETIME</text>
+<text x="897.1" y="524.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">QT_DURACAO_MIN</text>
+<text x="1158.9" y="524.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">TINYINT</text>
+<text x="897.1" y="541.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">TP_ATENDIMENTO</text>
+<text x="1158.9" y="541.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">VARCHAR(10)</text>
+<text x="897.1" y="558.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">TP_SITUACAO</text>
+<text x="1158.9" y="558.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">VARCHAR(14)</text>
+<text x="897.1" y="575.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">TP_MOTIVO_CANCELAMENTO</text>
+<text x="1158.9" y="575.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">VARCHAR(15)</text>
+<text x="897.1" y="592.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">DT_HR_REGISTRO</text>
+<text x="1158.9" y="592.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">DATETIME</text>
+<text x="897.1" y="609.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">DT_HR_CONFIRMACAO</text>
+<text x="1158.9" y="609.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">DATETIME</text>
+<text x="897.1" y="626.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">DS_OBSERVACAO</text>
+<text x="1158.9" y="626.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">VARCHAR(300)</text>
+<text x="897.1" y="643.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">TP_ATESTADO</text>
+<text x="1158.9" y="643.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">VARCHAR(8)</text>
+<text x="897.1" y="660.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">QT_DIAS_ATESTADO</text>
+<text x="1158.9" y="660.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">TINYINT</text>
+<text x="897.1" y="677.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">DS_CID_ATESTADO</text>
+<text x="1158.9" y="677.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">VARCHAR(100)</text>
+<text x="1420.0" y="469.5" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#000000" text-anchor="middle">PROCEDIMENTO_REALIZADO</text>
+<circle cx="1298.3" cy="487.0" r="3.4" fill="#f4c20d" stroke="#000000" stroke-width="0.8"/>
+<circle cx="1298.3" cy="487.0" r="1.1" fill="#ffffff" stroke="#000000" stroke-width="0"/>
+<path d="M1301.5,487.0 H1309.3 M1306.8,487.0 V490.0 M1308.9,487.0 V489.3" stroke="#000000" stroke-width="1.2" fill="none"/>
+<circle cx="1314.3" cy="487.0" r="3.4" fill="#b8bec6" stroke="#000000" stroke-width="0.8"/>
+<circle cx="1314.3" cy="487.0" r="1.1" fill="#ffffff" stroke="#000000" stroke-width="0"/>
+<path d="M1317.5,487.0 H1325.3 M1322.8,487.0 V490.0 M1324.9,487.0 V489.3" stroke="#000000" stroke-width="1.2" fill="none"/>
+<text x="1334.3" y="491.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">ID_CONSULTA</text>
+<text x="1541.7" y="491.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">INT</text>
+<circle cx="1298.3" cy="504.0" r="3.4" fill="#f4c20d" stroke="#000000" stroke-width="0.8"/>
+<circle cx="1298.3" cy="504.0" r="1.1" fill="#ffffff" stroke="#000000" stroke-width="0"/>
+<path d="M1301.5,504.0 H1309.3 M1306.8,504.0 V507.0 M1308.9,504.0 V506.3" stroke="#000000" stroke-width="1.2" fill="none"/>
+<circle cx="1314.3" cy="504.0" r="3.4" fill="#b8bec6" stroke="#000000" stroke-width="0.8"/>
+<circle cx="1314.3" cy="504.0" r="1.1" fill="#ffffff" stroke="#000000" stroke-width="0"/>
+<path d="M1317.5,504.0 H1325.3 M1322.8,504.0 V507.0 M1324.9,504.0 V506.3" stroke="#000000" stroke-width="1.2" fill="none"/>
+<text x="1334.3" y="508.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">ID_PROCEDIMENTO</text>
+<text x="1541.7" y="508.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">INT</text>
+<circle cx="1298.3" cy="521.0" r="3.4" fill="#f4c20d" stroke="#000000" stroke-width="0.8"/>
+<circle cx="1298.3" cy="521.0" r="1.1" fill="#ffffff" stroke="#000000" stroke-width="0"/>
+<path d="M1301.5,521.0 H1309.3 M1306.8,521.0 V524.0 M1308.9,521.0 V523.3" stroke="#000000" stroke-width="1.2" fill="none"/>
+<text x="1334.3" y="525.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">CD_DENTE</text>
+<text x="1541.7" y="525.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">VARCHAR(3)</text>
+<text x="1334.3" y="542.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">DS_OBSERVACAO</text>
+<text x="1541.7" y="542.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">VARCHAR(500)</text>
+<text x="1230.0" y="837.5" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#000000" text-anchor="middle">GUIA</text>
+<circle cx="1106.0" cy="855.0" r="3.4" fill="#f4c20d" stroke="#000000" stroke-width="0.8"/>
+<circle cx="1106.0" cy="855.0" r="1.1" fill="#ffffff" stroke="#000000" stroke-width="0"/>
+<path d="M1109.2,855.0 H1117.0 M1114.5,855.0 V858.0 M1116.6,855.0 V857.3" stroke="#000000" stroke-width="1.2" fill="none"/>
+<text x="1142.0" y="859.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">ID_GUIA</text>
+<text x="1354.0" y="859.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">INT</text>
+<circle cx="1106.0" cy="872.0" r="3.4" fill="#b8bec6" stroke="#000000" stroke-width="0.8"/>
+<circle cx="1106.0" cy="872.0" r="1.1" fill="#ffffff" stroke="#000000" stroke-width="0"/>
+<path d="M1109.2,872.0 H1117.0 M1114.5,872.0 V875.0 M1116.6,872.0 V874.3" stroke="#000000" stroke-width="1.2" fill="none"/>
+<text x="1142.0" y="876.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">ID_CONSULTA</text>
+<text x="1354.0" y="876.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">INT</text>
+<text x="1142.0" y="893.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">DT_EMISSAO</text>
+<text x="1354.0" y="893.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">DATE</text>
+<text x="1142.0" y="910.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">DT_HR_ASSINATURA</text>
+<text x="1354.0" y="910.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">DATETIME</text>
+<text x="1142.0" y="927.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">DT_ENVIO</text>
+<text x="1354.0" y="927.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">DATE</text>
+<text x="1142.0" y="944.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">VL_GUIA</text>
+<text x="1354.0" y="944.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">DECIMAL(10,2)</text>
+<text x="1142.0" y="961.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">DT_RECEBIMENTO</text>
+<text x="1354.0" y="961.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">DATE</text>
+<text x="1560.0" y="977.5" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#000000" text-anchor="middle">MEDICAMENTO</text>
+<circle cx="1438.9" cy="995.0" r="3.4" fill="#f4c20d" stroke="#000000" stroke-width="0.8"/>
+<circle cx="1438.9" cy="995.0" r="1.1" fill="#ffffff" stroke="#000000" stroke-width="0"/>
+<path d="M1442.1,995.0 H1449.9 M1447.4,995.0 V998.0 M1449.5,995.0 V997.3" stroke="#000000" stroke-width="1.2" fill="none"/>
+<text x="1474.9" y="999.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">ID_MEDICAMENTO</text>
+<text x="1681.1" y="999.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">INT</text>
+<text x="1474.9" y="1016.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">NM_MEDICAMENTO</text>
+<text x="1681.1" y="1016.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">VARCHAR(80)</text>
+<text x="1474.9" y="1033.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">DS_DOSAGEM</text>
+<text x="1681.1" y="1033.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">VARCHAR(60)</text>
+<text x="1474.9" y="1050.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">DS_ORIENTACAO</text>
+<text x="1681.1" y="1050.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">VARCHAR(200)</text>
+<text x="1474.9" y="1067.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">IN_CONTROLADO</text>
+<text x="1681.1" y="1067.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">BOOLEAN</text>
+<text x="1560.0" y="817.5" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#000000" text-anchor="middle">RECEITUARIO</text>
+<circle cx="1472.4" cy="835.0" r="3.4" fill="#f4c20d" stroke="#000000" stroke-width="0.8"/>
+<circle cx="1472.4" cy="835.0" r="1.1" fill="#ffffff" stroke="#000000" stroke-width="0"/>
+<path d="M1475.6,835.0 H1483.4 M1480.9,835.0 V838.0 M1483.0,835.0 V837.3" stroke="#000000" stroke-width="1.2" fill="none"/>
+<circle cx="1488.4" cy="835.0" r="3.4" fill="#b8bec6" stroke="#000000" stroke-width="0.8"/>
+<circle cx="1488.4" cy="835.0" r="1.1" fill="#ffffff" stroke="#000000" stroke-width="0"/>
+<path d="M1491.6,835.0 H1499.4 M1496.9,835.0 V838.0 M1499.0,835.0 V837.3" stroke="#000000" stroke-width="1.2" fill="none"/>
+<text x="1508.4" y="839.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">ID_CONSULTA</text>
+<text x="1647.6" y="839.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">INT</text>
+<circle cx="1472.4" cy="852.0" r="3.4" fill="#f4c20d" stroke="#000000" stroke-width="0.8"/>
+<circle cx="1472.4" cy="852.0" r="1.1" fill="#ffffff" stroke="#000000" stroke-width="0"/>
+<path d="M1475.6,852.0 H1483.4 M1480.9,852.0 V855.0 M1483.0,852.0 V854.3" stroke="#000000" stroke-width="1.2" fill="none"/>
+<circle cx="1488.4" cy="852.0" r="3.4" fill="#b8bec6" stroke="#000000" stroke-width="0.8"/>
+<circle cx="1488.4" cy="852.0" r="1.1" fill="#ffffff" stroke="#000000" stroke-width="0"/>
+<path d="M1491.6,852.0 H1499.4 M1496.9,852.0 V855.0 M1499.0,852.0 V854.3" stroke="#000000" stroke-width="1.2" fill="none"/>
+<text x="1508.4" y="856.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">ID_MEDICAMENTO</text>
+<text x="1647.6" y="856.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">INT</text>
+<text x="1560.0" y="1279.5" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#000000" text-anchor="middle">LABORATORIO</text>
+<circle cx="1443.9" cy="1297.0" r="3.4" fill="#f4c20d" stroke="#000000" stroke-width="0.8"/>
+<circle cx="1443.9" cy="1297.0" r="1.1" fill="#ffffff" stroke="#000000" stroke-width="0"/>
+<path d="M1447.1,1297.0 H1454.9 M1452.4,1297.0 V1300.0 M1454.5,1297.0 V1299.3" stroke="#000000" stroke-width="1.2" fill="none"/>
+<text x="1479.9" y="1301.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">ID_LABORATORIO</text>
+<text x="1676.1" y="1301.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">INT</text>
+<text x="1479.9" y="1318.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">NM_LABORATORIO</text>
+<text x="1676.1" y="1318.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">VARCHAR(60)</text>
+<text x="1479.9" y="1335.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">NR_WHATSAPP</text>
+<text x="1676.1" y="1335.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">VARCHAR(11)</text>
+<text x="1479.9" y="1352.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">QT_DIAS_PRAZO</text>
+<text x="1676.1" y="1352.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">TINYINT</text>
+<text x="1010.0" y="1247.5" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#000000" text-anchor="middle">PEDIDO_LABORATORIO</text>
+<circle cx="893.9" cy="1265.0" r="3.4" fill="#f4c20d" stroke="#000000" stroke-width="0.8"/>
+<circle cx="893.9" cy="1265.0" r="1.1" fill="#ffffff" stroke="#000000" stroke-width="0"/>
+<path d="M897.1,1265.0 H904.9 M902.4,1265.0 V1268.0 M904.5,1265.0 V1267.3" stroke="#000000" stroke-width="1.2" fill="none"/>
+<text x="929.9" y="1269.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">ID_PEDIDO</text>
+<text x="1126.1" y="1269.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">INT</text>
+<circle cx="893.9" cy="1282.0" r="3.4" fill="#b8bec6" stroke="#000000" stroke-width="0.8"/>
+<circle cx="893.9" cy="1282.0" r="1.1" fill="#ffffff" stroke="#000000" stroke-width="0"/>
+<path d="M897.1,1282.0 H904.9 M902.4,1282.0 V1285.0 M904.5,1282.0 V1284.3" stroke="#000000" stroke-width="1.2" fill="none"/>
+<text x="929.9" y="1286.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">ID_CONSULTA</text>
+<text x="1126.1" y="1286.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">INT</text>
+<circle cx="893.9" cy="1299.0" r="3.4" fill="#b8bec6" stroke="#000000" stroke-width="0.8"/>
+<circle cx="893.9" cy="1299.0" r="1.1" fill="#ffffff" stroke="#000000" stroke-width="0"/>
+<path d="M897.1,1299.0 H904.9 M902.4,1299.0 V1302.0 M904.5,1299.0 V1301.3" stroke="#000000" stroke-width="1.2" fill="none"/>
+<text x="929.9" y="1303.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">ID_LABORATORIO</text>
+<text x="1126.1" y="1303.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">INT</text>
+<text x="929.9" y="1320.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">TP_PEDIDO</text>
+<text x="1126.1" y="1320.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">VARCHAR(11)</text>
+<text x="929.9" y="1337.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">DS_PECA</text>
+<text x="1126.1" y="1337.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">VARCHAR(100)</text>
+<text x="929.9" y="1354.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">CD_DENTE</text>
+<text x="1126.1" y="1354.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">VARCHAR(3)</text>
+<text x="929.9" y="1371.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">DT_ENVIO</text>
+<text x="1126.1" y="1371.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">DATE</text>
+<text x="929.9" y="1388.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">DT_PREVISTA</text>
+<text x="1126.1" y="1388.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">DATE</text>
+<text x="929.9" y="1405.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">DT_CHEGADA</text>
+<text x="1126.1" y="1405.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">DATE</text>
+<text x="560.0" y="1317.5" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#000000" text-anchor="middle">TESTE_AUTOCLAVE</text>
+<circle cx="442.9" cy="1335.0" r="3.4" fill="#f4c20d" stroke="#000000" stroke-width="0.8"/>
+<circle cx="442.9" cy="1335.0" r="1.1" fill="#ffffff" stroke="#000000" stroke-width="0"/>
+<path d="M446.1,1335.0 H453.9 M451.4,1335.0 V1338.0 M453.5,1335.0 V1337.3" stroke="#000000" stroke-width="1.2" fill="none"/>
+<text x="478.9" y="1339.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">ID_TESTE</text>
+<text x="677.1" y="1339.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">INT</text>
+<circle cx="442.9" cy="1352.0" r="3.4" fill="#b8bec6" stroke="#000000" stroke-width="0.8"/>
+<circle cx="442.9" cy="1352.0" r="1.1" fill="#ffffff" stroke="#000000" stroke-width="0"/>
+<path d="M446.1,1352.0 H453.9 M451.4,1352.0 V1355.0 M453.5,1352.0 V1354.3" stroke="#000000" stroke-width="1.2" fill="none"/>
+<text x="478.9" y="1356.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">ID_FUNCIONARIO</text>
+<text x="677.1" y="1356.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">INT</text>
+<text x="478.9" y="1373.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">DT_TESTE</text>
+<text x="677.1" y="1373.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">DATE</text>
+<text x="478.9" y="1390.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">TP_RESULTADO</text>
+<text x="677.1" y="1390.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">VARCHAR(9)</text>
+<text x="478.9" y="1407.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">DS_OBSERVACAO</text>
+<text x="677.1" y="1407.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">VARCHAR(200)</text>
+<text x="2230.0" y="1017.5" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#000000" text-anchor="middle">DESPESA</text>
+<circle cx="2094.0" cy="1035.0" r="3.4" fill="#f4c20d" stroke="#000000" stroke-width="0.8"/>
+<circle cx="2094.0" cy="1035.0" r="1.1" fill="#ffffff" stroke="#000000" stroke-width="0"/>
+<path d="M2097.2,1035.0 H2105.0 M2102.5,1035.0 V1038.0 M2104.6,1035.0 V1037.3" stroke="#000000" stroke-width="1.2" fill="none"/>
+<text x="2130.0" y="1039.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">ID_DESPESA</text>
+<text x="2366.0" y="1039.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">INT</text>
+<text x="2130.0" y="1056.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">DS_TITULO</text>
+<text x="2366.0" y="1056.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">VARCHAR(80)</text>
+<text x="2130.0" y="1073.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">TP_CATEGORIA</text>
+<text x="2366.0" y="1073.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">VARCHAR(12)</text>
+<text x="2130.0" y="1090.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">VL_DESPESA</text>
+<text x="2366.0" y="1090.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">DECIMAL(10,2)</text>
+<text x="2130.0" y="1107.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">DT_VENCIMENTO</text>
+<text x="2366.0" y="1107.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">DATE</text>
+<text x="2130.0" y="1124.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">DT_PAGAMENTO</text>
+<text x="2366.0" y="1124.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">DATE</text>
+<text x="2130.0" y="1141.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">TP_FORMA_PAGAMENTO</text>
+<text x="2366.0" y="1141.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">VARCHAR(6)</text>
+<text x="2130.0" y="1158.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">DS_DESPESA</text>
+<text x="2366.0" y="1158.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">VARCHAR(200)</text>
+<circle cx="2094.0" cy="1171.0" r="3.4" fill="#b8bec6" stroke="#000000" stroke-width="0.8"/>
+<circle cx="2094.0" cy="1171.0" r="1.1" fill="#ffffff" stroke="#000000" stroke-width="0"/>
+<path d="M2097.2,1171.0 H2105.0 M2102.5,1171.0 V1174.0 M2104.6,1171.0 V1173.3" stroke="#000000" stroke-width="1.2" fill="none"/>
+<text x="2130.0" y="1175.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="start">ID_DENTISTA</text>
+<text x="2366.0" y="1175.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="end">INT</text>
+<rect x="2205.7" y="556.0" width="24.6" height="13.0" fill="#ffffff" stroke="none" stroke-width="0"/>
+<text x="2218.0" y="566.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="middle">(0,n)</text>
+<rect x="2229.7" y="518.0" width="24.6" height="13.0" fill="#ffffff" stroke="none" stroke-width="0"/>
+<text x="2242.0" y="528.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="middle">(1,1)</text>
+<rect x="380.4" y="422.0" width="24.6" height="13.0" fill="#ffffff" stroke="none" stroke-width="0"/>
+<text x="392.7" y="432.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="middle">(0,n)</text>
+<rect x="145.7" y="223.0" width="24.6" height="13.0" fill="#ffffff" stroke="none" stroke-width="0"/>
+<text x="158.0" y="233.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="middle">(0,1)</text>
+<rect x="288.6" y="583.5" width="24.6" height="13.0" fill="#ffffff" stroke="none" stroke-width="0"/>
+<text x="300.9" y="593.5" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="middle">(1,2)</text>
+<rect x="380.4" y="583.5" width="24.6" height="13.0" fill="#ffffff" stroke="none" stroke-width="0"/>
+<text x="392.7" y="593.5" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="middle">(1,1)</text>
+<rect x="535.7" y="776.0" width="24.6" height="13.0" fill="#ffffff" stroke="none" stroke-width="0"/>
+<text x="548.0" y="786.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="middle">(0,1)</text>
+<rect x="559.7" y="750.0" width="24.6" height="13.0" fill="#ffffff" stroke="none" stroke-width="0"/>
+<text x="572.0" y="760.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="middle">(1,1)</text>
+<rect x="1925.4" y="456.0" width="24.6" height="13.0" fill="#ffffff" stroke="none" stroke-width="0"/>
+<text x="1937.7" y="466.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="middle">(0,n)</text>
+<rect x="2071.1" y="456.0" width="24.6" height="13.0" fill="#ffffff" stroke="none" stroke-width="0"/>
+<text x="2083.4" y="466.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="middle">(0,1)</text>
+<rect x="935.7" y="247.0" width="24.6" height="13.0" fill="#ffffff" stroke="none" stroke-width="0"/>
+<text x="948.0" y="257.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="middle">(0,n)</text>
+<rect x="595.7" y="376.0" width="24.6" height="13.0" fill="#ffffff" stroke="none" stroke-width="0"/>
+<text x="608.0" y="386.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="middle">(1,1)</text>
+<rect x="1630.5" y="158.0" width="24.6" height="13.0" fill="#ffffff" stroke="none" stroke-width="0"/>
+<text x="1642.8" y="168.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="middle">(1,n)</text>
+<rect x="1138.4" y="158.0" width="24.6" height="13.0" fill="#ffffff" stroke="none" stroke-width="0"/>
+<text x="1150.7" y="168.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="middle">(1,1)</text>
+<rect x="1765.7" y="247.0" width="24.6" height="13.0" fill="#ffffff" stroke="none" stroke-width="0"/>
+<text x="1778.0" y="257.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="middle">(0,n)</text>
+<rect x="1765.7" y="406.0" width="24.6" height="13.0" fill="#ffffff" stroke="none" stroke-width="0"/>
+<text x="1778.0" y="416.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="middle">(1,1)</text>
+<rect x="709.2" y="158.0" width="24.6" height="13.0" fill="#ffffff" stroke="none" stroke-width="0"/>
+<text x="721.5" y="168.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="middle">(0,n)</text>
+<rect x="857.0" y="158.0" width="24.6" height="13.0" fill="#ffffff" stroke="none" stroke-width="0"/>
+<text x="869.3" y="168.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="middle">(1,1)</text>
+<rect x="822.8" y="482.0" width="24.6" height="13.0" fill="#ffffff" stroke="none" stroke-width="0"/>
+<text x="835.1" y="492.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="middle">(0,n)</text>
+<rect x="715.0" y="482.0" width="24.6" height="13.0" fill="#ffffff" stroke="none" stroke-width="0"/>
+<text x="727.3" y="492.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="middle">(1,1)</text>
+<rect x="1172.6" y="588.0" width="24.6" height="13.0" fill="#ffffff" stroke="none" stroke-width="0"/>
+<text x="1184.9" y="598.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="middle">(0,n)</text>
+<rect x="2069.7" y="588.0" width="24.6" height="13.0" fill="#ffffff" stroke="none" stroke-width="0"/>
+<text x="2082.0" y="598.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="middle">(1,1)</text>
+<rect x="875.7" y="699.0" width="24.6" height="13.0" fill="#ffffff" stroke="none" stroke-width="0"/>
+<text x="888.0" y="709.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="middle">(0,n)</text>
+<rect x="875.7" y="796.0" width="24.6" height="13.0" fill="#ffffff" stroke="none" stroke-width="0"/>
+<text x="888.0" y="806.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="middle">(1,1)</text>
+<rect x="1260.0" y="482.0" width="24.6" height="13.0" fill="#ffffff" stroke="none" stroke-width="0"/>
+<text x="1272.3" y="492.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="middle">(0,n)</text>
+<rect x="1172.6" y="482.0" width="24.6" height="13.0" fill="#ffffff" stroke="none" stroke-width="0"/>
+<text x="1184.9" y="492.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="middle">(1,1)</text>
+<rect x="1555.4" y="482.0" width="24.6" height="13.0" fill="#ffffff" stroke="none" stroke-width="0"/>
+<text x="1567.7" y="492.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="middle">(0,n)</text>
+<rect x="1630.0" y="506.0" width="24.6" height="13.0" fill="#ffffff" stroke="none" stroke-width="0"/>
+<text x="1642.3" y="516.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="middle">(1,1)</text>
+<rect x="1105.7" y="796.0" width="24.6" height="13.0" fill="#ffffff" stroke="none" stroke-width="0"/>
+<text x="1118.0" y="806.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="middle">(0,1)</text>
+<rect x="1105.7" y="699.0" width="24.6" height="13.0" fill="#ffffff" stroke="none" stroke-width="0"/>
+<text x="1118.0" y="709.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="middle">(1,1)</text>
+<rect x="1535.7" y="776.0" width="24.6" height="13.0" fill="#ffffff" stroke="none" stroke-width="0"/>
+<text x="1548.0" y="786.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="middle">(0,n)</text>
+<rect x="1172.6" y="650.0" width="24.6" height="13.0" fill="#ffffff" stroke="none" stroke-width="0"/>
+<text x="1184.9" y="660.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="middle">(1,1)</text>
+<rect x="1535.7" y="878.0" width="24.6" height="13.0" fill="#ffffff" stroke="none" stroke-width="0"/>
+<text x="1548.0" y="888.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="middle">(0,n)</text>
+<rect x="1559.7" y="936.0" width="24.6" height="13.0" fill="#ffffff" stroke="none" stroke-width="0"/>
+<text x="1572.0" y="946.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="middle">(1,1)</text>
+<rect x="1035.7" y="1206.0" width="24.6" height="13.0" fill="#ffffff" stroke="none" stroke-width="0"/>
+<text x="1048.0" y="1216.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="middle">(0,n)</text>
+<rect x="1035.7" y="699.0" width="24.6" height="13.0" fill="#ffffff" stroke="none" stroke-width="0"/>
+<text x="1048.0" y="709.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="middle">(1,1)</text>
+<rect x="1139.8" y="1282.0" width="24.6" height="13.0" fill="#ffffff" stroke="none" stroke-width="0"/>
+<text x="1152.1" y="1292.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="middle">(0,n)</text>
+<rect x="1405.6" y="1282.0" width="24.6" height="13.0" fill="#ffffff" stroke="none" stroke-width="0"/>
+<text x="1417.9" y="1292.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="middle">(1,1)</text>
+<rect x="404.6" y="1332.0" width="24.6" height="13.0" fill="#ffffff" stroke="none" stroke-width="0"/>
+<text x="416.9" y="1342.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="middle">(0,n)</text>
+<rect x="306.0" y="1332.0" width="24.6" height="13.0" fill="#ffffff" stroke="none" stroke-width="0"/>
+<text x="318.3" y="1342.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="middle">(1,1)</text>
+<rect x="2205.7" y="976.0" width="24.6" height="13.0" fill="#ffffff" stroke="none" stroke-width="0"/>
+<text x="2218.0" y="986.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="middle">(0,n)</text>
+<rect x="2205.7" y="879.0" width="24.6" height="13.0" fill="#ffffff" stroke="none" stroke-width="0"/>
+<text x="2218.0" y="889.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="middle">(0,1)</text>
+</g>
+</svg>
