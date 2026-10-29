@@ -4,7 +4,7 @@
 
 ![Modelo lógico](modelo_logico.png)
 
-**21 tabelas, 164 colunas, 21 chaves estrangeiras.** NOT NULL, UNIQUE, CHECK e DEFAULT não aparecem no diagrama do brModelo: estão no dicionário de dados e no script.
+**21 tabelas, 168 colunas, 22 chaves estrangeiras.** NOT NULL, UNIQUE, CHECK e DEFAULT não aparecem no diagrama do brModelo: estão no dicionário de dados e no script.
 
 ## Notação (esqueleto, seção 2)
 
@@ -21,7 +21,7 @@
 | FUNCIONARIO | entidade FUNCIONARIO (compostos decompostos) |
 | SALA | entidade SALA |
 | CONVENIO | entidade CONVENIO |
-| PACIENTE | entidade PACIENTE (R03 → FK + NR_CARTEIRINHA) |
+| PACIENTE | entidade PACIENTE (R03 → FK + NR_CARTEIRINHA; RESPONSAVEL_LEGAL decomposto) |
 | TELEFONE_PACIENTE | atributo multivalorado TELEFONE (1,2) |
 | ANAMNESE | entidade fraca ANAMNESE (R04, 1:1) |
 | PROCEDIMENTO | entidade PROCEDIMENTO (R02 → FK) |
@@ -30,7 +30,7 @@
 | PAGAMENTO | entidade PAGAMENTO (R11 → FK) |
 | CONSULTA | entidade CONSULTA (R05, R06, R07 → FKs; ATESTADO decomposto) |
 | PROCEDIMENTO_REALIZADO | entidade associativa (realiza) |
-| GUIA | entidade GUIA (R12, 1:1) |
+| GUIA | entidade GUIA (R12, 1:1; R18 → FK) |
 | MEDICAMENTO | entidade MEDICAMENTO |
 | RECEITUARIO | relacionamento N:N R13 (receita) |
 | LABORATORIO | entidade LABORATORIO |
@@ -128,6 +128,7 @@
 | ID_CONVENIO | INT | FK | sim |
 | NR_CARTEIRINHA | VARCHAR(20) |  | sim |
 | NM_RESPONSAVEL_LEGAL | VARCHAR(100) |  | sim |
+| ID_CPF_RESPONSAVEL | CHAR(11) |  | sim |
 | DT_CADASTRO | DATE |  | não |
 
 ### TELEFONE_PACIENTE
@@ -205,6 +206,7 @@
 | VL_PAGAMENTO | DECIMAL(10,2) |  | não |
 | TP_FORMA_PAGAMENTO | VARCHAR(7) |  | não |
 | QT_PARCELAS | TINYINT |  | não |
+| IN_NOTA_FISCAL | BOOLEAN |  | não |
 
 ### CONSULTA
 
@@ -223,6 +225,7 @@
 | DT_HR_CONFIRMACAO | DATETIME |  | sim |
 | DS_OBSERVACAO | VARCHAR(300) |  | sim |
 | TP_ATESTADO | VARCHAR(8) |  | sim |
+| DT_ATESTADO | DATE |  | sim |
 | QT_DIAS_ATESTADO | TINYINT |  | sim |
 | DS_CID_ATESTADO | VARCHAR(100) |  | sim |
 
@@ -241,6 +244,7 @@
 |---|---|---|---|
 | ID_GUIA | INT | PK | não |
 | ID_CONSULTA | INT | FK | não |
+| ID_CONVENIO | INT | FK | não |
 | DT_EMISSAO | DATE |  | não |
 | DT_HR_ASSINATURA | DATETIME |  | sim |
 | DT_ENVIO | DATE |  | sim |
@@ -306,7 +310,7 @@
 | TP_CATEGORIA | VARCHAR(12) |  | não |
 | VL_DESPESA | DECIMAL(10,2) |  | não |
 | DT_VENCIMENTO | DATE |  | não |
-| DT_PAGAMENTO | DATE |  | sim |
+| DT_PAGAMENTO | DATE |  | não |
 | TP_FORMA_PAGAMENTO | VARCHAR(6) |  | não |
 | DS_DESPESA | VARCHAR(200) |  | não |
 | ID_DENTISTA | INT | FK | sim |
@@ -332,6 +336,7 @@ Ponta da tabela referenciada = (1,1) se a FK é obrigatória, (0,1) se aceita nu
 | PROCEDIMENTO_REALIZADO | ID_CONSULTA | (0,n) | CONSULTA (ID_CONSULTA) | (1,1) | FK_PROC_REALIZADO_CONSULTA |
 | PROCEDIMENTO_REALIZADO | ID_PROCEDIMENTO | (0,n) | PROCEDIMENTO (ID_PROCEDIMENTO) | (1,1) | FK_PROC_REALIZADO_PROCEDIMENTO |
 | GUIA | ID_CONSULTA | (0,1) | CONSULTA (ID_CONSULTA) | (1,1) | FK_GUIA_CONSULTA |
+| GUIA | ID_CONVENIO | (0,n) | CONVENIO (ID_CONVENIO) | (1,1) | FK_GUIA_CONVENIO |
 | RECEITUARIO | ID_CONSULTA | (0,n) | CONSULTA (ID_CONSULTA) | (1,1) | FK_RECEITUARIO_CONSULTA |
 | RECEITUARIO | ID_MEDICAMENTO | (0,n) | MEDICAMENTO (ID_MEDICAMENTO) | (1,1) | FK_RECEITUARIO_MEDICAMENTO |
 | PEDIDO_LABORATORIO | ID_CONSULTA | (0,n) | CONSULTA (ID_CONSULTA) | (1,1) | FK_PEDIDO_CONSULTA |

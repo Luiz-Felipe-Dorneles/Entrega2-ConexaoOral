@@ -29,6 +29,9 @@ import re
 from decimal import Decimal
 
 random.seed(2026)
+# Gerador separado para as respostas da visita de retorno (28 e 29/10/2026):
+# assim o resto da massa continua idêntico ao da versão anterior.
+R2 = random.Random(2810)
 
 D = dt.date
 DT = dt.datetime
@@ -135,16 +138,16 @@ for nome, cols in [
     ("FUNCIONARIO", "ID_FUNCIONARIO NM_FUNCIONARIO TP_FUNCAO DT_NASCIMENTO TP_SEXO NR_TELEFONE DS_LOGRADOURO NR_ENDERECO DS_COMPLEMENTO NM_BAIRRO CD_CEP NM_BANCO NR_AGENCIA NR_CONTA DT_ADMISSAO DT_DESLIGAMENTO"),
     ("SALA", "ID_SALA NM_SALA HR_ABERTURA HR_FECHAMENTO"),
     ("CONVENIO", "ID_CONVENIO NM_CONVENIO IN_ATIVO"),
-    ("PACIENTE", "ID_PACIENTE NM_PACIENTE DT_NASCIMENTO TP_SEXO ID_CPF ID_RG DS_PROFISSAO TP_ESTADO_CIVIL DS_LOGRADOURO NR_ENDERECO DS_COMPLEMENTO NM_BAIRRO CD_CEP DS_EMAIL ID_CONVENIO NR_CARTEIRINHA NM_RESPONSAVEL_LEGAL DT_CADASTRO"),
+    ("PACIENTE", "ID_PACIENTE NM_PACIENTE DT_NASCIMENTO TP_SEXO ID_CPF ID_RG DS_PROFISSAO TP_ESTADO_CIVIL DS_LOGRADOURO NR_ENDERECO DS_COMPLEMENTO NM_BAIRRO CD_CEP DS_EMAIL ID_CONVENIO NR_CARTEIRINHA NM_RESPONSAVEL_LEGAL ID_CPF_RESPONSAVEL DT_CADASTRO"),
     ("TELEFONE_PACIENTE", "ID_PACIENTE NR_ORDEM NR_TELEFONE"),
     ("ANAMNESE", "ID_PACIENTE DT_PREENCHIMENTO TP_ASSINANTE DS_ARQUIVO_DIGITALIZADO IN_BEM_DE_SAUDE IN_TRATAMENTO_MEDICO IN_ALERGIA_MEDICAMENTO IN_DOENCA_GRAVE IN_USA_MEDICAMENTO IN_DIFICULDADE_ABRIR_BOCA QT_ESCOVACOES_DIA IN_DESMAIOS IN_REACAO_ANESTESICO IN_USOU_APARELHO IN_GRAVIDA_AMAMENTANDO IN_DIABETES IN_HIPERTENSAO IN_HEPATITE IN_PROBLEMA_RESPIRATORIO IN_PROBLEMA_CARDIACO IN_COMPLICACAO_TRATAMENTO DS_OBSERVACOES"),
     ("PROCEDIMENTO", "ID_PROCEDIMENTO ID_ESPECIALIDADE NM_PROCEDIMENTO TP_PROCEDIMENTO IN_ATIVO"),
     ("ORCAMENTO", "ID_ORCAMENTO ID_PACIENTE DT_ORCAMENTO DS_ORCAMENTO TP_SITUACAO"),
     ("ITEM_ORCAMENTO", "ID_ORCAMENTO NR_ITEM ID_PROCEDIMENTO CD_DENTE VL_ITEM"),
-    ("PAGAMENTO", "ID_PAGAMENTO ID_ORCAMENTO DT_PAGAMENTO VL_PAGAMENTO TP_FORMA_PAGAMENTO QT_PARCELAS"),
-    ("CONSULTA", "ID_CONSULTA ID_PACIENTE ID_DENTISTA ID_SALA DT_HR_INICIO QT_DURACAO_MIN TP_ATENDIMENTO TP_SITUACAO TP_MOTIVO_CANCELAMENTO DT_HR_REGISTRO DT_HR_CONFIRMACAO DS_OBSERVACAO TP_ATESTADO QT_DIAS_ATESTADO DS_CID_ATESTADO"),
+    ("PAGAMENTO", "ID_PAGAMENTO ID_ORCAMENTO DT_PAGAMENTO VL_PAGAMENTO TP_FORMA_PAGAMENTO QT_PARCELAS IN_NOTA_FISCAL"),
+    ("CONSULTA", "ID_CONSULTA ID_PACIENTE ID_DENTISTA ID_SALA DT_HR_INICIO QT_DURACAO_MIN TP_ATENDIMENTO TP_SITUACAO TP_MOTIVO_CANCELAMENTO DT_HR_REGISTRO DT_HR_CONFIRMACAO DS_OBSERVACAO TP_ATESTADO DT_ATESTADO QT_DIAS_ATESTADO DS_CID_ATESTADO"),
     ("PROCEDIMENTO_REALIZADO", "ID_CONSULTA ID_PROCEDIMENTO CD_DENTE DS_OBSERVACAO"),
-    ("GUIA", "ID_GUIA ID_CONSULTA DT_EMISSAO DT_HR_ASSINATURA DT_ENVIO VL_GUIA DT_RECEBIMENTO"),
+    ("GUIA", "ID_GUIA ID_CONSULTA ID_CONVENIO DT_EMISSAO DT_HR_ASSINATURA DT_ENVIO VL_GUIA DT_RECEBIMENTO"),
     ("MEDICAMENTO", "ID_MEDICAMENTO NM_MEDICAMENTO DS_DOSAGEM DS_ORIENTACAO IN_CONTROLADO"),
     ("RECEITUARIO", "ID_CONSULTA ID_MEDICAMENTO"),
     ("LABORATORIO", "ID_LABORATORIO NM_LABORATORIO NR_WHATSAPP QT_DIAS_PRAZO"),
@@ -180,9 +183,9 @@ PROFISSOES = ["Professora", "Engenheiro", "Analista administrativo", "Vendedor",
 CPFS = set()
 
 
-def cpf():
+def cpf(rng=random):
     while True:
-        n = [random.randint(0, 9) for _ in range(9)]
+        n = [rng.randint(0, 9) for _ in range(9)]
         if len(set(n)) == 1:
             continue
         s = sum((10 - i) * n[i] for i in range(9))
@@ -359,7 +362,7 @@ def novo_paciente(menor=False, adulto_min=18, cadastro=None, convenio=None, sexo
              TP_ESTADO_CIVIL="SOLTEIRO" if menor or idade(nasc) < 23 else random.choice(
                  ["SOLTEIRO", "CASADO", "CASADO", "DIVORCIADO", "UNIAO ESTAVEL", "VIUVO"]),
              DS_EMAIL=email(nome, pid), ID_CONVENIO=convenio, NR_CARTEIRINHA=carteirinha,
-             NM_RESPONSAVEL_LEGAL=None, DT_CADASTRO=cadastro,
+             NM_RESPONSAVEL_LEGAL=None, ID_CPF_RESPONSAVEL=None, DT_CADASTRO=cadastro,
              menor=menor, sem_ficha=sem_ficha, **endereco())
     PAC[pid] = p
     return pid
@@ -400,11 +403,13 @@ for i, pid in enumerate(menores_orto):
         partes = PAC[pid]["NM_PACIENTE"].split()
         PAC[pid]["NM_PACIENTE"] = " ".join(partes[:-1] + [sob])
         PAC[pid]["NM_RESPONSAVEL_LEGAL"] = PAC[resp]["NM_PACIENTE"]
+        PAC[pid]["ID_CPF_RESPONSAVEL"] = PAC[resp]["ID_CPF"]
     elif i == 14:
         pass     # menor sem responsável informado — inconsistência para A02
     else:
         sob = PAC[pid]["NM_PACIENTE"].split()[-1]
         PAC[pid]["NM_RESPONSAVEL_LEGAL"] = nome_pessoa(random.choice("FM"), sob)
+        PAC[pid]["ID_CPF_RESPONSAVEL"] = cpf(R2)   # nome e CPF do responsável (visita de retorno)
 MENOR_SEM_RESP = menores_orto[14]
 MENOR_ASSINOU = menores_orto[20]   # ficha de menor assinada pelo próprio paciente (A02)
 
@@ -743,8 +748,16 @@ def pagar(o, data, valor, forma=None, parcelas=None):
             forma = random.choices(["DEBITO", "CREDITO"], [15, 85])[0]
     if parcelas is None:
         parcelas = 1 if forma == "DEBITO" else (3 if valor <= 300 else random.choice([3, 6, 6]))
+        # Visita de retorno: também há PIX e crédito à vista (1x).
+        if forma == "DEBITO" and R2.random() < 0.30:
+            forma = "PIX"
+        elif forma == "CREDITO" and R2.random() < 0.15:
+            parcelas = 1
+    # Desconto de 5% quando o paciente pede nota fiscal (visita de retorno).
+    nota = valor > 300 and R2.random() < 0.10
     PAGS.append(dict(ID_PAGAMENTO=len(PAGS) + 1, ID_ORCAMENTO=o["ID_ORCAMENTO"], DT_PAGAMENTO=data,
-                     VL_PAGAMENTO=money(valor), TP_FORMA_PAGAMENTO=forma, QT_PARCELAS=parcelas))
+                     VL_PAGAMENTO=money(valor * 0.95 if nota else valor), TP_FORMA_PAGAMENTO=forma,
+                     QT_PARCELAS=parcelas, IN_NOTA_FISCAL=nota))
 
 
 MESES = ["janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"]
@@ -801,7 +814,7 @@ for c in CONS:
                     c["ID_ORCAMENTO"] = orto_mes[chave]["ID_ORCAMENTO"]
                 else:
                     o = novo_orc(pac, d, f"Ortodontia — {MESES[d.month - 1]}/{d.year}",
-                                 [("Manutenção ortodôntica", "GER", 180)], "CONCLUIDO")
+                                 [("Manutenção ortodôntica", "GER", 180)], "FINALIZADO")
                     orto_mes[chave] = o
                     c["ID_ORCAMENTO"] = o["ID_ORCAMENTO"]
                     pagar(o, d, 180)
@@ -834,16 +847,16 @@ for c in CONS:
             total = sum(i[2] for i in o["itens"])
             pagar(o, d, total, "CREDITO", 6)
 
-# Situação final dos tratamentos de HOF/endodontia: CONCLUIDO quando todas as
+# Situação final dos tratamentos de HOF/endodontia: FINALIZADO quando todas as
 # sessões já aconteceram até a data de referência.
 for t in TRAT:
     if "orc" in t:
         feitas = [x for x in t["consultas"] if x["TP_SITUACAO"] == "FINALIZADO"]
         if len(feitas) + t.get("prev", 0) >= t["sessoes"] and feitas:
-            t["orc"]["TP_SITUACAO"] = "CONCLUIDO"
+            t["orc"]["TP_SITUACAO"] = "FINALIZADO"
             t["fim"] = feitas[-1]["DT_HR_INICIO"].date()
 for o, fim in [(o_prot, D(2026, 10, 1)), (o_impl, D(2026, 10, 7)), (o_dent, D(2026, 9, 22))]:
-    o["TP_SITUACAO"] = "CONCLUIDO"
+    o["TP_SITUACAO"] = "FINALIZADO"
 
 # Orçamentos apresentados e não pagos (sem andamento): reprovados/em aberto.
 for k in range(9):
@@ -856,7 +869,7 @@ for k in range(9):
         ("Tratamento periodontal", [("Tratamento periodontal completo", "GER", 5000)]),
         ("Prótese protocolo inferior", [("Prótese protocolo", "INF", 40000)]),
     ])
-    novo_orc(pac, d, esc[0], esc[1], "REPROVADO" if d < D(2026, 10, 10) else "EM ABERTO")
+    novo_orc(pac, d, esc[0], esc[1], "CANCELADO" if d < D(2026, 10, 10) else "EM ABERTO")
 
 # Orçamento em aberto com dois itens (alvo do D02: paciente desiste de um item)
 novo_orc(HOF_EXISTENTES[0], D(2026, 10, 19), "Facetas em porcelana — 11 e 21",
@@ -894,7 +907,7 @@ enc = nova_consulta(pac_encaixe, PERIO, 1, at(D(2026, 10, 14), hm(14, 20)), "PAR
                     registro=at(D(2026, 10, 14), hm(14, 10)), obs="Encaixe para avaliação periodontal.")
 enc["TP_SITUACAO"] = "FINALIZADO"
 enc["DT_HR_CONFIRMACAO"] = at(D(2026, 10, 14), hm(14, 10))
-o_enc = novo_orc(pac_encaixe, D(2026, 10, 14), "Avaliação periodontal", [("Manutenção periodontal", "GER", 250)], "CONCLUIDO")
+o_enc = novo_orc(pac_encaixe, D(2026, 10, 14), "Avaliação periodontal", [("Manutenção periodontal", "GER", 250)], "FINALIZADO")
 pagar(o_enc, D(2026, 10, 14), 250, "DEBITO", 1)
 enc["ID_ORCAMENTO"] = o_enc["ID_ORCAMENTO"]
 enc["procs"] = [("Manutenção periodontal", "GER")]
@@ -964,6 +977,25 @@ p_a14 = next(c["ID_PACIENTE"] for c in finalizadas if c["TP_ATENDIMENTO"] == "CO
              and c["DT_HR_INICIO"].date() >= D(2026, 10, 5))
 PAC[p_a14]["ID_CONVENIO"] = None
 PAC[p_a14]["NR_CARTEIRINHA"] = None
+
+# Troca de convênio (visita de retorno): a clínica atualiza o cadastro e não
+# guarda o convênio antigo; as guias já emitidas continuam no convênio antigo.
+TROCA = D(2026, 10, 13)
+cand = sorted({g["cons"]["ID_PACIENTE"] for g in GUIAS if g["DT_EMISSAO"] < TROCA}
+              & {g["cons"]["ID_PACIENTE"] for g in GUIAS if g["DT_EMISSAO"] >= TROCA} - {p_a14})
+p_troca = cand[R2.randrange(len(cand))]
+antigo = PAC[p_troca]["ID_CONVENIO"]
+novo_conv = [k for k in range(1, 6) if k != antigo][R2.randrange(4)]
+while True:
+    cart = "".join(str(R2.randint(0, 9)) for _ in range(12))
+    if (novo_conv, cart) not in CARTEIRINHAS:
+        CARTEIRINHAS.add((novo_conv, cart))
+        break
+PAC[p_troca]["ID_CONVENIO"], PAC[p_troca]["NR_CARTEIRINHA"] = novo_conv, cart
+for g in GUIAS:
+    if g["cons"]["ID_PACIENTE"] == p_troca and g["DT_EMISSAO"] >= TROCA:
+        g["ID_CONVENIO"] = novo_conv
+        g["VL_GUIA"] = money(VL_GUIA_ORTO[novo_conv])
 
 # --------------------------------------------------- peças protéticas
 PECAS, ENVIOS = [], []
@@ -1079,8 +1111,12 @@ for c in cand_rx:
 for c in random.sample(fin_hist, 22):
     if random.random() < 0.8:
         c["TP_ATESTADO"] = "PRESENCA"
+        c["DT_ATESTADO"] = c["DT_HR_INICIO"].date()
     else:
         c["TP_ATESTADO"] = "DIAS"
+        # o paciente às vezes esquece de pedir: a data pode ser posterior à consulta
+        dd = proximo_util(c["DT_HR_INICIO"].date(), R2.choice([1, 2])) if R2.random() < 0.5 else c["DT_HR_INICIO"].date()
+        c["DT_ATESTADO"] = dd if dd <= DATA_REF else c["DT_HR_INICIO"].date()
         c["QT_DIAS_ATESTADO"] = random.choice([1, 1, 2, 3])
         c["DS_CID_ATESTADO"] = random.choice([None, "K04.0 — pulpite", "K08.1 — perda de dente por extração",
                                               "K05.3 — periodontite crônica"])
@@ -1106,11 +1142,11 @@ DESP = []
 
 
 def despesa(titulo, cat, valor, venc, forma, desc, pago=True, dent=None, pag_em=None):
-    pg = None
-    if pago:
-        pg = util(pag_em or venc)
-        if pg > DATA_REF:
-            pg = None
+    # Visita de retorno: a data de pagamento já vai preenchida no lançamento
+    # (data prevista). Conta "a pagar" = data de pagamento depois de hoje.
+    pg = util(pag_em) if pag_em else util_antes(venc)   # paga até o vencimento
+    if not pago:       # vencida ou duplicada: pagamento programado para depois de hoje
+        pg = util(max(venc, DATA_REF + dt.timedelta(days=3)))
     DESP.append(dict(ID_DESPESA=0, DS_TITULO=titulo, TP_CATEGORIA=cat, VL_DESPESA=money(valor), DT_VENCIMENTO=venc,
                      DT_PAGAMENTO=pg, TP_FORMA_PAGAMENTO=forma, DS_DESPESA=desc, ID_DENTISTA=dent))
 
@@ -1168,7 +1204,7 @@ for e in ENVIOS:
     lab = "Inove" if p["ID_LABORATORIO"] == 1 else "Wilson"
     venc = e["DT_CHEGADA"] or e["DT_PREVISTA"]
     despesa(f"Laboratório {lab} — {p['DS_PECA'].lower()}", "LABORATORIO", e["custo"], venc, "PIX",
-            f"{ {'CONFECCAO': 'Confecção', 'AJUSTE': 'Ajuste', 'REFINAMENTO': 'Refinamento'}[e['TP_ENVIO']] } da peça — pedido nº {e['ID_PEDIDO']}.", pago=e["DT_CHEGADA"] is not None)
+            f"{ {'CONFECCAO': 'Confecção', 'AJUSTE': 'Ajuste', 'REFINAMENTO': 'Refinamento'}[e['TP_ENVIO']] } da peça — pedido nº {e['ID_PEDIDO']}.")
     if e["uber"]:
         despesa("Uber — envio ao laboratório", "TRANSPORTE", random.randint(22, 36), e["DT_ENVIO"], "PIX",
                 f"Envio da peça ao Laboratório {lab}.")

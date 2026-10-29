@@ -55,7 +55,7 @@
 | Instagram | <https://www.instagram.com/conexaoral> |
 | Funcionamento | segunda a sexta, 8h às 18h; fecha nos feriados nacionais e no 9 de Julho |
 | Responsável pela clínica | Dra. Cristiane Leite Maciel — telefone direto: (11) 96516-6080 (publicação autorizada por ela); telefone da clínica: (11) 93148-6400 |
-| Quem atendeu o grupo | Guilherme Silva Maurício, sócio da clínica (sem atuação clínica) e integrante do grupo |
+| Quem atendeu o grupo | 26/10/2026: Guilherme Silva Maurício, sócio da clínica (sem atuação clínica), marido da responsável e integrante do grupo. 28/10/2026 (visita de retorno): Dra. Cristiane Leite Maciel, a responsável |
 
 **Contexto e porte.** Números do levantamento (dito pelo entrevistado, validado pela responsável; os calculados pelo grupo estão indicados). São eles que dimensionam a massa de dados (seção 4).
 
@@ -555,7 +555,7 @@ evidencias/                        fotos JPG/PNG
 apresentacao/                      slides
 ```
 
-**Histórico de commits e colaboração:** cada integrante faz commits com a própria conta, com nome compatível com a tabela de Integrantes, ao longo do desenvolvimento,
+**Histórico de commits e colaboração:** cada integrante faz commits com a própria conta, com nome compatível com a tabela de Integrantes, ao longo do desenvolvimento **[PREENCHER: divisão combinada pelo grupo]**.
 
 # 6. Uso de Inteligência Artificial
 
