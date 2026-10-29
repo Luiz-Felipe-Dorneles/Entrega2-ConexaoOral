@@ -555,7 +555,7 @@ evidencias/                        fotos JPG/PNG
 apresentacao/                      slides
 ```
 
-**Histórico de commits e colaboração:** cada integrante faz commits com a própria conta, com nome compatível com a tabela de Integrantes, ao longo do desenvolvimento **[PREENCHER: divisão combinada pelo grupo]**.
+**Histórico de commits e colaboração:** cada integrante faz commits com a própria conta, com nome compatível com a tabela de Integrantes, ao longo do desenvolvimento,
 
 # 6. Uso de Inteligência Artificial
 
