@@ -1,6 +1,6 @@
 # Roteiro da visita de retorno — Conexão Oral
 
-A entrevista e a validação foram concluídas em 26/10/2026. Esta visita de retorno serve para três coisas: **cumprir o que falta para a comprovação**, **fechar os poucos pontos "a levantar"** e **conferir números que a massa de dados usa como premissa**. Os itens que mudaram a estrutura do banco estão indicados na última coluna da seção 2. Se alguma resposta mudar um número, o grupo ajusta a massa (`docs/gerador_massa.py`) e o texto do README.
+A conferência do levantamento com o sócio e a validação pela responsável foram concluídas em 26/10/2026. Esta visita de retorno serve para três coisas: **cumprir o que falta para a comprovação**, **fechar os poucos pontos "a levantar"** e **conferir números que a massa de dados usa como premissa**. Os itens que mudaram a estrutura do banco estão indicados na última coluna da seção 2. Se alguma resposta mudar um número, o grupo ajusta a massa (`docs/gerador_massa.py`) e o texto do README.
 
 > Lembrete do esqueleto: a entrevista deve ser feita **com o responsável, no ambiente da organização**, e comprovada com foto. Na correção da E1, o professor apontou que a entrevista tinha sido feita com o próprio integrante. Por isso, o ideal é que a conversa abaixo seja feita **com a Dra. Cristiane, na clínica**, com pelo menos um integrante além do Guilherme.
 
@@ -8,7 +8,7 @@ A entrevista e a validação foram concluídas em 26/10/2026. Esta visita de ret
 
 - [ ] Foto da entrevista no local, com a Dra. Cristiane e os integrantes presentes (JPG ou PNG, para `evidencias/entrevista.jpg`). *Prevista para sexta, 30/10/2026.*
 - [ ] Foto final do grupo com a entrevistada.
-- [x] Anotar data, horário, duração, integrantes presentes e quem perguntou, anotou e fotografou (README, "Relato da entrevista"). *28/10/2026, 15h22, com a Dra. Cristiane, que respondeu; Guilherme Maurício perguntou, anotou e fotografou; falta a duração.*
+- [x] Anotar data, horário, duração, integrantes presentes e quem perguntou, anotou e fotografou (README, "Relato da entrevista"). *28/10/2026, 15h22, com a Dra. Cristiane, que respondeu; Guilherme Maurício perguntou, anotou e fotografou; duração de 2 horas.*
 - [x] Telefone da Dra. Cristiane (ou confirmar que o contato é o telefone da clínica). *(11) 96516-6080, publicação autorizada por ela.*
 - [ ] Confirmar que nenhuma foto mostra paciente ou tela com dado pessoal.
 - [ ] Opcional: fotos da fachada/recepção, das salas, da ficha de anamnese em branco, de uma guia em branco e do caderno da autoclave (sem dados).
@@ -39,6 +39,8 @@ As 18 perguntas foram respondidas pela Dra. Cristiane na visita de 28/10/2026, c
 | 18 | Data da avaliação da radiografia | É a do sistema, a mesma do exame. | Confirma o modelo. |
 
 ## 3. Números para conferir
+
+Esses números não foram conferidos na visita de retorno; o trabalho usa os números do levantamento validado em 26/10/2026.
 
 | Número usado | Valor no trabalho | Conferir com |
 |---|---|---|
