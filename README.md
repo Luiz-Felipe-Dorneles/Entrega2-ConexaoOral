@@ -8,7 +8,6 @@
 >
 > - [ ] Subir o arquivo `evidencias/entrevista.jpg` (foto com a Dra. Cristiane, prevista para sexta, 30/10/2026).
 > - [ ] Teste no MySQL: data, versão (`SELECT VERSION();`), quem rodou e um print do resultado em `docs/` (seção 3).
-> - [ ] Divisão dos commits entre os integrantes; cada um commita com a própria conta (seção 5).
 > - [ ] Slides em PDF ou PPTX na pasta `apresentacao/` (tabela de arquivos e seção 7).
 
 ## Integrantes
@@ -555,7 +554,7 @@ evidencias/                        fotos JPG/PNG
 apresentacao/                      slides
 ```
 
-**Histórico de commits e colaboração:** cada integrante faz commits com a própria conta, com nome compatível com a tabela de Integrantes, ao longo do desenvolvimento **[PREENCHER: divisão combinada pelo grupo]**.
+**Histórico de commits e colaboração:** cada integrante faz commits com a própria conta, com nome compatível com a tabela de Integrantes, ao longo do desenvolvimento. Divisão do trabalho no repositório: **Luiz Felipe** — README e integração das atualizações; **Guilherme** — levantamento, roteiro da visita de retorno e fotos da clínica; **Kaike** — modelo lógico e dicionário de dados; **Vitor** — script SQL, gerador da massa de dados, pasta da apresentação e atualização dos artefatos após a visita de retorno; **Cauã** — DER conceitual e especificação.
 
 # 6. Uso de Inteligência Artificial
 
