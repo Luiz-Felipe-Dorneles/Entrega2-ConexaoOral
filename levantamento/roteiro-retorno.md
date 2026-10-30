@@ -6,12 +6,12 @@ A conferência do levantamento com o sócio e a validação pela responsável fo
 
 ## 1. Comprovação (obrigatório)
 
-- [ ] Foto da entrevista no local, com a Dra. Cristiane e os integrantes presentes (JPG ou PNG, para `evidencias/entrevista.jpg`). *Prevista para sexta, 30/10/2026.*
-- [ ] Foto final do grupo com a entrevistada.
-- [x] Anotar data, horário, duração, integrantes presentes e quem perguntou, anotou e fotografou (README, "Relato da entrevista"). *28/10/2026, 15h22, com a Dra. Cristiane, que respondeu; Guilherme Maurício perguntou, anotou e fotografou; duração de 2 horas.*
+- [x] Foto da entrevista no local, com a Dra. Cristiane e os integrantes presentes (JPG ou PNG, para `evidencias/entrevista.jpg`). *Tirada em 28/10/2026: Cauã, Guilherme, Dra. Cristiane e Vitor.*
+- [x] Foto final do grupo com a entrevistada. *A mesma foto (`evidencias/entrevista.jpg`).*
+- [x] Anotar data, horário, duração, integrantes presentes e quem perguntou, anotou e fotografou (README, "Relato da entrevista"). *28/10/2026, 15h22, com a Dra. Cristiane, que respondeu; presentes Guilherme Maurício (perguntou e anotou), Cauã Sureira Gouveia e Vitor Santos Araújo; duração de 2 horas.*
 - [x] Telefone da Dra. Cristiane (ou confirmar que o contato é o telefone da clínica). *(11) 96516-6080, publicação autorizada por ela.*
-- [ ] Confirmar que nenhuma foto mostra paciente ou tela com dado pessoal.
-- [ ] Opcional: fotos da fachada/recepção, das salas, da ficha de anamnese em branco, de uma guia em branco e do caderno da autoclave (sem dados).
+- [x] Confirmar que nenhuma foto mostra paciente ou tela com dado pessoal. *Conferido: aparecem só a Dra. e os integrantes; nenhuma tela à vista.*
+- [x] Opcional: fotos da fachada/recepção (`responsavel_recepcao.jpg`, `logotipo_recepcao.jpg`), das salas, da ficha de anamnese em branco, de uma guia em branco e do caderno da autoclave (sem dados).
 
 ## 2. Pontos que estavam "a levantar" — respondidos em 28 e 29/10/2026
 

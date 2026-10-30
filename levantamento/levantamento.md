@@ -10,9 +10,9 @@ Este texto organiza o que o grupo levantou na clínica para a Entrega 2. Ele foi
 - **Observação presencial:** feita por Guilherme Maurício em 26/10/2026, às 16h (seção 10).
 - **Contato da clínica:** (11) 93148-6400 (telefone e WhatsApp). Segunda pessoa de contato: Dra. Cristiane.
 - **Autorizações:** a Dra. Cristiane autorizou o uso da imagem da clínica e a divulgação, no trabalho, do faturamento e dos valores médios por especialidade. A clínica foi informada de que toda a massa de dados do banco é fictícia.
-- **Visita de retorno:** 28/10/2026, às 15h22, com duração de 2 horas, com a Dra. Cristiane Leite Maciel, na clínica. As respostas foram dadas pela Dra. Cristiane; Guilherme Maurício perguntou, anotou e fotografou. Registro em 28 e 29/10/2026 (seção 12).
+- **Visita de retorno:** 28/10/2026, às 15h22, com duração de 2 horas, com a Dra. Cristiane Leite Maciel, na clínica. As respostas foram dadas pela Dra. Cristiane. Integrantes presentes: Guilherme Maurício (perguntou e anotou), Cauã Sureira Gouveia e Vitor Santos Araújo. Registro em 28 e 29/10/2026 (seção 12).
 - **Contato da responsável:** (11) 96516-6080 (publicação autorizada por ela).
-- **Pendente:** foto da entrevista no local, com a Dra. Cristiane, prevista para 30/10/2026.
+- **Comprovação:** foto da entrevista no local, com a Dra. Cristiane e os três integrantes, em 28/10/2026 (`evidencias/entrevista.jpg`).
 
 ## 2. Identificação
 
@@ -164,4 +164,4 @@ As perguntas que tinham ficado "a levantar" foram respondidas pela Dra. Cristian
 
 ## 13. Pendências
 
-Não há mais perguntas à clínica. Resta a foto da entrevista no local, com a Dra. Cristiane, prevista para 30/10/2026.
+Não há pendências: não há mais perguntas à clínica, e a foto da entrevista no local foi tirada em 28/10/2026 (`evidencias/entrevista.jpg`).
