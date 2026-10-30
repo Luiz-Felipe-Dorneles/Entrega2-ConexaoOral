@@ -11,7 +11,7 @@ A conferência do levantamento com o sócio e a validação pela responsável fo
 - [x] Anotar data, horário, duração, integrantes presentes e quem perguntou, anotou e fotografou (README, "Relato da entrevista"). *28/10/2026, 15h22, com a Dra. Cristiane, que respondeu; presentes Guilherme Maurício (perguntou e anotou), Cauã Sureira Gouveia e Vitor Santos Araújo; duração de 2 horas.*
 - [x] Telefone da Dra. Cristiane (ou confirmar que o contato é o telefone da clínica). *(11) 96516-6080, publicação autorizada por ela.*
 - [x] Confirmar que nenhuma foto mostra paciente ou tela com dado pessoal. *Conferido: aparecem só a Dra. e os integrantes; nenhuma tela à vista.*
-- [x] Opcional: fotos da fachada/recepção (`responsavel_recepcao.jpg`, `logotipo_recepcao.jpg`), das salas, da ficha de anamnese em branco, de uma guia em branco e do caderno da autoclave (sem dados).
+- [x] Opcional: fotos da recepção (`responsavel_recepcao.jpg`, `logotipo_recepcao.jpg`). *Não foram tiradas as opcionais das salas, da ficha de anamnese em branco, da guia em branco nem do caderno da autoclave.*
 
 ## 2. Pontos que estavam "a levantar" — respondidos em 28 e 29/10/2026
 
