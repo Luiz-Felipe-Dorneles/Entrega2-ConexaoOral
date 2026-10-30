@@ -46,7 +46,7 @@ nav{columns:3;font-size:.86rem;margin:.6em 0 1em}nav a{display:block;color:var(-
 <tr><td>R18</td><td>CONVENIO</td><td>GUIA</td><td>1:N — cada CONVENIO paga nenhum(a) ou vários(as) GUIA; cada GUIA está ligado(a) a exatamente um(a) CONVENIO.</td></tr>
 <tr><td>—</td><td>CONSULTA</td><td>PROCEDIMENTO (via PROCEDIMENTO_REALIZADO)</td><td>N:N — cada CONSULTA realiza nenhum ou vários PROCEDIMENTOS; cada PROCEDIMENTO aparece em nenhuma ou várias CONSULTAS. Atributos: CD_DENTE (compõe o identificador), DS_OBSERVACAO.</td></tr>
 </table></div>
-<p><b>Entidades fracas:</b> ANAMNESE (identificada pelo paciente) e ITEM_ORCAMENTO (orçamento + NR_ITEM). <b>Entidade associativa:</b> PROCEDIMENTO_REALIZADO (também guarda as radiografias e a avaliação). <b>N:N:</b> CONSULTA receita MEDICAMENTO (tabela RECEITUARIO). <b>Atributos compostos:</b> ENDERECO, DADOS_BANCARIOS, AVALIACAO_SAUDE, HISTORICO_SAUDE e ATESTADO (opcional, na CONSULTA). <b>Multivalorado:</b> TELEFONE (1,2) do paciente. Não há autorrelacionamento nem generalização/especialização.</p>
+<p><b>Entidades fracas:</b> ANAMNESE (identificada pelo paciente) e ITEM_ORCAMENTO (orçamento + NR_ITEM). <b>Entidade associativa:</b> PROCEDIMENTO_REALIZADO (também guarda as radiografias e a avaliação). <b>N:N:</b> CONSULTA receita MEDICAMENTO (tabela RECEITUARIO). <b>Atributos compostos:</b> ENDERECO, DADOS_BANCARIOS, AVALIACAO_SAUDE, HISTORICO_SAUDE, RESPONSAVEL_LEGAL (opcional, no PACIENTE) e ATESTADO (opcional, na CONSULTA). <b>Multivalorado:</b> TELEFONE (1,2) do paciente. Não há autorrelacionamento nem generalização/especialização.</p>
 <p><b>Especialidade</b> (ESPECIALIDADE) — Área de atuação odontológica. Hoje é digitada livremente no cadastro do dentista; as 7 em uso viram um catálogo.</p>
 <p><b>Dentista</b> (DENTISTA) — Profissional que atende os pacientes: 7 hoje, um por especialidade; 6 autônomos e a proprietária (HOF).</p>
 <p><b>Funcionario</b> (FUNCIONARIO) — Quem trabalha na clínica sem ser dentista: recepcionista, auxiliar de dentista e auxiliar de limpeza.</p>
@@ -119,6 +119,7 @@ nav{columns:3;font-size:.86rem;margin:.6em 0 1em}nav a{display:block;color:var(-
 <p class="idx"><b>Índices:</b> PK ID_ESPECIALIDADE (clusterizado); único em NM_ESPECIALIDADE.</p>
 <h3 id="DENTISTA">DENTISTA</h3>
 <div class="form">DENTISTA = @ID_DENTISTA + ID_ESPECIALIDADE + NM_DENTISTA + ID_CRO + DT_NASCIMENTO + NR_TELEFONE + (DS_EMAIL) + DS_CHAVE_PIX + DS_LOGRADOURO + NR_ENDERECO + (DS_COMPLEMENTO) + NM_BAIRRO + CD_CEP + TP_VINCULO + IN_ATIVO
+ENDERECO = DS_LOGRADOURO + NR_ENDERECO + (DS_COMPLEMENTO) + NM_BAIRRO + CD_CEP   *atributo composto*
 TP_VINCULO = [PROPRIETARIA | AUTONOMO]</div>
 <p class="leit"><b>Leitura:</b> Todo dentista tem CRO único e uma especialidade. Só o e-mail é opcional, como no cadastro do sistema. A idade, que o sistema pede, não é guardada: sai de DT_NASCIMENTO.</p>
 <div class="wrap"><table><tr><th>Atributo</th><th>Tipo físico</th><th>Obrigatório</th><th>Restrições</th><th>Significado e relevância</th></tr>
@@ -141,6 +142,8 @@ TP_VINCULO = [PROPRIETARIA | AUTONOMO]</div>
 <p class="idx"><b>Índices:</b> PK ID_DENTISTA (clusterizado); único em ID_CRO; índice da FK ID_ESPECIALIDADE (o InnoDB cria um se nenhum índice existente começar por essa coluna).</p>
 <h3 id="FUNCIONARIO">FUNCIONARIO</h3>
 <div class="form">FUNCIONARIO = @ID_FUNCIONARIO + NM_FUNCIONARIO + TP_FUNCAO + DT_NASCIMENTO + TP_SEXO + NR_TELEFONE + DS_LOGRADOURO + NR_ENDERECO + (DS_COMPLEMENTO) + NM_BAIRRO + CD_CEP + NM_BANCO + NR_AGENCIA + NR_CONTA + DT_ADMISSAO + (DT_DESLIGAMENTO)
+ENDERECO = DS_LOGRADOURO + NR_ENDERECO + (DS_COMPLEMENTO) + NM_BAIRRO + CD_CEP   *atributo composto*
+DADOS_BANCARIOS = NM_BANCO + NR_AGENCIA + NR_CONTA   *atributo composto*
 TP_FUNCAO = [RECEPCIONISTA | AUXILIAR DE DENTISTA | AUXILIAR DE LIMPEZA]
 TP_SEXO = [M | F]</div>
 <p class="leit"><b>Leitura:</b> Os oito campos do cadastro são obrigatórios, e nenhum é único entre funcionários. DT_DESLIGAMENTO vem entre ( ) porque só existe para quem saiu.</p>
@@ -184,6 +187,7 @@ TP_SEXO = [M | F]</div>
 <p class="idx"><b>Índices:</b> PK ID_CONVENIO (clusterizado); único em NM_CONVENIO.</p>
 <h3 id="PACIENTE">PACIENTE<span class="tag">dado sensível — LGPD</span></h3>
 <div class="form">PACIENTE = @ID_PACIENTE + NM_PACIENTE + DT_NASCIMENTO + TP_SEXO + ID_CPF + ID_RG + DS_PROFISSAO + TP_ESTADO_CIVIL + DS_LOGRADOURO + NR_ENDERECO + (DS_COMPLEMENTO) + NM_BAIRRO + CD_CEP + DS_EMAIL + (ID_CONVENIO) + (NR_CARTEIRINHA) + (NM_RESPONSAVEL_LEGAL) + (ID_CPF_RESPONSAVEL) + DT_CADASTRO
+ENDERECO = DS_LOGRADOURO + NR_ENDERECO + (DS_COMPLEMENTO) + NM_BAIRRO + CD_CEP   *atributo composto*
 RESPONSAVEL_LEGAL = NM_RESPONSAVEL_LEGAL + ID_CPF_RESPONSAVEL   *atributo composto opcional (0,1)*
 TP_SEXO = [M | F]
 TP_ESTADO_CIVIL = [SOLTEIRO | CASADO | DIVORCIADO | VIUVO | UNIAO ESTAVEL]</div>
@@ -223,6 +227,8 @@ NR_ORDEM = [1 | 2]</div>
 <p class="idx"><b>Índices:</b> PK ID_PACIENTE, NR_ORDEM (clusterizado); único em ID_PACIENTE, NR_TELEFONE.</p>
 <h3 id="ANAMNESE">ANAMNESE<span class="tag">dado sensível — LGPD</span></h3>
 <div class="form">ANAMNESE = @ID_PACIENTE + DT_PREENCHIMENTO + TP_ASSINANTE + DS_ARQUIVO_DIGITALIZADO + IN_BEM_DE_SAUDE + IN_TRATAMENTO_MEDICO + IN_ALERGIA_MEDICAMENTO + IN_DOENCA_GRAVE + IN_USA_MEDICAMENTO + IN_DIFICULDADE_ABRIR_BOCA + QT_ESCOVACOES_DIA + IN_DESMAIOS + IN_REACAO_ANESTESICO + IN_USOU_APARELHO + IN_GRAVIDA_AMAMENTANDO + IN_DIABETES + IN_HIPERTENSAO + IN_HEPATITE + IN_PROBLEMA_RESPIRATORIO + IN_PROBLEMA_CARDIACO + IN_COMPLICACAO_TRATAMENTO + (DS_OBSERVACOES)
+AVALIACAO_SAUDE = IN_BEM_DE_SAUDE + IN_TRATAMENTO_MEDICO + IN_ALERGIA_MEDICAMENTO + IN_DOENCA_GRAVE + IN_USA_MEDICAMENTO + IN_DIFICULDADE_ABRIR_BOCA + QT_ESCOVACOES_DIA + IN_DESMAIOS + IN_REACAO_ANESTESICO + IN_USOU_APARELHO   *atributo composto*
+HISTORICO_SAUDE = IN_GRAVIDA_AMAMENTANDO + IN_DIABETES + IN_HIPERTENSAO + IN_HEPATITE + IN_PROBLEMA_RESPIRATORIO + IN_PROBLEMA_CARDIACO + IN_COMPLICACAO_TRATAMENTO   *atributo composto*
 TP_ASSINANTE = [PACIENTE | RESPONSAVEL]</div>
 <p class="leit"><b>Leitura:</b> Uma ficha por paciente (1:1). As respostas de saúde deixam de existir só na imagem escaneada (P04): cada pergunta da ficha é uma coluna. A imagem continua guardada como respaldo (RP03).</p>
 <div class="wrap"><table><tr><th>Atributo</th><th>Tipo físico</th><th>Obrigatório</th><th>Restrições</th><th>Significado e relevância</th></tr>
