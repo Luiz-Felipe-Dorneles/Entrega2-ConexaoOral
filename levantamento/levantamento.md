@@ -1,6 +1,6 @@
 # Levantamento de campo — Conexão Oral Odontologia Especializada (Entrega 2)
 
-Este texto organiza o que o grupo levantou na clínica para a Entrega 2. Ele foi escrito pelo grupo a partir das anotações da visita; não é transcrição de perguntas e respostas. Em cada ponto, separamos o que foi **dito** pelo entrevistado, o que foi **observado** no local e o que foi **calculado** pelo grupo. Nenhum dado real de paciente foi anotado: registramos só a estrutura das informações (quais campos existem), nunca o conteúdo.
+Este texto organiza o que o grupo levantou na clínica para a Entrega 2. Ele foi organizado pelo grupo a partir das anotações da visita, com apoio do Claude na redação (README, seção 6, Uso 2); não é transcrição de perguntas e respostas. Em cada ponto, separamos o que foi **dito** pelo entrevistado, o que foi **observado** no local e o que foi **calculado** pelo grupo. Nenhum dado real de paciente foi anotado: registramos só a estrutura das informações (quais campos existem), nunca o conteúdo.
 
 ## 1. Visita, fontes e validação
 
