@@ -15,11 +15,11 @@ números do levantamento (README, seções 1.1 e 4):
     por dia (12 + 5), mas as médias por especialidade somam ~16;
   - ortodontia ~78% dos atendimentos, HOF ~18%, demais ~4%;
   - 80% particular e 20% convênio (~72 guias por mês);
-  - ~15 faltas e cancelamentos por mês; 12 a 15 pacientes novos por mês;
+  - ~15 faltas e cancelamentos por mês; 10 a 12 pacientes novos por mês;
   - ~15 receitas, ~10 radiografias e ~3 peças protéticas por mês;
   - teste biológico da autoclave toda semana.
 Período: 03/08/2026 a 27/11/2026 (12 semanas de histórico, o dia da
-visita, 26/10/2026, e cinco semanas de agenda futura — um ciclo de
+visita, 26/10/2026, o restante da semana e mais quatro semanas de agenda futura — um ciclo de
 retorno da ortodontia), só em dias úteis.
 """
 import datetime as dt
@@ -1198,6 +1198,8 @@ for t in TRAT:
 despesa("Repasse prótese", "REPASSE", 12000, D(2026, 10, 6), "PIX", "Repasse ao protesista: protocolo superior concluído.", dent=PROT)
 despesa("Repasse implantodontia", "REPASSE", 1200, D(2026, 10, 13), "PIX", "Repasse ao implantodontista: implante unitário concluído.", dent=IMPL)
 despesa("Repasse dentística", "REPASSE", 1800, D(2026, 9, 28), "PIX", "Repasse ao dentista de dentística: facetas concluídas.", dent=DENT)
+# A12 — erro proposital: repasse lançado para a proprietária (HOF não tem repasse, RN16)
+despesa("Repasse HOF", "REPASSE", 950, D(2026, 10, 16), "PIX", "Lançado por engano: HOF é da proprietária e não tem repasse.", dent=HOF)
 # Laboratório (uma despesa por ida da peça) e Uber
 for e in ENVIOS:
     p = PECAS[e["ID_PECA"] - 1]

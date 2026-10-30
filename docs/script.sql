@@ -6371,7 +6371,7 @@ INSERT INTO TESTE_AUTOCLAVE (ID_TESTE, ID_FUNCIONARIO, DT_TESTE, TP_RESULTADO, D
   (11, 2, '2026-10-14', 'APROVADO', NULL),
   (12, 2, '2026-10-21', 'APROVADO', NULL);
 
--- DESPESA: 81 registros
+-- DESPESA: 82 registros
 INSERT INTO DESPESA (ID_DESPESA, DS_TITULO, TP_CATEGORIA, VL_DESPESA, DT_VENCIMENTO, DT_PAGAMENTO, TP_FORMA_PAGAMENTO, DS_DESPESA, ID_DENTISTA) VALUES
   (1, 'Condomínio — agosto', 'CONDOMINIO', 1250.00, '2026-08-05', '2026-08-05', 'BOLETO', 'Taxa condominial da sala 26.', NULL),
   (2, 'Uber — envio ao laboratório', 'TRANSPORTE', 31.00, '2026-08-06', '2026-08-06', 'PIX', 'Envio da peça ao Laboratório Inove.', NULL),
@@ -6437,23 +6437,24 @@ INSERT INTO DESPESA (ID_DESPESA, DS_TITULO, TP_CATEGORIA, VL_DESPESA, DT_VENCIME
   (62, 'Insumos odontológicos', 'INSUMOS', 1111.00, '2026-10-14', '2026-10-14', 'BOLETO', 'Anestésicos e agulhas.', NULL),
   (63, 'Água — outubro', 'AGUA', 108.00, '2026-10-15', '2026-10-29', 'BOLETO', 'Conta de água.', NULL),
   (64, 'Correios', 'CORREIOS', 47.00, '2026-10-16', '2026-10-16', 'PIX', 'Envio de documentos.', NULL),
-  (65, 'Insumos odontológicos', 'INSUMOS', 900.00, '2026-10-18', '2026-10-16', 'PIX', 'Fios e braquetes ortodônticos.', NULL),
-  (66, 'Imposto — outubro', 'IMPOSTO', 5223.90, '2026-10-20', '2026-10-20', 'BOLETO', 'Imposto sobre o faturamento do mês anterior.', NULL),
-  (67, 'Luz — outubro', 'LUZ', 469.00, '2026-10-20', '2026-10-20', 'BOLETO', 'Conta de energia elétrica.', NULL),
-  (68, 'Luz — outubro', 'LUZ', 469.00, '2026-10-20', '2026-10-29', 'BOLETO', 'Conta de energia elétrica.', NULL),
-  (69, 'Insumos odontológicos', 'INSUMOS', 742.50, '2026-10-22', '2026-10-29', 'BOLETO', 'Resinas e materiais de moldagem.', NULL),
-  (70, 'Repasse endodontia', 'REPASSE', 600.00, '2026-10-23', '2026-10-23', 'PIX', 'Repasse ao endodontista: tratamento concluído em 20/10/2026.', 2),
-  (71, 'Repasse endodontia', 'REPASSE', 600.00, '2026-10-27', '2026-10-27', 'PIX', 'Repasse ao endodontista: tratamento concluído em 22/10/2026.', 2),
-  (72, 'Laboratório Inove — contenção ortodôntica superior', 'LABORATORIO', 250.00, '2026-10-28', '2026-10-28', 'PIX', 'Confecção da peça — pedido nº 12.', NULL),
-  (73, 'Condomínio — novembro', 'CONDOMINIO', 1250.00, '2026-11-05', '2026-11-05', 'BOLETO', 'Taxa condominial da sala 26.', NULL),
-  (74, 'Repasse ortodontia — outubro', 'REPASSE', 11880.00, '2026-11-09', '2026-11-09', 'PIX', 'Repasse mensal ao ortodontista referente a outubro (valor combinado).', 1),
-  (75, 'Salário — Nicole — outubro', 'SALARIO', 2100.00, '2026-11-09', '2026-11-09', 'PIX', 'Pagamento do funcionário referente a outubro.', NULL),
-  (76, 'Salário — Patrícia — outubro', 'SALARIO', 2300.00, '2026-11-09', '2026-11-09', 'PIX', 'Pagamento do funcionário referente a outubro.', NULL),
-  (77, 'Salário — Yasmin — outubro', 'SALARIO', 900.00, '2026-11-09', '2026-11-09', 'PIX', 'Pagamento do funcionário referente a outubro.', NULL),
-  (78, 'Internet — novembro', 'INTERNET', 149.90, '2026-11-10', '2026-11-10', 'BOLETO', 'Plano de internet da clínica.', NULL),
-  (79, 'Água — novembro', 'AGUA', 128.00, '2026-11-15', '2026-11-13', 'BOLETO', 'Conta de água.', NULL),
-  (80, 'Imposto — novembro', 'IMPOSTO', 3552.60, '2026-11-20', '2026-11-19', 'BOLETO', 'Imposto sobre o faturamento do mês anterior.', NULL),
-  (81, 'Luz — novembro', 'LUZ', 423.00, '2026-11-20', '2026-11-19', 'BOLETO', 'Conta de energia elétrica.', NULL);
+  (65, 'Repasse HOF', 'REPASSE', 950.00, '2026-10-16', '2026-10-16', 'PIX', 'Lançado por engano: HOF é da proprietária e não tem repasse.', 4),
+  (66, 'Insumos odontológicos', 'INSUMOS', 900.00, '2026-10-18', '2026-10-16', 'PIX', 'Fios e braquetes ortodônticos.', NULL),
+  (67, 'Imposto — outubro', 'IMPOSTO', 5223.90, '2026-10-20', '2026-10-20', 'BOLETO', 'Imposto sobre o faturamento do mês anterior.', NULL),
+  (68, 'Luz — outubro', 'LUZ', 469.00, '2026-10-20', '2026-10-20', 'BOLETO', 'Conta de energia elétrica.', NULL),
+  (69, 'Luz — outubro', 'LUZ', 469.00, '2026-10-20', '2026-10-29', 'BOLETO', 'Conta de energia elétrica.', NULL),
+  (70, 'Insumos odontológicos', 'INSUMOS', 742.50, '2026-10-22', '2026-10-29', 'BOLETO', 'Resinas e materiais de moldagem.', NULL),
+  (71, 'Repasse endodontia', 'REPASSE', 600.00, '2026-10-23', '2026-10-23', 'PIX', 'Repasse ao endodontista: tratamento concluído em 20/10/2026.', 2),
+  (72, 'Repasse endodontia', 'REPASSE', 600.00, '2026-10-27', '2026-10-27', 'PIX', 'Repasse ao endodontista: tratamento concluído em 22/10/2026.', 2),
+  (73, 'Laboratório Inove — contenção ortodôntica superior', 'LABORATORIO', 250.00, '2026-10-28', '2026-10-28', 'PIX', 'Confecção da peça — pedido nº 12.', NULL),
+  (74, 'Condomínio — novembro', 'CONDOMINIO', 1250.00, '2026-11-05', '2026-11-05', 'BOLETO', 'Taxa condominial da sala 26.', NULL),
+  (75, 'Repasse ortodontia — outubro', 'REPASSE', 11880.00, '2026-11-09', '2026-11-09', 'PIX', 'Repasse mensal ao ortodontista referente a outubro (valor combinado).', 1),
+  (76, 'Salário — Nicole — outubro', 'SALARIO', 2100.00, '2026-11-09', '2026-11-09', 'PIX', 'Pagamento do funcionário referente a outubro.', NULL),
+  (77, 'Salário — Patrícia — outubro', 'SALARIO', 2300.00, '2026-11-09', '2026-11-09', 'PIX', 'Pagamento do funcionário referente a outubro.', NULL),
+  (78, 'Salário — Yasmin — outubro', 'SALARIO', 900.00, '2026-11-09', '2026-11-09', 'PIX', 'Pagamento do funcionário referente a outubro.', NULL),
+  (79, 'Internet — novembro', 'INTERNET', 149.90, '2026-11-10', '2026-11-10', 'BOLETO', 'Plano de internet da clínica.', NULL),
+  (80, 'Água — novembro', 'AGUA', 128.00, '2026-11-15', '2026-11-13', 'BOLETO', 'Conta de água.', NULL),
+  (81, 'Imposto — novembro', 'IMPOSTO', 3552.60, '2026-11-20', '2026-11-19', 'BOLETO', 'Imposto sobre o faturamento do mês anterior.', NULL),
+  (82, 'Luz — novembro', 'LUZ', 423.00, '2026-11-20', '2026-11-19', 'BOLETO', 'Conta de energia elétrica.', NULL);
 -- [FIM MASSA]
 
 -- ---------------------------------------------------------------------
@@ -6881,7 +6882,8 @@ ORDER BY VL_RECEBIDO DESC;
 
 -- G16 — Quais pacientes de ortodontia foram atendidos nos últimos 45 dias
 -- e estão sem retorno agendado?
--- Atende: PR04 (o retorno é agendado antes de o paciente sair), tratamento contínuo de ortodontia
+-- Atende: RF21 e PR04 (o retorno é agendado antes de o paciente sair) — consulta
+-- de apoio à recepção no tratamento contínuo de ortodontia; não responde a P nem a KPI
 SELECT p.NM_PACIENTE, MAX(DATE(c.DT_HR_INICIO)) AS DT_ULTIMA_CONSULTA, t.NR_TELEFONE
 FROM CONSULTA c
 JOIN PACIENTE p ON p.ID_PACIENTE = c.ID_PACIENTE
