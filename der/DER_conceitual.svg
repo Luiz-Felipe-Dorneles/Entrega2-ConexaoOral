@@ -650,5 +650,23 @@
 <text x="1435.0" y="892.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="middle">(0,n)</text>
 <rect x="2067.7" y="882.0" width="24.6" height="13.0" fill="#ffffff" stroke="none" stroke-width="0"/>
 <text x="2080.0" y="892.0" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="11" font-weight="400" fill="#000000" text-anchor="middle">(0,n)</text>
+<g id="legenda">
+<rect x="10" y="130" width="490" height="202" fill="#ffffff" stroke="#000000" stroke-width="1.0"/>
+<text x="22" y="152" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#000000">Legenda (notação brModelo / Heuser)</text>
+<circle cx="40" cy="172" r="4" fill="#000000" stroke="#000000"/>
+<text x="70" y="176" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="12" fill="#000000">Atributo identificador</text>
+<circle cx="40" cy="192" r="4" fill="#ffffff" stroke="#000000"/>
+<text x="70" y="196" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="12" fill="#000000">Atributo comum; (0,1) = opcional; (1,2) = multivalorado</text>
+<ellipse cx="42" cy="212" rx="20" ry="6" fill="#ffffff" stroke="#000000"/>
+<text x="70" y="216" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="12" fill="#000000">Atributo composto (elipse com subatributos)</text>
+<line x1="22" y1="232" x2="62" y2="232" stroke="#000000" stroke-width="3.5"/>
+<text x="70" y="236" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="12" fill="#000000">Linha grossa = relacionamento identificador: ANAMNESE é identificada</text>
+<text x="70" y="256" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="12" fill="#000000">pelo PACIENTE (não tem identificador próprio); ITEM_ORCAMENTO é</text>
+<text x="70" y="276" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="12" fill="#000000">identificado pelo ORCAMENTO + NR_ITEM</text>
+<rect x="22" y="283" width="40" height="18" fill="none" stroke="#000000"/>
+<polygon points="30,292 42,286 54,292 42,298" fill="#ffffff" stroke="#000000"/>
+<text x="70" y="296" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="12" fill="#000000">Entidade associativa (retângulo em volta do losango)</text>
+<text x="70" y="316" font-family="'Liberation Sans', Arial, Helvetica, sans-serif" font-size="12" fill="#000000">Sem chaves estrangeiras: elas só aparecem no modelo lógico</text>
+</g>
 </g>
 </svg>
