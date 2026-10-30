@@ -9,7 +9,7 @@
 ## Notação (esqueleto, seção 2)
 
 - Tabela = retângulo com o nome no topo e uma linha por coluna (nome e tipo).
-- Chave dourada = **PK**; chave prateada = **FK**; as duas = coluna que é PK e FK.
+- Marca **PK**, **FK** ou **PK, FK** escrita ao lado do tipo de cada coluna-chave; os ícones repetem a informação (chave dourada = PK; chave prateada = FK; as duas = coluna que é PK e FK).
 - Ligação = linha entre a tabela da FK e a tabela referenciada, com (mín, máx) em cada ponta.
 
 ## De onde veio cada tabela
@@ -135,7 +135,7 @@
 
 | Coluna | Tipo | Chave | Nulo? |
 |---|---|---|---|
-| ID_PACIENTE | INT | PK + FK | não |
+| ID_PACIENTE | INT | PK, FK | não |
 | NR_ORDEM | TINYINT | PK | não |
 | NR_TELEFONE | VARCHAR(11) |  | não |
 
@@ -143,7 +143,7 @@
 
 | Coluna | Tipo | Chave | Nulo? |
 |---|---|---|---|
-| ID_PACIENTE | INT | PK + FK | não |
+| ID_PACIENTE | INT | PK, FK | não |
 | DT_PREENCHIMENTO | DATE |  | não |
 | TP_ASSINANTE | VARCHAR(11) |  | não |
 | DS_ARQUIVO_DIGITALIZADO | VARCHAR(200) |  | não |
@@ -190,7 +190,7 @@
 
 | Coluna | Tipo | Chave | Nulo? |
 |---|---|---|---|
-| ID_ORCAMENTO | INT | PK + FK | não |
+| ID_ORCAMENTO | INT | PK, FK | não |
 | NR_ITEM | TINYINT | PK | não |
 | ID_PROCEDIMENTO | INT | FK | não |
 | CD_DENTE | VARCHAR(3) |  | não |
@@ -233,8 +233,8 @@
 
 | Coluna | Tipo | Chave | Nulo? |
 |---|---|---|---|
-| ID_CONSULTA | INT | PK + FK | não |
-| ID_PROCEDIMENTO | INT | PK + FK | não |
+| ID_CONSULTA | INT | PK, FK | não |
+| ID_PROCEDIMENTO | INT | PK, FK | não |
 | CD_DENTE | VARCHAR(3) | PK | não |
 | DS_OBSERVACAO | VARCHAR(500) |  | sim |
 
@@ -265,8 +265,8 @@
 
 | Coluna | Tipo | Chave | Nulo? |
 |---|---|---|---|
-| ID_CONSULTA | INT | PK + FK | não |
-| ID_MEDICAMENTO | INT | PK + FK | não |
+| ID_CONSULTA | INT | PK, FK | não |
+| ID_MEDICAMENTO | INT | PK, FK | não |
 
 ### LABORATORIO
 
