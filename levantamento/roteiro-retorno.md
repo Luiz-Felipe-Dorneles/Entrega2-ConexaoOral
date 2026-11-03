@@ -1,4 +1,4 @@
-# Roteiro da visita de retorno — Conexão Oral
+# Roteiro da visita de retorno (2ª entrevista) — Conexão Oral
 
 A conferência do levantamento com o sócio e a validação pela responsável foram concluídas em 26/10/2026. Esta visita de retorno serve para três coisas: **cumprir o que falta para a comprovação**, **fechar os poucos pontos "a levantar"** e **conferir números que a massa de dados usa como premissa**. Os itens que mudaram a estrutura do banco estão indicados na última coluna da seção 2. Se alguma resposta mudar um número, o grupo ajusta a massa (`docs/gerador_massa.py`) e o texto do README.
 
@@ -6,14 +6,14 @@ A conferência do levantamento com o sócio e a validação pela responsável fo
 
 ## 1. Comprovação (obrigatório)
 
-- [x] Foto da entrevista no local, com a Dra. Cristiane e os integrantes presentes (JPG ou PNG, para `evidencias/entrevista.jpg`). *Tirada em 28/10/2026: Cauã, Guilherme, Dra. Cristiane e Vitor.*
+- [x] Foto da entrevista no local, com a Dra. Cristiane e os integrantes presentes (JPG ou PNG, para `evidencias/entrevista.jpg`). *Tirada em 28/10/2026, por uma funcionária da clínica: Cauã, Guilherme, Dra. Cristiane e Vitor. Enviada ao repositório em 30/10/2026.*
 - [x] Foto final do grupo com a entrevistada. *A mesma foto (`evidencias/entrevista.jpg`).*
-- [x] Anotar data, horário, duração, integrantes presentes e quem perguntou, anotou e fotografou (README, "Relato da entrevista"). *28/10/2026, 15h22, com a Dra. Cristiane, que respondeu; presentes Guilherme Maurício (perguntou e anotou), Cauã Sureira Gouveia e Vitor Santos Araújo; duração de 2 horas.*
+- [x] Anotar data, horário, duração, integrantes presentes e quem perguntou, anotou e fotografou (README, "Relato da entrevista"). *28/10/2026, 15h22, com a Dra. Cristiane, que respondeu; presentes Guilherme Maurício (perguntou e anotou), Cauã Sureira Gouveia e Vitor Santos Araújo; foto tirada por uma funcionária da clínica; duração de 2 horas.*
 - [x] Telefone da Dra. Cristiane (ou confirmar que o contato é o telefone da clínica). *(11) 96516-6080, publicação autorizada por ela.*
 - [x] Confirmar que nenhuma foto mostra paciente ou tela com dado pessoal. *Conferido: aparecem só a Dra. e os integrantes; nenhuma tela à vista.*
 - [x] Opcional: fotos da recepção (`responsavel_recepcao.jpg`, `logotipo_recepcao.jpg`). *Não foram tiradas as opcionais das salas, da ficha de anamnese em branco, da guia em branco nem do caderno da autoclave.*
 
-## 2. Pontos que estavam "a levantar" — respondidos em 28 e 29/10/2026
+## 2. Pontos que estavam "a levantar" — respondidos em 28/10/2026 (registro em 28 e 29/10)
 
 As 18 perguntas foram respondidas pela Dra. Cristiane na visita de 28/10/2026, com registro em 28 e 29/10/2026 (levantamento, seção 12). A última coluna diz o que mudou no trabalho.
 
