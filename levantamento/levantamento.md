@@ -1,18 +1,20 @@
 # Levantamento de campo — Conexão Oral Odontologia Especializada (Entrega 2)
 
-Este texto organiza o que o grupo levantou na clínica para a Entrega 2. Ele foi organizado pelo grupo a partir das anotações da visita, com apoio do Claude na redação (README, seção 6, Uso 2); não é transcrição de perguntas e respostas. Em cada ponto, separamos o que foi **dito** pelo entrevistado, o que foi **observado** no local e o que foi **calculado** pelo grupo. Nenhum dado real de paciente foi anotado: registramos só a estrutura das informações (quais campos existem), nunca o conteúdo.
+Este texto organiza o que o grupo levantou na clínica para a Entrega 2. Ele foi organizado pelo grupo a partir das anotações da visita, com apoio do Claude na redação (README, seção 6, Usos 2, 4, 5 e 6); não é transcrição de perguntas e respostas. Em cada ponto, separamos o que foi **dito** pelo entrevistado, o que foi **observado** no local e o que foi **calculado** pelo grupo. Nenhum dado real de paciente foi anotado: registramos só a estrutura das informações (quais campos existem), nunca o conteúdo.
 
 ## 1. Visita, fontes e validação
 
-- **Conferência presencial:** 26/10/2026, às 16h, na própria clínica.
+O levantamento foi feito em **duas entrevistas** na clínica: a 1ª em 26/10/2026, com o integrante Guilherme Maurício, e a 2ª em 28/10/2026, com o grupo e a Dra. Cristiane.
+
+- **1ª entrevista (conferência presencial):** 26/10/2026, às 16h, na própria clínica.
 - **Quem respondeu:** Guilherme Silva Maurício, sócio da clínica (sem atuação clínica), marido da Dra. Cristiane e integrante do grupo.
 - **Quem validou:** Dra. Cristiane, responsável pela clínica, que leu o levantamento completo e o validou em 26/10/2026, às 19h44, sem correções (validação informada por Guilherme Maurício).
 - **Observação presencial:** feita por Guilherme Maurício em 26/10/2026, às 16h (seção 10).
 - **Contato da clínica:** (11) 93148-6400 (telefone e WhatsApp). Segunda pessoa de contato: Dra. Cristiane.
 - **Autorizações:** a Dra. Cristiane autorizou o uso da imagem da clínica e a divulgação, no trabalho, do faturamento e dos valores médios por especialidade. A clínica foi informada de que toda a massa de dados do banco é fictícia.
-- **Visita de retorno:** 28/10/2026, às 15h22, com duração de 2 horas, com a Dra. Cristiane Leite Maciel, na clínica. As respostas foram dadas pela Dra. Cristiane. Integrantes presentes: Guilherme Maurício (perguntou e anotou), Cauã Sureira Gouveia e Vitor Santos Araújo. Registro em 28 e 29/10/2026 (seção 12).
+- **2ª entrevista (visita de retorno):** 28/10/2026, às 15h22, com duração de 2 horas, com a Dra. Cristiane Leite Maciel, na clínica. As respostas foram dadas pela Dra. Cristiane. Integrantes presentes: Guilherme Maurício (perguntou e anotou), Cauã Sureira Gouveia e Vitor Santos Araújo. Registro em 28 e 29/10/2026 (seção 12).
 - **Contato da responsável:** (11) 96516-6080 (publicação autorizada por ela).
-- **Comprovação:** foto da entrevista no local, com a Dra. Cristiane e os três integrantes, em 28/10/2026 (`evidencias/entrevista.jpg`).
+- **Comprovação:** foto da 2ª entrevista no local, com a Dra. Cristiane e os três integrantes, em 28/10/2026, tirada por uma funcionária da clínica (`evidencias/entrevista.jpg`). Por problemas pessoais do grupo, a foto só foi enviada ao repositório em 30/10/2026.
 
 ## 2. Identificação
 
@@ -149,7 +151,7 @@ Em 26/10/2026, às 16h, foi observado: o agendamento é feito no Simples Dental,
 - **Itens novos no modelo:** especialidade, sala, funcionário, orçamento, procedimentos, radiografia, atestado, despesas e repasse, teste da autoclave, idas da peça ao laboratório.
 - **Itens que saíram ou foram simplificados:** convênio sem dados próprios; guia só com os dados que a clínica usa; laboratório sem cadastro próprio no sistema (passa a ter no banco); estoque e compras não existem.
 
-## 12. Visita de retorno (28 e 29/10/2026)
+## 12. Visita de retorno — 2ª entrevista (28/10/2026; registro em 28 e 29/10)
 
 As perguntas que tinham ficado "a levantar" foram respondidas pela Dra. Cristiane na visita de retorno, em 28/10/2026, na clínica. Guilherme Maurício perguntou e anotou; o registro foi feito em 28 e 29/10/2026. O que já foi incorporado nas seções acima (cadastros e pagamento) não se repete aqui.
 
@@ -164,4 +166,4 @@ As perguntas que tinham ficado "a levantar" foram respondidas pela Dra. Cristian
 
 ## 13. Pendências
 
-Não há pendências: não há mais perguntas à clínica, e a foto da entrevista no local foi tirada em 28/10/2026 (`evidencias/entrevista.jpg`).
+Não há pendências: não há mais perguntas à clínica, e a foto da 2ª entrevista no local foi tirada em 28/10/2026 (`evidencias/entrevista.jpg`).
