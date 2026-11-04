@@ -83,7 +83,7 @@ Identificador marcado com **@**.
 |---|---|---|---|---|---|---|---|
 | R01 | ESPECIALIDADE | (1,1) | atua em | (0,n) | DENTISTA | — | Uma especialidade por dentista; 7 dentistas, 7 especialidades. |
 | R02 | ESPECIALIDADE | (0,1) | classifica | (0,n) | PROCEDIMENTO | — | Cada procedimento clínico é de uma especialidade; a radiografia, feita pela auxiliar para todas, não tem. |
-| R03 | CONVENIO | (0,1) | cobre | (0,n) | PACIENTE | NR_CARTEIRINHA | Paciente de convênio tem nome do convênio e carteirinha; mais de um convênio nunca aconteceu. |
+| R03 | CONVENIO | (0,1) | cobre | (0,n) | PACIENTE | NR_CARTEIRINHA | Paciente de convênio tem nome do convênio e carteirinha; nunca teve dois convênios ao mesmo tempo (a troca acontece — ver R18). |
 | R04 | PACIENTE | (1,1) | preenche (identificador) | (0,1) | ANAMNESE | — | Ficha preenchida e assinada na chegada do paciente novo; uma por paciente (relacionamento identificador). |
 | R05 | PACIENTE | (1,1) | agenda | (0,n) | CONSULTA | — | O sistema exige paciente, dentista, dia e horário para salvar o agendamento (RN04). |
 | R06 | DENTISTA | (1,1) | atende | (0,n) | CONSULTA | — | Idem (RN04). |
