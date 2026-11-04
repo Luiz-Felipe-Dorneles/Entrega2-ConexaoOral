@@ -9,30 +9,23 @@
 --   Terminal: mysql -u root -p --default-character-set=utf8mb4 < docs/script.sql
 -- Todos os dados são fictícios (nenhum paciente, dentista ou
 -- funcionário real). A massa (seção 4) é gerada por docs/gerador_massa.py.
+--
+-- Versão simplificada (03/11/2026): só usa comandos vistos em aula
+-- (CREATE, INSERT, SELECT com JOIN e LEFT JOIN, WHERE, BETWEEN, LIKE,
+-- IN, DISTINCT, ORDER BY, GROUP BY com COUNT/SUM, UPDATE e DELETE).
+-- O que mudou em relação à versão anterior: docs/mudancas-sql.md.
+--
+-- "Hoje" da massa de dados: segunda-feira, 26/10/2026, 13h. As datas
+-- das consultas estão escritas no próprio SELECT (ex.: BETWEEN
+-- '2026-09-01' AND '2026-09-30'); para outro período, troque as datas.
 -- =====================================================================
 
 -- ---------------------------------------------------------------------
 -- 1. CREATE DATABASE
 -- ---------------------------------------------------------------------
-SET NAMES utf8mb4;
 DROP DATABASE IF EXISTS conexao_oral;
-CREATE DATABASE conexao_oral
-  DEFAULT CHARACTER SET utf8mb4
-  DEFAULT COLLATE utf8mb4_0900_ai_ci;
+CREATE DATABASE conexao_oral;
 USE conexao_oral;
-
--- "Hoje" da massa de dados: segunda-feira, 26/10/2026, 13h (dia da
--- visita à clínica). As consultas usam esta data; em produção,
--- basta trocar por CURDATE() e NOW().
-SET @DATA_REF    = DATE('2026-10-26');
-SET @AGORA_REF   = TIMESTAMP('2026-10-26 13:00:00');
--- Próximo dia útil (sem contar feriados) e último mês fechado.
-SET @PROX_UTIL   = CASE DAYOFWEEK(@DATA_REF) WHEN 6 THEN DATE_ADD(@DATA_REF, INTERVAL 3 DAY)
-                                             WHEN 7 THEN DATE_ADD(@DATA_REF, INTERVAL 2 DAY)
-                                             ELSE DATE_ADD(@DATA_REF, INTERVAL 1 DAY) END;
-SET @MES_INI     = CAST(DATE_FORMAT(@DATA_REF, '%Y-%m-01') AS DATE);
-SET @MES_ANT_INI = DATE_SUB(@MES_INI, INTERVAL 1 MONTH);
-SET @MES_ANT_FIM = LAST_DAY(@MES_ANT_INI);
 
 -- ---------------------------------------------------------------------
 -- 2 e 3. CREATE TABLE com constraints (PK, FK, NOT NULL, UNIQUE,
@@ -46,7 +39,7 @@ CREATE TABLE ESPECIALIDADE (
   NM_ESPECIALIDADE  VARCHAR(40)  NOT NULL,
   CONSTRAINT PK_ESPECIALIDADE PRIMARY KEY (ID_ESPECIALIDADE),
   CONSTRAINT UQ_ESPECIALIDADE_NOME UNIQUE (NM_ESPECIALIDADE)
-) ENGINE = InnoDB;
+);
 
 -- Dentista: 7 hoje, uma especialidade por dentista.
 CREATE TABLE DENTISTA (
@@ -69,11 +62,8 @@ CREATE TABLE DENTISTA (
   CONSTRAINT UQ_DENTISTA_CRO UNIQUE (ID_CRO),                                                -- RN25
   CONSTRAINT FK_DENTISTA_ESPECIALIDADE FOREIGN KEY (ID_ESPECIALIDADE)
     REFERENCES ESPECIALIDADE (ID_ESPECIALIDADE),
-  CONSTRAINT CK_DENTISTA_CRO CHECK (REGEXP_LIKE(ID_CRO, '^[0-9]{4,8}$')),
-  CONSTRAINT CK_DENTISTA_TELEFONE CHECK (REGEXP_LIKE(NR_TELEFONE, '^[0-9]{10,11}$')),
-  CONSTRAINT CK_DENTISTA_CEP CHECK (REGEXP_LIKE(CD_CEP, '^[0-9]{8}$')),
   CONSTRAINT CK_DENTISTA_VINCULO CHECK (TP_VINCULO IN ('PROPRIETARIA', 'AUTONOMO'))
-) ENGINE = InnoDB;
+);
 
 -- Funcionário (não dentista): recepcionista, auxiliar de dentista e
 -- auxiliar de limpeza. Nenhum campo é único entre funcionários.
@@ -98,10 +88,8 @@ CREATE TABLE FUNCIONARIO (
   CONSTRAINT CK_FUNCIONARIO_FUNCAO CHECK (TP_FUNCAO IN
     ('RECEPCIONISTA', 'AUXILIAR DE DENTISTA', 'AUXILIAR DE LIMPEZA')),
   CONSTRAINT CK_FUNCIONARIO_SEXO CHECK (TP_SEXO IN ('M', 'F')),
-  CONSTRAINT CK_FUNCIONARIO_TELEFONE CHECK (REGEXP_LIKE(NR_TELEFONE, '^[0-9]{10,11}$')),
-  CONSTRAINT CK_FUNCIONARIO_CEP CHECK (REGEXP_LIKE(CD_CEP, '^[0-9]{8}$')),
   CONSTRAINT CK_FUNCIONARIO_DESLIGAMENTO CHECK (DT_DESLIGAMENTO IS NULL OR DT_DESLIGAMENTO >= DT_ADMISSAO)
-) ENGINE = InnoDB;
+);
 
 -- Sala: 2 salas, 1 cadeira em cada, com horário de uso próprio.
 CREATE TABLE SALA (
@@ -113,7 +101,7 @@ CREATE TABLE SALA (
   CONSTRAINT UQ_SALA_NOME UNIQUE (NM_SALA),
   CONSTRAINT CK_SALA_HORARIO CHECK (HR_ABERTURA >= '08:00:00'
     AND HR_FECHAMENTO <= '18:00:00' AND HR_ABERTURA < HR_FECHAMENTO)                       -- RP01, RN11
-) ENGINE = InnoDB;
+);
 
 -- Convênio: a clínica só precisa do nome (5 convênios).
 CREATE TABLE CONVENIO (
@@ -122,7 +110,7 @@ CREATE TABLE CONVENIO (
   IN_ATIVO          BOOLEAN      NOT NULL DEFAULT TRUE,
   CONSTRAINT PK_CONVENIO PRIMARY KEY (ID_CONVENIO),
   CONSTRAINT UQ_CONVENIO_NOME UNIQUE (NM_CONVENIO)
-) ENGINE = InnoDB;
+);
 
 -- Paciente: campos da Ficha de Anamnese (dados pessoais). O responsável
 -- legal do menor fica no próprio cadastro (nome e CPF), como no sistema;
@@ -146,22 +134,21 @@ CREATE TABLE PACIENTE (
   NR_CARTEIRINHA           VARCHAR(20)  NULL,
   NM_RESPONSAVEL_LEGAL     VARCHAR(100) NULL,
   ID_CPF_RESPONSAVEL       CHAR(11)     NULL,
-  DT_CADASTRO              DATE         NOT NULL DEFAULT (CURRENT_DATE),
+  DT_CADASTRO              DATE         NOT NULL,
   CONSTRAINT PK_PACIENTE PRIMARY KEY (ID_PACIENTE),
   CONSTRAINT UQ_PACIENTE_CPF UNIQUE (ID_CPF),                                                -- RN25
   CONSTRAINT UQ_PACIENTE_CARTEIRINHA UNIQUE (ID_CONVENIO, NR_CARTEIRINHA),
   CONSTRAINT FK_PACIENTE_CONVENIO FOREIGN KEY (ID_CONVENIO)
     REFERENCES CONVENIO (ID_CONVENIO),
   CONSTRAINT CK_PACIENTE_SEXO CHECK (TP_SEXO IN ('M', 'F')),
-  CONSTRAINT CK_PACIENTE_CPF CHECK (REGEXP_LIKE(ID_CPF, '^[0-9]{11}$')),
-  CONSTRAINT CK_PACIENTE_CEP CHECK (REGEXP_LIKE(CD_CEP, '^[0-9]{8}$')),
   CONSTRAINT CK_PACIENTE_ESTADO_CIVIL CHECK (TP_ESTADO_CIVIL IN
     ('SOLTEIRO', 'CASADO', 'DIVORCIADO', 'VIUVO', 'UNIAO ESTAVEL')),
-  CONSTRAINT CK_PACIENTE_CONVENIO CHECK ((ID_CONVENIO IS NULL) = (NR_CARTEIRINHA IS NULL)),   -- RN24
-  CONSTRAINT CK_PACIENTE_RESPONSAVEL CHECK ((NM_RESPONSAVEL_LEGAL IS NULL) = (ID_CPF_RESPONSAVEL IS NULL)), -- RN02
-  CONSTRAINT CK_PACIENTE_CPF_RESPONSAVEL CHECK (REGEXP_LIKE(ID_CPF_RESPONSAVEL, '^[0-9]{11}$')),
+  CONSTRAINT CK_PACIENTE_CONVENIO CHECK ((ID_CONVENIO IS NULL AND NR_CARTEIRINHA IS NULL)
+    OR (ID_CONVENIO IS NOT NULL AND NR_CARTEIRINHA IS NOT NULL)),   -- RN24
+  CONSTRAINT CK_PACIENTE_RESPONSAVEL CHECK ((NM_RESPONSAVEL_LEGAL IS NULL AND ID_CPF_RESPONSAVEL IS NULL)
+    OR (NM_RESPONSAVEL_LEGAL IS NOT NULL AND ID_CPF_RESPONSAVEL IS NOT NULL)),   -- RN02
   CONSTRAINT CK_PACIENTE_RESPONSAVEL_DIFERENTE CHECK (ID_CPF_RESPONSAVEL <> ID_CPF)            -- RN02
-) ENGINE = InnoDB;
+);
 
 -- Telefone do paciente (atributo multivalorado: até dois).
 CREATE TABLE TELEFONE_PACIENTE (
@@ -171,10 +158,9 @@ CREATE TABLE TELEFONE_PACIENTE (
   CONSTRAINT PK_TELEFONE_PACIENTE PRIMARY KEY (ID_PACIENTE, NR_ORDEM),
   CONSTRAINT UQ_TELEFONE_PACIENTE UNIQUE (ID_PACIENTE, NR_TELEFONE),
   CONSTRAINT FK_TELEFONE_PACIENTE FOREIGN KEY (ID_PACIENTE)
-    REFERENCES PACIENTE (ID_PACIENTE) ON DELETE CASCADE,
-  CONSTRAINT CK_TELEFONE_ORDEM CHECK (NR_ORDEM IN (1, 2)),
-  CONSTRAINT CK_TELEFONE_NUMERO CHECK (REGEXP_LIKE(NR_TELEFONE, '^[0-9]{10,11}$'))
-) ENGINE = InnoDB;
+    REFERENCES PACIENTE (ID_PACIENTE),
+  CONSTRAINT CK_TELEFONE_ORDEM CHECK (NR_ORDEM IN (1, 2))
+);
 
 -- Ficha de Anamnese: uma por paciente (1:1), com as respostas de saúde
 -- em campos próprios (P04) e o caminho da ficha escaneada (RP03).
@@ -206,7 +192,7 @@ CREATE TABLE ANAMNESE (
     REFERENCES PACIENTE (ID_PACIENTE),
   CONSTRAINT CK_ANAMNESE_ASSINANTE CHECK (TP_ASSINANTE IN ('PACIENTE', 'RESPONSAVEL')),  -- RN02
   CONSTRAINT CK_ANAMNESE_ESCOVACOES CHECK (QT_ESCOVACOES_DIA BETWEEN 0 AND 10)
-) ENGINE = InnoDB;
+);
 
 -- Catálogo de procedimentos (hoje digitados livremente). A radiografia é
 -- um procedimento de apoio, feito pela auxiliar para qualquer especialidade:
@@ -222,8 +208,9 @@ CREATE TABLE PROCEDIMENTO (
   CONSTRAINT FK_PROCEDIMENTO_ESPECIALIDADE FOREIGN KEY (ID_ESPECIALIDADE)
     REFERENCES ESPECIALIDADE (ID_ESPECIALIDADE),
   CONSTRAINT CK_PROCEDIMENTO_TIPO CHECK (TP_PROCEDIMENTO IN ('CLINICO', 'PROVA_PECA', 'RADIOGRAFIA')),
-  CONSTRAINT CK_PROCEDIMENTO_ESPECIALIDADE CHECK ((TP_PROCEDIMENTO = 'RADIOGRAFIA') = (ID_ESPECIALIDADE IS NULL))
-) ENGINE = InnoDB;
+  CONSTRAINT CK_PROCEDIMENTO_ESPECIALIDADE CHECK ((TP_PROCEDIMENTO = 'RADIOGRAFIA' AND ID_ESPECIALIDADE IS NULL)
+    OR (TP_PROCEDIMENTO <> 'RADIOGRAFIA' AND ID_ESPECIALIDADE IS NOT NULL))
+);
 
 -- Orçamento (plano de tratamento) feito pela Dra. responsável.
 -- O valor total não é guardado: é a soma dos itens. Para a clínica,
@@ -239,7 +226,7 @@ CREATE TABLE ORCAMENTO (
     REFERENCES PACIENTE (ID_PACIENTE),
   CONSTRAINT CK_ORCAMENTO_SITUACAO CHECK (TP_SITUACAO IN
     ('EM ABERTO', 'APROVADO', 'FINALIZADO', 'CANCELADO'))
-) ENGINE = InnoDB;
+);
 
 -- Item do orçamento: procedimento, dente e valor (entidade fraca).
 -- CD_DENTE: notação FDI (11–48) ou SUP/INF (arcada) ou GER (boca toda/face).
@@ -251,13 +238,12 @@ CREATE TABLE ITEM_ORCAMENTO (
   VL_ITEM           DECIMAL(10,2) NOT NULL,
   CONSTRAINT PK_ITEM_ORCAMENTO PRIMARY KEY (ID_ORCAMENTO, NR_ITEM),
   CONSTRAINT FK_ITEM_ORCAMENTO_ORCAMENTO FOREIGN KEY (ID_ORCAMENTO)
-    REFERENCES ORCAMENTO (ID_ORCAMENTO) ON DELETE CASCADE,
+    REFERENCES ORCAMENTO (ID_ORCAMENTO),
   CONSTRAINT FK_ITEM_ORCAMENTO_PROCEDIMENTO FOREIGN KEY (ID_PROCEDIMENTO)
     REFERENCES PROCEDIMENTO (ID_PROCEDIMENTO),
   CONSTRAINT CK_ITEM_ORCAMENTO_NR CHECK (NR_ITEM >= 1),
-  CONSTRAINT CK_ITEM_ORCAMENTO_DENTE CHECK (REGEXP_LIKE(CD_DENTE, '^([1-4][1-8]|SUP|INF|GER)$')),
   CONSTRAINT CK_ITEM_ORCAMENTO_VALOR CHECK (VL_ITEM > 0)
-) ENGINE = InnoDB;
+);
 
 -- Pagamento particular: lançado dentro do orçamento (um orçamento
 -- pode ter mais de um pagamento). Débito e PIX à vista; crédito à vista ou em
@@ -277,7 +263,7 @@ CREATE TABLE PAGAMENTO (
   CONSTRAINT CK_PAGAMENTO_FORMA CHECK (TP_FORMA_PAGAMENTO IN ('DEBITO', 'CREDITO', 'PIX')), -- RN14
   CONSTRAINT CK_PAGAMENTO_PARCELAS CHECK ((TP_FORMA_PAGAMENTO IN ('DEBITO', 'PIX') AND QT_PARCELAS = 1)
     OR (TP_FORMA_PAGAMENTO = 'CREDITO' AND QT_PARCELAS IN (1, 3, 6)))                       -- RN14
-) ENGINE = InnoDB;
+);
 
 -- Consulta: agendamento e atendimento num só registro (decisão da E1).
 -- O atestado (no máximo um por consulta, nunca sem atendimento) fica na
@@ -307,14 +293,12 @@ CREATE TABLE CONSULTA (
     REFERENCES DENTISTA (ID_DENTISTA),                                                       -- RN04
   CONSTRAINT FK_CONSULTA_SALA FOREIGN KEY (ID_SALA)
     REFERENCES SALA (ID_SALA),
-  CONSTRAINT CK_CONSULTA_DIA_UTIL CHECK (DAYOFWEEK(DT_HR_INICIO) BETWEEN 2 AND 6),          -- RP01
-  CONSTRAINT CK_CONSULTA_HORARIO CHECK (TIME(DT_HR_INICIO) >= '08:00:00'
-    AND TIME(DATE_ADD(DT_HR_INICIO, INTERVAL QT_DURACAO_MIN MINUTE)) <= '18:00:00'),        -- RP01
   CONSTRAINT CK_CONSULTA_DURACAO CHECK (QT_DURACAO_MIN BETWEEN 45 AND 60),
   CONSTRAINT CK_CONSULTA_ATENDIMENTO CHECK (TP_ATENDIMENTO IN ('PARTICULAR', 'CONVENIO')),
   CONSTRAINT CK_CONSULTA_SITUACAO CHECK (TP_SITUACAO IN
     ('CONFIRMAR', 'CONFIRMADA', 'EM ATENDIMENTO', 'FINALIZADO', 'CANCELADA')),
-  CONSTRAINT CK_CONSULTA_MOTIVO CHECK ((TP_SITUACAO = 'CANCELADA') = (TP_MOTIVO_CANCELAMENTO IS NOT NULL)), -- RN12
+  CONSTRAINT CK_CONSULTA_MOTIVO CHECK ((TP_SITUACAO = 'CANCELADA' AND TP_MOTIVO_CANCELAMENTO IS NOT NULL)
+    OR (TP_SITUACAO <> 'CANCELADA' AND TP_MOTIVO_CANCELAMENTO IS NULL)),   -- RN12
   CONSTRAINT CK_CONSULTA_MOTIVO_VALOR CHECK (TP_MOTIVO_CANCELAMENTO IN
     ('AVISO_PACIENTE', 'SEM_CONFIRMACAO', 'FALTA', 'SEM_REGISTRO')),                         -- RN12, RN13, P01, P05
   CONSTRAINT CK_CONSULTA_CONFIRMACAO CHECK (DT_HR_CONFIRMACAO IS NULL
@@ -323,16 +307,12 @@ CREATE TABLE CONSULTA (
     OR TP_MOTIVO_CANCELAMENTO <> 'SEM_CONFIRMACAO' OR DT_HR_CONFIRMACAO IS NULL),            -- RN13
   CONSTRAINT CK_CONSULTA_ATESTADO CHECK (
     (TP_ATESTADO IS NULL AND DT_ATESTADO IS NULL AND QT_DIAS_ATESTADO IS NULL AND DS_CID_ATESTADO IS NULL)
-    OR (TP_ATESTADO IS NOT NULL AND TP_SITUACAO = 'FINALIZADO' AND DT_ATESTADO IS NOT NULL
-        AND ((TP_ATESTADO = 'PRESENCA' AND QT_DIAS_ATESTADO IS NULL
-              AND DT_ATESTADO = DATE(DT_HR_INICIO))
-          OR (TP_ATESTADO = 'DIAS' AND QT_DIAS_ATESTADO IS NOT NULL
-              AND QT_DIAS_ATESTADO BETWEEN 1 AND 30 AND DT_ATESTADO >= DATE(DT_HR_INICIO)))))  -- RN21
-) ENGINE = InnoDB;
+    OR (TP_ATESTADO = 'PRESENCA' AND TP_SITUACAO = 'FINALIZADO' AND DT_ATESTADO IS NOT NULL
+        AND QT_DIAS_ATESTADO IS NULL)
+    OR (TP_ATESTADO = 'DIAS' AND TP_SITUACAO = 'FINALIZADO' AND DT_ATESTADO IS NOT NULL
+        AND QT_DIAS_ATESTADO BETWEEN 1 AND 30))   -- RN21
+);
 
-CREATE INDEX IX_CONSULTA_DENTISTA_INICIO ON CONSULTA (ID_DENTISTA, DT_HR_INICIO);
-CREATE INDEX IX_CONSULTA_SALA_INICIO     ON CONSULTA (ID_SALA, DT_HR_INICIO);
-CREATE INDEX IX_CONSULTA_PACIENTE_INICIO ON CONSULTA (ID_PACIENTE, DT_HR_INICIO);
 
 -- Procedimento realizado: entidade associativa CONSULTA x PROCEDIMENTO,
 -- com o dente. Preenchido depois do atendimento. O valor fica só no orçamento.
@@ -346,9 +326,8 @@ CREATE TABLE PROCEDIMENTO_REALIZADO (
   CONSTRAINT FK_PROC_REALIZADO_CONSULTA FOREIGN KEY (ID_CONSULTA)
     REFERENCES CONSULTA (ID_CONSULTA),
   CONSTRAINT FK_PROC_REALIZADO_PROCEDIMENTO FOREIGN KEY (ID_PROCEDIMENTO)
-    REFERENCES PROCEDIMENTO (ID_PROCEDIMENTO),
-  CONSTRAINT CK_PROC_REALIZADO_DENTE CHECK (REGEXP_LIKE(CD_DENTE, '^([1-4][1-8]|SUP|INF|GER)$'))
-) ENGINE = InnoDB;
+    REFERENCES PROCEDIMENTO (ID_PROCEDIMENTO)
+);
 
 -- Guia de convênio: só os dados de que a clínica precisa (assinatura,
 -- valor e envio); paciente e procedimentos vêm da consulta. O convênio fica
@@ -372,10 +351,9 @@ CREATE TABLE GUIA (
   CONSTRAINT CK_GUIA_VALOR CHECK (VL_GUIA > 0),
   CONSTRAINT CK_GUIA_ENVIO_ASSINADA CHECK (DT_ENVIO IS NULL OR DT_HR_ASSINATURA IS NOT NULL), -- RN05
   CONSTRAINT CK_GUIA_RECEBIMENTO_ENVIADA CHECK (DT_RECEBIMENTO IS NULL OR DT_ENVIO IS NOT NULL),
-  CONSTRAINT CK_GUIA_DATAS CHECK ((DT_HR_ASSINATURA IS NULL OR DATE(DT_HR_ASSINATURA) >= DT_EMISSAO)
-    AND (DT_ENVIO IS NULL OR DT_ENVIO >= DATE(DT_HR_ASSINATURA))
+  CONSTRAINT CK_GUIA_DATAS CHECK ((DT_HR_ASSINATURA IS NULL OR DT_HR_ASSINATURA >= DT_EMISSAO)
     AND (DT_RECEBIMENTO IS NULL OR DT_RECEBIMENTO >= DT_ENVIO))
-) ENGINE = InnoDB;
+);
 
 -- Medicamento: lista que já vem no sistema (dosagem, orientação e
 -- indicação de controlado preenchidas).
@@ -387,7 +365,7 @@ CREATE TABLE MEDICAMENTO (
   IN_CONTROLADO     BOOLEAN      NOT NULL DEFAULT FALSE,
   CONSTRAINT PK_MEDICAMENTO PRIMARY KEY (ID_MEDICAMENTO),
   CONSTRAINT UQ_MEDICAMENTO_NOME UNIQUE (NM_MEDICAMENTO)
-) ENGINE = InnoDB;
+);
 
 -- Receituário: os medicamentos receitados em cada consulta (relacionamento
 -- N:N CONSULTA x MEDICAMENTO). A receita não tem número nem dado próprio:
@@ -400,7 +378,7 @@ CREATE TABLE RECEITUARIO (
     REFERENCES CONSULTA (ID_CONSULTA),
   CONSTRAINT FK_RECEITUARIO_MEDICAMENTO FOREIGN KEY (ID_MEDICAMENTO)
     REFERENCES MEDICAMENTO (ID_MEDICAMENTO)
-) ENGINE = InnoDB;
+);
 
 -- Laboratório protético (2): contato pelo WhatsApp, prazo padrão de 7 dias.
 CREATE TABLE LABORATORIO (
@@ -410,9 +388,8 @@ CREATE TABLE LABORATORIO (
   QT_DIAS_PRAZO     TINYINT      NOT NULL DEFAULT 7,
   CONSTRAINT PK_LABORATORIO PRIMARY KEY (ID_LABORATORIO),
   CONSTRAINT UQ_LABORATORIO_NOME UNIQUE (NM_LABORATORIO),
-  CONSTRAINT CK_LABORATORIO_WHATSAPP CHECK (REGEXP_LIKE(NR_WHATSAPP, '^[0-9]{10,11}$')),
   CONSTRAINT CK_LABORATORIO_PRAZO CHECK (QT_DIAS_PRAZO BETWEEN 1 AND 60)                    -- RN26
-) ENGINE = InnoDB;
+);
 
 -- Pedido ao laboratório: cada ida de uma peça protética ao laboratório
 -- (confecção, ajuste, refinamento ou refazimento) é um pedido, feito a partir de uma
@@ -433,10 +410,9 @@ CREATE TABLE PEDIDO_LABORATORIO (
   CONSTRAINT FK_PEDIDO_LABORATORIO FOREIGN KEY (ID_LABORATORIO)
     REFERENCES LABORATORIO (ID_LABORATORIO),                                                 -- RN08
   CONSTRAINT CK_PEDIDO_TIPO CHECK (TP_PEDIDO IN ('CONFECCAO', 'AJUSTE', 'REFINAMENTO', 'REFAZIMENTO')), -- RN28
-  CONSTRAINT CK_PEDIDO_DENTE CHECK (REGEXP_LIKE(CD_DENTE, '^([1-4][1-8]|SUP|INF|GER)$')),
   CONSTRAINT CK_PEDIDO_DATAS CHECK (DT_PREVISTA >= DT_ENVIO
-    AND (DT_CHEGADA IS NULL OR DT_CHEGADA >= DT_ENVIO))                                     -- P03, RN26
-) ENGINE = InnoDB;
+    AND (DT_CHEGADA IS NULL OR DT_CHEGADA >= DT_ENVIO))                                     -- P03
+);
 
 -- Teste biológico semanal da autoclave (hoje anotado em caderno).
 CREATE TABLE TESTE_AUTOCLAVE (
@@ -451,7 +427,7 @@ CREATE TABLE TESTE_AUTOCLAVE (
     REFERENCES FUNCIONARIO (ID_FUNCIONARIO),
   CONSTRAINT CK_TESTE_RESULTADO CHECK (TP_RESULTADO IN ('APROVADO', 'REPROVADO')),
   CONSTRAINT CK_TESTE_REPROVADO CHECK (TP_RESULTADO = 'APROVADO' OR DS_OBSERVACAO IS NOT NULL) -- RN23
-) ENGINE = InnoDB;
+);
 
 -- Despesa (contas a pagar): lançada no financeiro. O repasse aponta o
 -- dentista que recebeu. A data de pagamento já vai preenchida no lançamento
@@ -475,9 +451,10 @@ CREATE TABLE DESPESA (
     'CONDOMINIO', 'INSUMOS', 'REPASSE', 'SALARIO', 'IMPOSTO', 'LABORATORIO',
     'TRANSPORTE', 'CORREIOS')),
   CONSTRAINT CK_DESPESA_FORMA CHECK (TP_FORMA_PAGAMENTO IN ('PIX', 'BOLETO')),              -- RN18
-  CONSTRAINT CK_DESPESA_REPASSE CHECK ((TP_CATEGORIA = 'REPASSE') = (ID_DENTISTA IS NOT NULL)), -- RN17
+  CONSTRAINT CK_DESPESA_REPASSE CHECK ((TP_CATEGORIA = 'REPASSE' AND ID_DENTISTA IS NOT NULL)
+    OR (TP_CATEGORIA <> 'REPASSE' AND ID_DENTISTA IS NULL)),   -- RN17
   CONSTRAINT CK_DESPESA_REPASSE_PIX CHECK (TP_CATEGORIA <> 'REPASSE' OR TP_FORMA_PAGAMENTO = 'PIX')  -- RN17
-) ENGINE = InnoDB;
+);
 
 -- ---------------------------------------------------------------------
 -- 4. INSERT INTO — massa de dados fictícia
@@ -4580,8 +4557,8 @@ INSERT INTO CONSULTA (ID_CONSULTA, ID_PACIENTE, ID_DENTISTA, ID_SALA, DT_HR_INIC
   (830, 232, 1, 2, '2026-10-14 12:30:00', 45, 'PARTICULAR', 'FINALIZADO', NULL, '2026-09-16 13:20:00', '2026-10-13 13:49:00', 'Retorno remarcado: a data original caiu em feriado.', NULL, NULL, NULL, NULL),
   (831, 261, 1, 2, '2026-10-14 13:15:00', 45, 'PARTICULAR', 'CANCELADA', 'FALTA', '2026-09-16 14:05:00', '2026-10-13 10:25:00', 'Paciente não compareceu e não avisou.', NULL, NULL, NULL, NULL),
   (832, 368, 4, 1, '2026-10-14 14:00:00', 45, 'PARTICULAR', 'FINALIZADO', NULL, '2026-10-07 14:05:00', '2026-10-13 14:56:00', NULL, NULL, NULL, NULL, NULL),
-  (833, 262, 1, 2, '2026-10-14 14:00:00', 45, 'CONVENIO', 'FINALIZADO', NULL, '2026-09-16 14:50:00', '2026-10-13 10:03:00', NULL, NULL, NULL, NULL, NULL),
-  (834, 366, 6, 1, '2026-10-14 14:20:00', 45, 'PARTICULAR', 'FINALIZADO', NULL, '2026-10-14 14:10:00', '2026-10-14 14:10:00', 'Encaixe para avaliação periodontal.', NULL, NULL, NULL, NULL),
+  (833, 366, 6, 1, '2026-10-14 14:00:00', 45, 'PARTICULAR', 'FINALIZADO', NULL, '2026-10-14 13:50:00', '2026-10-14 13:50:00', 'Encaixe para avaliação periodontal.', NULL, NULL, NULL, NULL),
+  (834, 262, 1, 2, '2026-10-14 14:00:00', 45, 'CONVENIO', 'FINALIZADO', NULL, '2026-09-16 14:50:00', '2026-10-13 10:03:00', NULL, NULL, NULL, NULL, NULL),
   (835, 395, 4, 1, '2026-10-14 14:45:00', 45, 'PARTICULAR', 'FINALIZADO', NULL, '2026-10-08 15:50:00', '2026-10-13 14:34:00', NULL, NULL, NULL, NULL, NULL),
   (836, 263, 1, 2, '2026-10-14 14:45:00', 45, 'PARTICULAR', 'FINALIZADO', NULL, '2026-09-16 15:35:00', '2026-10-13 12:05:00', NULL, NULL, NULL, NULL, NULL),
   (837, 430, 4, 1, '2026-10-14 15:30:00', 45, 'PARTICULAR', 'FINALIZADO', NULL, '2026-10-09 13:20:00', '2026-10-13 10:56:00', NULL, NULL, NULL, NULL, NULL),
@@ -5908,8 +5885,8 @@ INSERT INTO PROCEDIMENTO_REALIZADO (ID_CONSULTA, ID_PROCEDIMENTO, CD_DENTE, DS_O
   (829, 1, 'GER', NULL),
   (830, 1, 'GER', NULL),
   (832, 22, 'GER', NULL),
-  (833, 1, 'GER', NULL),
-  (834, 30, 'GER', NULL),
+  (833, 30, 'GER', NULL),
+  (834, 1, 'GER', NULL),
   (835, 22, 'GER', NULL),
   (836, 1, 'GER', NULL),
   (837, 22, 'GER', NULL),
@@ -6233,7 +6210,7 @@ INSERT INTO GUIA (ID_GUIA, ID_CONSULTA, ID_CONVENIO, DT_EMISSAO, DT_HR_ASSINATUR
   (183, 825, 4, '2026-10-14', '2026-10-14 09:15:00', '2026-10-15', 60.00, NULL),
   (184, 827, 2, '2026-10-14', '2026-10-14 10:48:00', '2026-10-15', 55.00, NULL),
   (185, 829, 2, '2026-10-14', '2026-10-14 11:39:00', '2026-10-15', 55.00, NULL),
-  (186, 833, 3, '2026-10-14', '2026-10-14 13:52:00', '2026-10-15', 80.00, NULL),
+  (186, 834, 3, '2026-10-14', '2026-10-14 13:52:00', '2026-10-15', 80.00, NULL),
   (187, 840, 2, '2026-10-14', '2026-10-14 16:53:00', '2026-10-15', 55.00, NULL),
   (188, 846, 3, '2026-10-15', '2026-10-15 11:31:00', '2026-10-19', 80.00, NULL),
   (189, 848, 3, '2026-10-15', '2026-10-15 13:10:00', '2026-10-15', 80.00, NULL),
@@ -6461,7 +6438,7 @@ INSERT INTO DESPESA (ID_DESPESA, DS_TITULO, TP_CATEGORIA, VL_DESPESA, DT_VENCIME
 -- 5. SELECT com JOIN (consultas que cruzam várias tabelas)
 -- ---------------------------------------------------------------------
 
--- J01 — Qual é a agenda de hoje, por horário e sala?
+-- J01 — Qual é a agenda de hoje (26/10/2026), por horário e sala?
 SELECT c.DT_HR_INICIO, s.NM_SALA, d.NM_DENTISTA, e.NM_ESPECIALIDADE,
        p.NM_PACIENTE, c.TP_ATENDIMENTO, c.TP_SITUACAO
 FROM CONSULTA c
@@ -6469,10 +6446,10 @@ JOIN SALA s          ON s.ID_SALA = c.ID_SALA
 JOIN DENTISTA d      ON d.ID_DENTISTA = c.ID_DENTISTA
 JOIN ESPECIALIDADE e ON e.ID_ESPECIALIDADE = d.ID_ESPECIALIDADE
 JOIN PACIENTE p      ON p.ID_PACIENTE = c.ID_PACIENTE
-WHERE DATE(c.DT_HR_INICIO) = @DATA_REF
+WHERE c.DT_HR_INICIO BETWEEN '2026-10-26 00:00:00' AND '2026-10-26 23:59:59'
 ORDER BY c.DT_HR_INICIO, s.NM_SALA;
 
--- J02 — Qual é o histórico clínico do paciente da prótese protocolo
+-- J02 — Qual é o histórico clínico do paciente 416, o da prótese protocolo
 -- (consultas, dentista, procedimentos e dentes)?
 SELECT c.DT_HR_INICIO, d.NM_DENTISTA, c.TP_SITUACAO,
        pr.NM_PROCEDIMENTO, r.CD_DENTE
@@ -6480,65 +6457,60 @@ FROM CONSULTA c
 JOIN DENTISTA d ON d.ID_DENTISTA = c.ID_DENTISTA
 LEFT JOIN PROCEDIMENTO_REALIZADO r ON r.ID_CONSULTA = c.ID_CONSULTA
 LEFT JOIN PROCEDIMENTO pr          ON pr.ID_PROCEDIMENTO = r.ID_PROCEDIMENTO
-WHERE c.ID_PACIENTE = (SELECT MIN(o.ID_PACIENTE) FROM ORCAMENTO o
-                       JOIN ITEM_ORCAMENTO i ON i.ID_ORCAMENTO = o.ID_ORCAMENTO
-                       JOIN PROCEDIMENTO pr  ON pr.ID_PROCEDIMENTO = i.ID_PROCEDIMENTO
-                       WHERE pr.NM_PROCEDIMENTO = 'Prótese protocolo' AND o.TP_SITUACAO = 'FINALIZADO')
+WHERE c.ID_PACIENTE = 416
 ORDER BY c.DT_HR_INICIO;
 
--- J03 — Quanto vale cada orçamento de tratamento (fora a ortodontia
--- mensal), quanto já foi pago e qual é o saldo? Pagamento com nota fiscal
--- teve 5% de desconto (RN27): ele quita o valor cheio.
+-- J03 (1/2) — Quanto vale cada orçamento de tratamento (fora a ortodontia
+-- mensal)? O total é a soma dos itens. A parte 2 mostra quanto já foi pago;
+-- saldo = VL_TOTAL (parte 1) − VL_PAGO (parte 2), para o mesmo orçamento.
 SELECT o.ID_ORCAMENTO, p.NM_PACIENTE, o.DT_ORCAMENTO, o.DS_ORCAMENTO, o.TP_SITUACAO,
-       it.VL_TOTAL, COALESCE(pg.VL_PAGO, 0) AS VL_PAGO,
-       ROUND(it.VL_TOTAL - COALESCE(pg.VL_QUITADO, 0), 2) AS VL_SALDO
+       COUNT(*) AS QT_ITENS, SUM(i.VL_ITEM) AS VL_TOTAL
 FROM ORCAMENTO o
-JOIN PACIENTE p ON p.ID_PACIENTE = o.ID_PACIENTE
-JOIN (SELECT ID_ORCAMENTO, SUM(VL_ITEM) AS VL_TOTAL
-      FROM ITEM_ORCAMENTO GROUP BY ID_ORCAMENTO) it ON it.ID_ORCAMENTO = o.ID_ORCAMENTO
-LEFT JOIN (SELECT ID_ORCAMENTO, SUM(VL_PAGAMENTO) AS VL_PAGO,
-                  SUM(CASE WHEN IN_NOTA_FISCAL THEN VL_PAGAMENTO / 0.95 ELSE VL_PAGAMENTO END) AS VL_QUITADO
-           FROM PAGAMENTO GROUP BY ID_ORCAMENTO) pg ON pg.ID_ORCAMENTO = o.ID_ORCAMENTO
-WHERE EXISTS (SELECT 1 FROM ITEM_ORCAMENTO i2
-              JOIN PROCEDIMENTO pr ON pr.ID_PROCEDIMENTO = i2.ID_PROCEDIMENTO
-              JOIN ESPECIALIDADE e ON e.ID_ESPECIALIDADE = pr.ID_ESPECIALIDADE
-              WHERE i2.ID_ORCAMENTO = o.ID_ORCAMENTO AND e.NM_ESPECIALIDADE <> 'Ortodontia')
+JOIN PACIENTE p       ON p.ID_PACIENTE = o.ID_PACIENTE
+JOIN ITEM_ORCAMENTO i ON i.ID_ORCAMENTO = o.ID_ORCAMENTO
+JOIN PROCEDIMENTO pr  ON pr.ID_PROCEDIMENTO = i.ID_PROCEDIMENTO
+LEFT JOIN ESPECIALIDADE e ON e.ID_ESPECIALIDADE = pr.ID_ESPECIALIDADE
+WHERE e.NM_ESPECIALIDADE <> 'Ortodontia' OR e.NM_ESPECIALIDADE IS NULL
+GROUP BY o.ID_ORCAMENTO, p.NM_PACIENTE, o.DT_ORCAMENTO, o.DS_ORCAMENTO, o.TP_SITUACAO
 ORDER BY o.DT_ORCAMENTO DESC, o.ID_ORCAMENTO;
 
--- J04 — Quais guias foram emitidas neste mês, com os quatro dados de que a
+-- J03 (2/2) — Quanto já foi pago em cada orçamento? (pagamento com nota
+-- fiscal tem 5% de desconto — RN27 — e quita o valor cheio)
+SELECT ID_ORCAMENTO, COUNT(*) AS QT_PAGAMENTOS, SUM(VL_PAGAMENTO) AS VL_PAGO
+FROM PAGAMENTO
+GROUP BY ID_ORCAMENTO
+ORDER BY ID_ORCAMENTO;
+
+-- J04 — Quais guias foram emitidas em outubro/2026, com os dados de que a
 -- clínica precisa (paciente, procedimentos, valor e assinatura)?
-SELECT g.ID_GUIA, cv.NM_CONVENIO, p.NM_PACIENTE, DATE(c.DT_HR_INICIO) AS DT_ATENDIMENTO,
-       GROUP_CONCAT(pr.NM_PROCEDIMENTO SEPARATOR ', ') AS DS_PROCEDIMENTOS,
-       g.VL_GUIA, g.DT_HR_ASSINATURA, g.DT_ENVIO
+-- Uma linha por procedimento da guia.
+SELECT g.ID_GUIA, cv.NM_CONVENIO, p.NM_PACIENTE, c.DT_HR_INICIO,
+       pr.NM_PROCEDIMENTO, g.VL_GUIA, g.DT_HR_ASSINATURA, g.DT_ENVIO
 FROM GUIA g
 JOIN CONSULTA c  ON c.ID_CONSULTA = g.ID_CONSULTA
 JOIN PACIENTE p  ON p.ID_PACIENTE = c.ID_PACIENTE
 JOIN CONVENIO cv ON cv.ID_CONVENIO = g.ID_CONVENIO
 LEFT JOIN PROCEDIMENTO_REALIZADO r ON r.ID_CONSULTA = c.ID_CONSULTA
 LEFT JOIN PROCEDIMENTO pr          ON pr.ID_PROCEDIMENTO = r.ID_PROCEDIMENTO
-WHERE g.DT_EMISSAO >= @MES_INI
-GROUP BY g.ID_GUIA, cv.NM_CONVENIO, p.NM_PACIENTE, c.DT_HR_INICIO, g.VL_GUIA,
-         g.DT_HR_ASSINATURA, g.DT_ENVIO
+WHERE g.DT_EMISSAO BETWEEN '2026-10-01' AND '2026-10-31'
 ORDER BY g.ID_GUIA;
 
 -- J05 — Quais receitas foram emitidas nos últimos 30 dias, com os
--- medicamentos e o tipo (comum ou controlada, que vem do medicamento)?
-SELECT DATE(c.DT_HR_INICIO) AS DT_RECEITA, p.NM_PACIENTE, d.NM_DENTISTA,
-       m.NM_MEDICAMENTO, m.DS_DOSAGEM, m.DS_ORIENTACAO,
-       CASE WHEN m.IN_CONTROLADO THEN 'CONTROLADA' ELSE 'COMUM' END AS TP_RECEITA
+-- medicamentos e se o medicamento é controlado (IN_CONTROLADO = 1)?
+SELECT c.DT_HR_INICIO AS DT_RECEITA, p.NM_PACIENTE, d.NM_DENTISTA,
+       m.NM_MEDICAMENTO, m.DS_DOSAGEM, m.DS_ORIENTACAO, m.IN_CONTROLADO
 FROM RECEITUARIO rc
 JOIN CONSULTA c    ON c.ID_CONSULTA = rc.ID_CONSULTA
 JOIN PACIENTE p    ON p.ID_PACIENTE = c.ID_PACIENTE
 JOIN DENTISTA d    ON d.ID_DENTISTA = c.ID_DENTISTA
 JOIN MEDICAMENTO m ON m.ID_MEDICAMENTO = rc.ID_MEDICAMENTO
-WHERE c.DT_HR_INICIO >= DATE_SUB(@DATA_REF, INTERVAL 30 DAY)
+WHERE c.DT_HR_INICIO BETWEEN '2026-09-26 00:00:00' AND '2026-10-26 23:59:59'
 ORDER BY c.DT_HR_INICIO, p.NM_PACIENTE, m.NM_MEDICAMENTO;
 
 -- J06 — Quais pedidos foram feitos ao laboratório, para quem, por qual
--- dentista e em quanto tempo voltaram?
+-- dentista, e quando foram enviados e chegaram?
 SELECT pl.ID_PEDIDO, pl.TP_PEDIDO, pl.DS_PECA, pl.CD_DENTE, p.NM_PACIENTE, d.NM_DENTISTA,
-       l.NM_LABORATORIO, pl.DT_ENVIO, pl.DT_PREVISTA, pl.DT_CHEGADA,
-       DATEDIFF(pl.DT_CHEGADA, pl.DT_ENVIO) AS QT_DIAS
+       l.NM_LABORATORIO, pl.DT_ENVIO, pl.DT_PREVISTA, pl.DT_CHEGADA
 FROM PEDIDO_LABORATORIO pl
 JOIN CONSULTA c    ON c.ID_CONSULTA = pl.ID_CONSULTA
 JOIN PACIENTE p    ON p.ID_PACIENTE = c.ID_PACIENTE
@@ -6547,54 +6519,42 @@ JOIN LABORATORIO l ON l.ID_LABORATORIO = pl.ID_LABORATORIO
 ORDER BY pl.DT_ENVIO, pl.ID_PEDIDO;
 
 -- ---------------------------------------------------------------------
--- 6. UPDATE
--- (o safe update mode do Workbench é desligado só durante UPDATE/DELETE)
+-- 6. UPDATE (cada um altera um registro, identificado pela chave)
 -- ---------------------------------------------------------------------
-SET SQL_SAFE_UPDATES = 0;
 
--- U01 — A recepcionista confirmou pelo WhatsApp a primeira consulta do
--- próximo dia útil (RN13).
-SET @ID_U01 = (SELECT MIN(ID_CONSULTA) FROM CONSULTA
-               WHERE TP_SITUACAO = 'CONFIRMAR' AND DATE(DT_HR_INICIO) = @PROX_UTIL);
+-- U01 — A recepcionista confirmou pelo WhatsApp a consulta 978, a primeira
+-- do próximo dia útil (27/10/2026, 8h) (RN13).
 UPDATE CONSULTA
-SET TP_SITUACAO = 'CONFIRMADA', DT_HR_CONFIRMACAO = @AGORA_REF
-WHERE ID_CONSULTA = @ID_U01;
+SET TP_SITUACAO = 'CONFIRMADA', DT_HR_CONFIRMACAO = '2026-10-26 13:00:00'
+WHERE ID_CONSULTA = 978;
 
--- U02 — Um paciente de amanhã avisou com 24 horas de antecedência que não
--- virá: a consulta fica no histórico como CANCELADA, com o motivo (RN12).
-SET @ID_U02 = (SELECT MAX(ID_CONSULTA) FROM CONSULTA
-               WHERE TP_SITUACAO = 'CONFIRMAR' AND DATE(DT_HR_INICIO) = @PROX_UTIL
-                 AND DT_HR_INICIO >= DATE_ADD(@AGORA_REF, INTERVAL 24 HOUR));
+-- U02 — O paciente da consulta 993 (27/10/2026, 17h) avisou com 24 horas de
+-- antecedência que não virá: a consulta fica no histórico como CANCELADA,
+-- com o motivo (RN12).
 UPDATE CONSULTA
 SET TP_SITUACAO = 'CANCELADA', TP_MOTIVO_CANCELAMENTO = 'AVISO_PACIENTE',
     DS_OBSERVACAO = 'Paciente avisou com 24 horas de antecedência; remarcar na próxima data livre.'
-WHERE ID_CONSULTA = @ID_U02;
+WHERE ID_CONSULTA = 993;
 -- (A remarcação é uma consulta nova, criada com INSERT pela recepcionista — RN12.)
 
--- U03 — O laboratório avisou que a peça que está com ele vai levar mais
--- 2 dias: a previsão de chegada do pedido é atualizada (P03).
-SET @ID_U03 = (SELECT MIN(ID_PEDIDO) FROM PEDIDO_LABORATORIO WHERE DT_CHEGADA IS NULL);
+-- U03 — O laboratório avisou que a peça do pedido 12 vai levar mais
+-- 2 dias: a previsão de chegada passa de 28/10 para 30/10/2026 (P03).
 UPDATE PEDIDO_LABORATORIO
-SET DT_PREVISTA = DATE_ADD(DT_PREVISTA, INTERVAL 2 DAY)
-WHERE ID_PEDIDO = @ID_U03;
+SET DT_PREVISTA = '2026-10-30'
+WHERE ID_PEDIDO = 12;
 
--- U04 — A conta de água vencida, que estava programada para depois, foi
--- paga hoje por boleto: a data de pagamento passa a ser hoje.
+-- U04 — A conta de água de outubro (despesa 63), vencida e programada para
+-- depois, foi paga hoje por boleto: a data de pagamento passa a ser hoje.
 UPDATE DESPESA
-SET DT_PAGAMENTO = @DATA_REF
-WHERE TP_CATEGORIA = 'AGUA' AND DT_PAGAMENTO > @DATA_REF AND DT_VENCIMENTO < @DATA_REF;
+SET DT_PAGAMENTO = '2026-10-26'
+WHERE ID_DESPESA = 63;
 
--- U05 — A Dra. responsável avaliou a radiografia pendente mais antiga; a
--- avaliação fica na observação do procedimento realizado (RN22).
-SET @ID_U05 = (SELECT r.ID_CONSULTA FROM PROCEDIMENTO_REALIZADO r
-               JOIN PROCEDIMENTO pr ON pr.ID_PROCEDIMENTO = r.ID_PROCEDIMENTO
-               JOIN CONSULTA c      ON c.ID_CONSULTA = r.ID_CONSULTA
-               WHERE pr.TP_PROCEDIMENTO = 'RADIOGRAFIA' AND r.DS_OBSERVACAO IS NULL
-               ORDER BY c.DT_HR_INICIO LIMIT 1);
+-- U05 — A Dra. responsável avaliou a radiografia panorâmica da consulta 926
+-- (a pendente mais antiga); a avaliação fica na observação do procedimento
+-- realizado (RN22).
 UPDATE PROCEDIMENTO_REALIZADO
 SET DS_OBSERVACAO = 'Avaliação: sem alterações periapicais.'
-WHERE ID_CONSULTA = @ID_U05 AND DS_OBSERVACAO IS NULL
-  AND ID_PROCEDIMENTO IN (SELECT ID_PROCEDIMENTO FROM PROCEDIMENTO WHERE TP_PROCEDIMENTO = 'RADIOGRAFIA');
+WHERE ID_CONSULTA = 926 AND ID_PROCEDIMENTO = 37 AND CD_DENTE = 'GER';
 
 -- ---------------------------------------------------------------------
 -- 7. DELETE
@@ -6603,53 +6563,43 @@ WHERE ID_CONSULTA = @ID_U05 AND DS_OBSERVACAO IS NULL
 -- ainda não pago, despesa lançada em duplicidade e cadastro duplicado.
 -- ---------------------------------------------------------------------
 
--- D01 — O segundo telefone de um paciente foi desativado e é removido.
-SET @ID_D01 = (SELECT MIN(ID_PACIENTE) FROM TELEFONE_PACIENTE WHERE NR_ORDEM = 2);
+-- D01 — O segundo telefone do paciente 1 foi desativado e é removido.
 DELETE FROM TELEFONE_PACIENTE
-WHERE ID_PACIENTE = @ID_D01 AND NR_ORDEM = 2;
+WHERE ID_PACIENTE = 1 AND NR_ORDEM = 2;
 
--- D02 — Paciente desistiu de um dos itens de um orçamento ainda em aberto
--- e sem pagamento: o item é excluído (o total é recalculado pela soma).
-SET @ID_D02 = (SELECT MIN(o.ID_ORCAMENTO) FROM ORCAMENTO o
-               WHERE o.TP_SITUACAO = 'EM ABERTO'
-                 AND NOT EXISTS (SELECT 1 FROM PAGAMENTO pg WHERE pg.ID_ORCAMENTO = o.ID_ORCAMENTO)
-                 AND (SELECT COUNT(*) FROM ITEM_ORCAMENTO i WHERE i.ID_ORCAMENTO = o.ID_ORCAMENTO) >= 2);
-SET @NR_D02 = (SELECT MAX(NR_ITEM) FROM ITEM_ORCAMENTO WHERE ID_ORCAMENTO = @ID_D02);
+-- D02 — O paciente desistiu do item 2 do orçamento 537 (em aberto e sem
+-- pagamento): o item é excluído (o total do orçamento é a soma dos itens).
 DELETE FROM ITEM_ORCAMENTO
-WHERE ID_ORCAMENTO = @ID_D02 AND NR_ITEM = @NR_D02;
+WHERE ID_ORCAMENTO = 537 AND NR_ITEM = 2;
 
--- D03 — Despesa lançada em duplicidade (mesmo título, valor e vencimento,
--- ainda a pagar) é excluída.
-SET @ID_D03 = (SELECT MAX(d.ID_DESPESA) FROM DESPESA d
-               JOIN DESPESA o ON o.ID_DESPESA < d.ID_DESPESA AND o.DS_TITULO = d.DS_TITULO
-                             AND o.VL_DESPESA = d.VL_DESPESA AND o.DT_VENCIMENTO = d.DT_VENCIMENTO
-               WHERE d.DT_PAGAMENTO > @DATA_REF);
+-- D03 — A conta de luz de outubro foi lançada duas vezes: a cópia (despesa
+-- 69, ainda a pagar) é excluída.
 DELETE FROM DESPESA
-WHERE ID_DESPESA = @ID_D03;
+WHERE ID_DESPESA = 69;
 
--- D04 — Cadastro de paciente feito em duplicidade (mesmo nome e data de
--- nascimento de um cadastro anterior, sem consulta, orçamento nem ficha) é
--- excluído; os telefones saem junto (ON DELETE CASCADE).
--- Um paciente COM histórico não pode ser apagado: a FK bloqueia (RESTRICT).
--- Para demonstrar na apresentação: DELETE FROM PACIENTE WHERE ID_PACIENTE = 1;
-SET @ID_D04 = (SELECT MAX(p.ID_PACIENTE) FROM PACIENTE p
-               JOIN PACIENTE o ON o.ID_PACIENTE < p.ID_PACIENTE
-                              AND o.NM_PACIENTE = p.NM_PACIENTE AND o.DT_NASCIMENTO = p.DT_NASCIMENTO
-               WHERE NOT EXISTS (SELECT 1 FROM CONSULTA c  WHERE c.ID_PACIENTE = p.ID_PACIENTE)
-                 AND NOT EXISTS (SELECT 1 FROM ORCAMENTO x WHERE x.ID_PACIENTE = p.ID_PACIENTE)
-                 AND NOT EXISTS (SELECT 1 FROM ANAMNESE a  WHERE a.ID_PACIENTE = p.ID_PACIENTE));
+-- D04 — O paciente 441 foi cadastrado em duplicidade (mesmo nome e data de
+-- nascimento de um cadastro anterior, sem consulta, orçamento nem ficha) e
+-- é excluído. Primeiro saem os telefones dele (a chave estrangeira não
+-- deixa apagar um paciente que ainda tem telefone), depois o cadastro.
+-- Um paciente COM histórico não pode ser apagado: a chave estrangeira
+-- bloqueia. Para demonstrar: DELETE FROM PACIENTE WHERE ID_PACIENTE = 1;
+-- Para demonstrar um CHECK (débito só à vista — RN14), este INSERT é recusado:
+-- INSERT INTO PAGAMENTO (ID_ORCAMENTO, DT_PAGAMENTO, VL_PAGAMENTO, TP_FORMA_PAGAMENTO, QT_PARCELAS)
+--   VALUES (1, '2026-10-26', 180.00, 'DEBITO', 3);
+DELETE FROM TELEFONE_PACIENTE
+WHERE ID_PACIENTE = 441;
+
 DELETE FROM PACIENTE
-WHERE ID_PACIENTE = @ID_D04;
-
-SET SQL_SAFE_UPDATES = 1;
+WHERE ID_PACIENTE = 441;
 
 -- ---------------------------------------------------------------------
 -- 8. Consultas gerenciais (respondem aos problemas P01–P05 e aos KPIs
--- K01–K15 do README, seção 1.6)
+-- K01–K15 do README, seção 1.6). Os KPIs mensais usam setembro/2026, o
+-- último mês fechado; para outro mês, troque as datas do BETWEEN.
 -- ---------------------------------------------------------------------
 
--- G01 — Quais consultas do próximo dia útil ainda não foram confirmadas
--- (lista para a confirmação por WhatsApp)?
+-- G01 — Quais consultas do próximo dia útil (27/10/2026) ainda não foram
+-- confirmadas (lista para a confirmação por WhatsApp)?
 -- Atende: P01 (consulta combinada e não registrada/confirmada), RN13
 SELECT c.DT_HR_INICIO, s.NM_SALA, d.NM_DENTISTA, p.NM_PACIENTE, t.NR_TELEFONE
 FROM CONSULTA c
@@ -6657,143 +6607,135 @@ JOIN PACIENTE p ON p.ID_PACIENTE = c.ID_PACIENTE
 JOIN DENTISTA d ON d.ID_DENTISTA = c.ID_DENTISTA
 JOIN SALA s     ON s.ID_SALA = c.ID_SALA
 JOIN TELEFONE_PACIENTE t ON t.ID_PACIENTE = p.ID_PACIENTE AND t.NR_ORDEM = 1
-WHERE DATE(c.DT_HR_INICIO) = @PROX_UTIL AND c.TP_SITUACAO = 'CONFIRMAR'
+WHERE c.DT_HR_INICIO BETWEEN '2026-10-27 00:00:00' AND '2026-10-27 23:59:59'
+  AND c.TP_SITUACAO = 'CONFIRMAR'
 ORDER BY c.DT_HR_INICIO, s.NM_SALA;
 
--- G02 — Que percentual das consultas de cada mês foi confirmado na véspera?
+-- G02 — Das consultas agendadas em setembro/2026, quantas foram
+-- confirmadas e qual o percentual?
 -- Atende: P01, K01 (meta proposta: 95%)
-SELECT DATE_FORMAT(DT_HR_INICIO, '%Y-%m') AS MES,
-       COUNT(*) AS QT_AGENDADAS,
-       SUM(DT_HR_CONFIRMACAO < DATE(DT_HR_INICIO)) AS QT_CONFIRMADAS_VESPERA,
-       ROUND(100.0 * SUM(DT_HR_CONFIRMACAO < DATE(DT_HR_INICIO)) / COUNT(*), 1) AS PC_CONFIRMADAS
+-- COUNT(*) conta todas; COUNT(DT_HR_CONFIRMACAO) só as que têm confirmação.
+SELECT COUNT(*) AS QT_AGENDADAS,
+       COUNT(DT_HR_CONFIRMACAO) AS QT_CONFIRMADAS,
+       100.0 * COUNT(DT_HR_CONFIRMACAO) / COUNT(*) AS PC_CONFIRMADAS
 FROM CONSULTA
-WHERE DT_HR_INICIO < @DATA_REF
-  AND (TP_MOTIVO_CANCELAMENTO IS NULL OR TP_MOTIVO_CANCELAMENTO <> 'SEM_REGISTRO')
-GROUP BY DATE_FORMAT(DT_HR_INICIO, '%Y-%m')
-ORDER BY MES;
+WHERE DT_HR_INICIO BETWEEN '2026-09-01 00:00:00' AND '2026-09-30 23:59:59'
+  AND (TP_MOTIVO_CANCELAMENTO IS NULL OR TP_MOTIVO_CANCELAMENTO <> 'SEM_REGISTRO');
 
--- G03 — Quantas vezes por mês um paciente chegou para uma consulta
--- combinada que não estava na agenda?
+-- G03 — Em que dias um paciente chegou para uma consulta combinada que não
+-- estava na agenda?
 -- Atende: P01, K02 (meta proposta: 0 por mês)
-SELECT DATE_FORMAT(DT_HR_INICIO, '%Y-%m') AS MES,
-       COUNT(*) AS QT_SEM_REGISTRO
-FROM CONSULTA
-WHERE TP_MOTIVO_CANCELAMENTO = 'SEM_REGISTRO'
-GROUP BY DATE_FORMAT(DT_HR_INICIO, '%Y-%m')
-ORDER BY MES;
+SELECT c.DT_HR_INICIO, p.NM_PACIENTE, d.NM_DENTISTA, c.DS_OBSERVACAO
+FROM CONSULTA c
+JOIN PACIENTE p ON p.ID_PACIENTE = c.ID_PACIENTE
+JOIN DENTISTA d ON d.ID_DENTISTA = c.ID_DENTISTA
+WHERE c.TP_MOTIVO_CANCELAMENTO = 'SEM_REGISTRO'
+ORDER BY c.DT_HR_INICIO;
 
--- G04 — Qual é a taxa de cancelamento e a de faltas sem aviso por mês?
+-- G04 — Como terminaram as consultas de setembro/2026: realizadas,
+-- canceladas com aviso, sem confirmação ou falta?
 -- Atende: P05 (falta registrada igual a cancelamento), K03 e K04
-SELECT DATE_FORMAT(DT_HR_INICIO, '%Y-%m') AS MES,
-       COUNT(*) AS QT_AGENDADAS,
-       SUM(TP_SITUACAO = 'CANCELADA') AS QT_CANCELADAS,
-       SUM(TP_MOTIVO_CANCELAMENTO = 'AVISO_PACIENTE') AS QT_AVISO_24H,
-       SUM(TP_MOTIVO_CANCELAMENTO = 'SEM_CONFIRMACAO') AS QT_SEM_CONFIRMACAO,
-       SUM(TP_MOTIVO_CANCELAMENTO = 'FALTA') AS QT_FALTAS,
-       ROUND(100.0 * SUM(TP_SITUACAO = 'CANCELADA') / COUNT(*), 1) AS PC_CANCELAMENTO,
-       ROUND(100.0 * SUM(TP_MOTIVO_CANCELAMENTO = 'FALTA') / COUNT(*), 1) AS PC_FALTAS
+-- Taxa de cancelamento = canceladas ÷ total; taxa de faltas = FALTA ÷ total.
+SELECT TP_SITUACAO, TP_MOTIVO_CANCELAMENTO, COUNT(*) AS QT_CONSULTAS
 FROM CONSULTA
-WHERE DT_HR_INICIO < @DATA_REF
+WHERE DT_HR_INICIO BETWEEN '2026-09-01 00:00:00' AND '2026-09-30 23:59:59'
   AND (TP_MOTIVO_CANCELAMENTO IS NULL OR TP_MOTIVO_CANCELAMENTO <> 'SEM_REGISTRO')
-GROUP BY DATE_FORMAT(DT_HR_INICIO, '%Y-%m')
-ORDER BY MES;
+GROUP BY TP_SITUACAO, TP_MOTIVO_CANCELAMENTO
+ORDER BY QT_CONSULTAS DESC;
 
 -- G05 — Quais pacientes mais faltaram ou cancelaram nos últimos 90 dias?
 -- Atende: P05
-SELECT p.NM_PACIENTE, d.NM_DENTISTA,
-       COUNT(*) AS QT_CANCELAMENTOS,
-       SUM(c.TP_MOTIVO_CANCELAMENTO = 'FALTA') AS QT_FALTAS_SEM_AVISO,
-       MAX(DATE(c.DT_HR_INICIO)) AS DT_ULTIMA
+SELECT p.NM_PACIENTE, d.NM_DENTISTA, COUNT(*) AS QT_CANCELAMENTOS
 FROM CONSULTA c
 JOIN PACIENTE p ON p.ID_PACIENTE = c.ID_PACIENTE
 JOIN DENTISTA d ON d.ID_DENTISTA = c.ID_DENTISTA
 WHERE c.TP_MOTIVO_CANCELAMENTO IN ('AVISO_PACIENTE', 'SEM_CONFIRMACAO', 'FALTA')
-  AND c.DT_HR_INICIO >= DATE_SUB(@DATA_REF, INTERVAL 90 DAY)
-  AND c.DT_HR_INICIO < @DATA_REF
-GROUP BY p.ID_PACIENTE, p.NM_PACIENTE, d.NM_DENTISTA
-ORDER BY QT_CANCELAMENTOS DESC, QT_FALTAS_SEM_AVISO DESC, p.NM_PACIENTE
-LIMIT 10;
+  AND c.DT_HR_INICIO BETWEEN '2026-07-28 00:00:00' AND '2026-10-25 23:59:59'
+GROUP BY p.NM_PACIENTE, d.NM_DENTISTA
+ORDER BY QT_CANCELAMENTOS DESC, p.NM_PACIENTE;
 
--- G06 — Quantas guias foram assinadas antes do atendimento, depois, ou
--- continuam sem assinatura, por mês?
--- Atende: P02 (histórico; regra de outubro/2026), K05 (meta: 100% antes)
-SELECT DATE_FORMAT(g.DT_EMISSAO, '%Y-%m') AS MES,
-       COUNT(*) AS QT_GUIAS,
-       SUM(g.DT_HR_ASSINATURA <= c.DT_HR_INICIO) AS QT_ASSINADAS_ANTES,
-       SUM(g.DT_HR_ASSINATURA > c.DT_HR_INICIO) AS QT_ASSINADAS_DEPOIS,
-       SUM(g.DT_HR_ASSINATURA IS NULL) AS QT_SEM_ASSINATURA,
-       ROUND(100.0 * SUM(g.DT_HR_ASSINATURA <= c.DT_HR_INICIO) / COUNT(*), 1) AS PC_ANTES
+-- G06 (1/2) — Quantas guias foram emitidas em outubro/2026 e quantas já têm
+-- assinatura?
+-- Atende: P02 (regra de outubro/2026), K05 (meta: 100% assinadas antes)
+SELECT COUNT(*) AS QT_GUIAS, COUNT(DT_HR_ASSINATURA) AS QT_ASSINADAS
+FROM GUIA
+WHERE DT_EMISSAO BETWEEN '2026-10-01' AND '2026-10-31';
+
+-- G06 (2/2) — Dessas guias, quantas foram assinadas ANTES de o paciente
+-- entrar na sala? K05 = esta quantidade ÷ QT_GUIAS da parte 1.
+SELECT COUNT(*) AS QT_ASSINADAS_ANTES
 FROM GUIA g
 JOIN CONSULTA c ON c.ID_CONSULTA = g.ID_CONSULTA
-GROUP BY DATE_FORMAT(g.DT_EMISSAO, '%Y-%m')
-ORDER BY MES;
+WHERE g.DT_EMISSAO BETWEEN '2026-10-01' AND '2026-10-31'
+  AND g.DT_HR_ASSINATURA <= c.DT_HR_INICIO;
 
--- G07 — Quais guias ainda não foram enviadas ao convênio e há quantos dias?
+-- G07 — Quais guias ainda não foram enviadas ao convênio? (assinatura
+-- vazia = falta assinar; assinada = falta enviar)
 -- Atende: P02, RN05, RP04
-SELECT g.ID_GUIA, cv.NM_CONVENIO, p.NM_PACIENTE, g.DT_EMISSAO,
-       CASE WHEN g.DT_HR_ASSINATURA IS NULL THEN 'FALTA ASSINATURA' ELSE 'ASSINADA, NÃO ENVIADA' END AS DS_PENDENCIA,
-       DATEDIFF(@DATA_REF, g.DT_EMISSAO) AS QT_DIAS_EM_ABERTO
+SELECT g.ID_GUIA, cv.NM_CONVENIO, p.NM_PACIENTE, g.DT_EMISSAO, g.DT_HR_ASSINATURA
 FROM GUIA g
 JOIN CONSULTA c  ON c.ID_CONSULTA = g.ID_CONSULTA
 JOIN PACIENTE p  ON p.ID_PACIENTE = c.ID_PACIENTE
 JOIN CONVENIO cv ON cv.ID_CONVENIO = g.ID_CONVENIO
 WHERE g.DT_ENVIO IS NULL
-ORDER BY QT_DIAS_EM_ABERTO DESC;
+ORDER BY g.DT_EMISSAO;
 
--- G08 — Quanto falta receber de cada convênio e em que data, pela regra
--- "enviada antes do dia 15, paga no dia 30 do mês; depois, no dia 30 do
--- mês seguinte"?
+-- G08 (1/2) — Quanto cada convênio vai pagar em 30/10/2026? Regra RP04:
+-- guia enviada até o dia 14 é paga no dia 30 do mesmo mês; enviada a
+-- partir do dia 15, no dia 30 do mês seguinte. Então entram as guias
+-- enviadas de 15/09 a 14/10 e ainda não recebidas.
 -- Atende: RP04, K06 (valor a receber dos convênios)
-WITH a_receber AS (
-  SELECT g.ID_CONVENIO, g.VL_GUIA,
-         DATE_ADD(CAST(DATE_FORMAT(g.DT_ENVIO, '%Y-%m-01') AS DATE),
-                  INTERVAL (DAY(g.DT_ENVIO) >= 15) MONTH) AS DT_MES_PAGAMENTO
-  FROM GUIA g
-  WHERE g.DT_ENVIO IS NOT NULL AND g.DT_RECEBIMENTO IS NULL
-)
-SELECT cv.NM_CONVENIO,
-       LEAST(DATE_ADD(a.DT_MES_PAGAMENTO, INTERVAL 29 DAY), LAST_DAY(a.DT_MES_PAGAMENTO)) AS DT_PREVISTA,
-       COUNT(*) AS QT_GUIAS,
-       SUM(a.VL_GUIA) AS VL_A_RECEBER
-FROM a_receber a
-JOIN CONVENIO cv ON cv.ID_CONVENIO = a.ID_CONVENIO
-GROUP BY cv.NM_CONVENIO, a.DT_MES_PAGAMENTO
-ORDER BY DT_PREVISTA, cv.NM_CONVENIO;
-
--- G09 — Quanto cada convênio gerou de faturamento (guias emitidas) por mês?
--- Atende: K07 (faturamento por convênio)
-SELECT DATE_FORMAT(g.DT_EMISSAO, '%Y-%m') AS MES, cv.NM_CONVENIO,
-       COUNT(*) AS QT_GUIAS, SUM(g.VL_GUIA) AS VL_FATURADO
+SELECT cv.NM_CONVENIO, COUNT(*) AS QT_GUIAS, SUM(g.VL_GUIA) AS VL_A_RECEBER
 FROM GUIA g
 JOIN CONVENIO cv ON cv.ID_CONVENIO = g.ID_CONVENIO
-GROUP BY DATE_FORMAT(g.DT_EMISSAO, '%Y-%m'), cv.NM_CONVENIO
-ORDER BY MES, VL_FATURADO DESC;
+WHERE g.DT_ENVIO BETWEEN '2026-09-15' AND '2026-10-14'
+  AND g.DT_RECEBIMENTO IS NULL
+GROUP BY cv.NM_CONVENIO
+ORDER BY VL_A_RECEBER DESC;
 
--- G10 — Cada laboratório cumpre o prazo? Quantos pedidos, tempo médio,
--- quantos atrasaram e quantos voltaram ao laboratório (ajuste, refinamento
--- ou refazimento)? O atraso é
--- medido contra o prazo padrão do laboratório (envio + QT_DIAS_PRAZO), e
--- não contra DT_PREVISTA, que pode ter sido renegociada (U03).
+-- G08 (2/2) — E em 30/11/2026 (guias enviadas de 15/10 a 14/11)?
+SELECT cv.NM_CONVENIO, COUNT(*) AS QT_GUIAS, SUM(g.VL_GUIA) AS VL_A_RECEBER
+FROM GUIA g
+JOIN CONVENIO cv ON cv.ID_CONVENIO = g.ID_CONVENIO
+WHERE g.DT_ENVIO BETWEEN '2026-10-15' AND '2026-11-14'
+  AND g.DT_RECEBIMENTO IS NULL
+GROUP BY cv.NM_CONVENIO
+ORDER BY VL_A_RECEBER DESC;
+
+-- G09 — Quanto cada convênio gerou de faturamento (guias emitidas) em
+-- setembro/2026?
+-- Atende: K07 (faturamento por convênio)
+SELECT cv.NM_CONVENIO, COUNT(*) AS QT_GUIAS, SUM(g.VL_GUIA) AS VL_FATURADO
+FROM GUIA g
+JOIN CONVENIO cv ON cv.ID_CONVENIO = g.ID_CONVENIO
+WHERE g.DT_EMISSAO BETWEEN '2026-09-01' AND '2026-09-30'
+GROUP BY cv.NM_CONVENIO
+ORDER BY VL_FATURADO DESC;
+
+-- G10 (1/2) — Quantos pedidos cada laboratório recebeu, de que tipo, e
+-- quantos já voltaram? (tipo diferente de CONFECCAO = peça que voltou ao
+-- laboratório para ajuste, refinamento ou refazimento)
 -- Atende: P03 (pedido e chegada da peça sem registro), K08 (meta: 100% no prazo)
-SELECT l.NM_LABORATORIO,
-       COUNT(*) AS QT_PEDIDOS,
-       SUM(pl.TP_PEDIDO <> 'CONFECCAO') AS QT_RETORNOS_AO_LABORATORIO,
-       SUM(pl.DT_CHEGADA IS NOT NULL) AS QT_CHEGARAM,
-       ROUND(AVG(DATEDIFF(pl.DT_CHEGADA, pl.DT_ENVIO)), 1) AS QT_DIAS_MEDIOS,
-       SUM(pl.DT_CHEGADA > DATE_ADD(pl.DT_ENVIO, INTERVAL l.QT_DIAS_PRAZO DAY)) AS QT_ATRASADOS,
-       ROUND(100.0 * SUM(pl.DT_CHEGADA <= DATE_ADD(pl.DT_ENVIO, INTERVAL l.QT_DIAS_PRAZO DAY))
-             / SUM(pl.DT_CHEGADA IS NOT NULL), 1) AS PC_NO_PRAZO
+SELECT l.NM_LABORATORIO, pl.TP_PEDIDO, COUNT(*) AS QT_PEDIDOS,
+       COUNT(pl.DT_CHEGADA) AS QT_CHEGARAM
 FROM PEDIDO_LABORATORIO pl
 JOIN LABORATORIO l ON l.ID_LABORATORIO = pl.ID_LABORATORIO
-GROUP BY l.ID_LABORATORIO, l.NM_LABORATORIO
+GROUP BY l.NM_LABORATORIO, pl.TP_PEDIDO
+ORDER BY l.NM_LABORATORIO, pl.TP_PEDIDO;
+
+-- G10 (2/2) — Quantos pedidos de cada laboratório chegaram até a data
+-- prevista? K08 = esta quantidade ÷ QT_CHEGARAM da parte 1.
+SELECT l.NM_LABORATORIO, COUNT(*) AS QT_NO_PRAZO
+FROM PEDIDO_LABORATORIO pl
+JOIN LABORATORIO l ON l.ID_LABORATORIO = pl.ID_LABORATORIO
+WHERE pl.DT_CHEGADA <= pl.DT_PREVISTA
+GROUP BY l.NM_LABORATORIO
 ORDER BY l.NM_LABORATORIO;
 
 -- G11 — Quais peças estão no laboratório agora e quando devem chegar?
 -- Atende: P03, RN06 (a prova só é marcada depois que a peça chega)
 SELECT pl.ID_PEDIDO, pl.TP_PEDIDO, pl.DS_PECA, p.NM_PACIENTE, l.NM_LABORATORIO,
-       pl.DT_ENVIO, pl.DT_PREVISTA,
-       DATEDIFF(pl.DT_PREVISTA, @DATA_REF) AS QT_DIAS_PARA_PREVISAO,
-       CASE WHEN pl.DT_PREVISTA < @DATA_REF THEN 'ATRASADA' ELSE 'NO PRAZO' END AS DS_SITUACAO
+       pl.DT_ENVIO, pl.DT_PREVISTA
 FROM PEDIDO_LABORATORIO pl
 JOIN LABORATORIO l ON l.ID_LABORATORIO = pl.ID_LABORATORIO
 JOIN CONSULTA c    ON c.ID_CONSULTA = pl.ID_CONSULTA
@@ -6801,170 +6743,134 @@ JOIN PACIENTE p    ON p.ID_PACIENTE = c.ID_PACIENTE
 WHERE pl.DT_CHEGADA IS NULL
 ORDER BY pl.DT_PREVISTA;
 
--- G12 — Quais pacientes com consulta nos próximos 7 dias têm alerta de
--- saúde na Ficha de Anamnese?
+-- G12 — Quais pacientes com consulta nos próximos 7 dias (de hoje, 13h,
+-- até 02/11/2026) têm alerta de saúde na Ficha de Anamnese? (1 = sim)
 -- Atende: P04 (dados de saúde só na imagem escaneada)
 SELECT c.DT_HR_INICIO, d.NM_DENTISTA, p.NM_PACIENTE,
-       CONCAT_WS(', ',
-         CASE WHEN a.IN_ALERGIA_MEDICAMENTO THEN 'alergia a medicamento' END,
-         CASE WHEN a.IN_REACAO_ANESTESICO   THEN 'reação a anestésico' END,
-         CASE WHEN a.IN_PROBLEMA_CARDIACO   THEN 'problema cardíaco' END,
-         CASE WHEN a.IN_HIPERTENSAO         THEN 'hipertensão' END,
-         CASE WHEN a.IN_DIABETES            THEN 'diabetes' END,
-         CASE WHEN a.IN_GRAVIDA_AMAMENTANDO THEN 'gestante ou amamentando' END,
-         CASE WHEN a.IN_HEPATITE            THEN 'hepatite' END) AS DS_ALERTAS,
+       a.IN_ALERGIA_MEDICAMENTO, a.IN_REACAO_ANESTESICO, a.IN_PROBLEMA_CARDIACO,
+       a.IN_HIPERTENSAO, a.IN_DIABETES, a.IN_GRAVIDA_AMAMENTANDO, a.IN_HEPATITE,
        a.DS_OBSERVACOES
 FROM CONSULTA c
 JOIN PACIENTE p ON p.ID_PACIENTE = c.ID_PACIENTE
 JOIN DENTISTA d ON d.ID_DENTISTA = c.ID_DENTISTA
 JOIN ANAMNESE a ON a.ID_PACIENTE = c.ID_PACIENTE
-WHERE c.DT_HR_INICIO >= @AGORA_REF
-  AND c.DT_HR_INICIO < DATE_ADD(@DATA_REF, INTERVAL 8 DAY)
+WHERE c.DT_HR_INICIO BETWEEN '2026-10-26 13:00:00' AND '2026-11-02 23:59:59'
   AND c.TP_SITUACAO <> 'CANCELADA'
-  AND (a.IN_ALERGIA_MEDICAMENTO OR a.IN_REACAO_ANESTESICO OR a.IN_PROBLEMA_CARDIACO
-       OR a.IN_HIPERTENSAO OR a.IN_DIABETES OR a.IN_GRAVIDA_AMAMENTANDO OR a.IN_HEPATITE)
+  AND (a.IN_ALERGIA_MEDICAMENTO = TRUE OR a.IN_REACAO_ANESTESICO = TRUE
+       OR a.IN_PROBLEMA_CARDIACO = TRUE OR a.IN_HIPERTENSAO = TRUE OR a.IN_DIABETES = TRUE
+       OR a.IN_GRAVIDA_AMAMENTANDO = TRUE OR a.IN_HEPATITE = TRUE)
 ORDER BY c.DT_HR_INICIO;
 
--- G13 — Dos pacientes atendidos em cada mês, quantos têm a ficha de saúde
--- registrada em campos (e não só a imagem)?
+-- G13 — Dos pacientes atendidos em setembro/2026, quantos têm a ficha de
+-- saúde registrada em campos (e não só a imagem)?
 -- Atende: P04, K09 (meta: 100%)
-SELECT DATE_FORMAT(c.DT_HR_INICIO, '%Y-%m') AS MES,
-       COUNT(DISTINCT c.ID_PACIENTE) AS QT_PACIENTES,
+SELECT COUNT(DISTINCT c.ID_PACIENTE) AS QT_PACIENTES,
        COUNT(DISTINCT a.ID_PACIENTE) AS QT_COM_FICHA,
-       ROUND(100.0 * COUNT(DISTINCT a.ID_PACIENTE) / COUNT(DISTINCT c.ID_PACIENTE), 1) AS PC_COM_FICHA
+       100.0 * COUNT(DISTINCT a.ID_PACIENTE) / COUNT(DISTINCT c.ID_PACIENTE) AS PC_COM_FICHA
 FROM CONSULTA c
 LEFT JOIN ANAMNESE a ON a.ID_PACIENTE = c.ID_PACIENTE
 WHERE c.TP_SITUACAO = 'FINALIZADO'
-GROUP BY DATE_FORMAT(c.DT_HR_INICIO, '%Y-%m')
-ORDER BY MES;
+  AND c.DT_HR_INICIO BETWEEN '2026-09-01 00:00:00' AND '2026-09-30 23:59:59';
 
--- G14 — Quanto a clínica faturou em cada mês (particular pago + guias de
--- convênio emitidas) e qual o ticket médio do particular?
+-- G14 (1/2) — Quanto a clínica recebeu de pagamentos particulares em
+-- setembro/2026 e qual o ticket médio por orçamento pago?
 -- Atende: K10 (faturamento; referência informada: R$ 90 mil/mês), K11 (ticket médio)
-WITH faturamento AS (
-  SELECT DATE_FORMAT(DT_PAGAMENTO, '%Y-%m') AS MES, VL_PAGAMENTO AS VL_PARTICULAR,
-         0 AS VL_CONVENIO, ID_ORCAMENTO
-  FROM PAGAMENTO
-  UNION ALL
-  SELECT DATE_FORMAT(DT_EMISSAO, '%Y-%m'), 0, VL_GUIA, NULL
-  FROM GUIA
-)
-SELECT MES,
-       SUM(VL_PARTICULAR) AS VL_PARTICULAR,
-       SUM(VL_CONVENIO) AS VL_CONVENIO,
-       SUM(VL_PARTICULAR) + SUM(VL_CONVENIO) AS VL_TOTAL,
+SELECT SUM(VL_PAGAMENTO) AS VL_PARTICULAR,
        COUNT(DISTINCT ID_ORCAMENTO) AS QT_ORCAMENTOS_PAGOS,
-       ROUND(SUM(VL_PARTICULAR) / COUNT(DISTINCT ID_ORCAMENTO), 2) AS VL_TICKET_MEDIO
-FROM faturamento
-WHERE MES >= '2026-08'
-GROUP BY MES
-ORDER BY MES;
+       SUM(VL_PAGAMENTO) / COUNT(DISTINCT ID_ORCAMENTO) AS VL_TICKET_MEDIO
+FROM PAGAMENTO
+WHERE DT_PAGAMENTO BETWEEN '2026-09-01' AND '2026-09-30';
 
--- G15 — Quanto cada especialidade trouxe de receita particular no último
--- mês fechado (pagamento rateado pelos itens do orçamento)?
+-- G14 (2/2) — E quanto foi emitido em guias de convênio no mesmo mês?
+-- K10 = VL_PARTICULAR (parte 1) + VL_CONVENIO.
+SELECT COUNT(*) AS QT_GUIAS, SUM(VL_GUIA) AS VL_CONVENIO
+FROM GUIA
+WHERE DT_EMISSAO BETWEEN '2026-09-01' AND '2026-09-30';
+
+-- G15 — Quanto cada especialidade representa nos orçamentos pagos em
+-- setembro/2026 (soma dos itens desses orçamentos)? Especialidade vazia =
+-- radiografia (exame de apoio).
 -- Atende: K12 (faturamento por especialidade, conferido pelo sócio)
-WITH total_orc AS (
-  SELECT ID_ORCAMENTO, SUM(VL_ITEM) AS VL_TOTAL FROM ITEM_ORCAMENTO GROUP BY ID_ORCAMENTO
-)
-SELECT COALESCE(e.NM_ESPECIALIDADE, 'Radiografia (apoio)') AS NM_ESPECIALIDADE,
-       ROUND(SUM(pg.VL_PAGAMENTO * i.VL_ITEM / t.VL_TOTAL), 2) AS VL_RECEBIDO,
-       ROUND(100.0 * SUM(pg.VL_PAGAMENTO * i.VL_ITEM / t.VL_TOTAL)
-             / (SELECT SUM(VL_PAGAMENTO) FROM PAGAMENTO
-                WHERE DT_PAGAMENTO BETWEEN @MES_ANT_INI AND @MES_ANT_FIM), 1) AS PC_DO_MES
+SELECT e.NM_ESPECIALIDADE, COUNT(*) AS QT_ITENS, SUM(i.VL_ITEM) AS VL_ITENS
 FROM PAGAMENTO pg
-JOIN total_orc t      ON t.ID_ORCAMENTO = pg.ID_ORCAMENTO
 JOIN ITEM_ORCAMENTO i ON i.ID_ORCAMENTO = pg.ID_ORCAMENTO
 JOIN PROCEDIMENTO pr  ON pr.ID_PROCEDIMENTO = i.ID_PROCEDIMENTO
 LEFT JOIN ESPECIALIDADE e ON e.ID_ESPECIALIDADE = pr.ID_ESPECIALIDADE
-WHERE pg.DT_PAGAMENTO BETWEEN @MES_ANT_INI AND @MES_ANT_FIM
-GROUP BY e.ID_ESPECIALIDADE, e.NM_ESPECIALIDADE
-ORDER BY VL_RECEBIDO DESC;
+WHERE pg.DT_PAGAMENTO BETWEEN '2026-09-01' AND '2026-09-30'
+GROUP BY e.NM_ESPECIALIDADE
+ORDER BY VL_ITENS DESC;
 
--- G16 — Quais pacientes de ortodontia foram atendidos nos últimos 45 dias
--- e estão sem retorno agendado?
--- Atende: RF21 e PR04 (o retorno é agendado antes de o paciente sair) — consulta
--- de apoio à recepção no tratamento contínuo de ortodontia; não responde a P nem a KPI
-SELECT p.NM_PACIENTE, MAX(DATE(c.DT_HR_INICIO)) AS DT_ULTIMA_CONSULTA, t.NR_TELEFONE
+-- G16 — Quais pacientes de ortodontia foram atendidos desde 11/09/2026
+-- (últimos 45 dias) e estão sem retorno agendado?
+-- Atende: RF22 (relatório da recepção) e PR04 (o retorno é agendado antes de
+-- o paciente sair) — consulta de apoio; não responde a P nem a KPI.
+-- O LEFT JOIN procura uma consulta futura; se não achar (f.ID_CONSULTA IS
+-- NULL), o paciente está sem retorno.
+SELECT DISTINCT p.NM_PACIENTE, t.NR_TELEFONE
 FROM CONSULTA c
 JOIN PACIENTE p ON p.ID_PACIENTE = c.ID_PACIENTE
 JOIN TELEFONE_PACIENTE t ON t.ID_PACIENTE = p.ID_PACIENTE AND t.NR_ORDEM = 1
 JOIN DENTISTA d ON d.ID_DENTISTA = c.ID_DENTISTA
 JOIN ESPECIALIDADE e ON e.ID_ESPECIALIDADE = d.ID_ESPECIALIDADE
+LEFT JOIN CONSULTA f ON f.ID_PACIENTE = c.ID_PACIENTE
+                    AND f.DT_HR_INICIO >= '2026-10-26 13:00:00'
+                    AND f.TP_SITUACAO IN ('CONFIRMAR', 'CONFIRMADA')
 WHERE e.NM_ESPECIALIDADE = 'Ortodontia'
   AND c.TP_SITUACAO = 'FINALIZADO'
-  AND c.DT_HR_INICIO >= DATE_SUB(@DATA_REF, INTERVAL 45 DAY)
-  AND NOT EXISTS (SELECT 1 FROM CONSULTA f
-                  WHERE f.ID_PACIENTE = c.ID_PACIENTE AND f.DT_HR_INICIO >= @AGORA_REF
-                    AND f.TP_SITUACAO IN ('CONFIRMAR', 'CONFIRMADA'))
-GROUP BY p.ID_PACIENTE, p.NM_PACIENTE, t.NR_TELEFONE
-ORDER BY DT_ULTIMA_CONSULTA;
+  AND c.DT_HR_INICIO BETWEEN '2026-09-11 00:00:00' AND '2026-10-26 23:59:59'
+  AND f.ID_CONSULTA IS NULL
+ORDER BY p.NM_PACIENTE;
 
 -- G17 — Quais contas estão a pagar (data de pagamento prevista depois de
--- hoje), quais já venceram e quais estão programadas para depois do vencimento?
+-- hoje, 26/10/2026)? Vencimento antes de hoje = conta vencida.
 -- Atende: K13 (contas a pagar acompanhadas pelo sócio)
-SELECT d.DS_TITULO, d.TP_CATEGORIA, d.VL_DESPESA, d.DT_VENCIMENTO, d.DT_PAGAMENTO AS DT_PAGAMENTO_PREVISTO,
-       d.TP_FORMA_PAGAMENTO,
-       CASE WHEN d.DT_VENCIMENTO < @DATA_REF THEN 'VENCIDA'
-            WHEN d.DT_PAGAMENTO > d.DT_VENCIMENTO THEN 'PROGRAMADA APÓS O VENCIMENTO'
-            ELSE 'A VENCER' END AS DS_SITUACAO,
-       GREATEST(DATEDIFF(@DATA_REF, d.DT_VENCIMENTO), 0) AS QT_DIAS_ATRASO
-FROM DESPESA d
-WHERE d.DT_PAGAMENTO > @DATA_REF
-ORDER BY d.DT_VENCIMENTO, d.DS_TITULO;
+SELECT DS_TITULO, TP_CATEGORIA, VL_DESPESA, DT_VENCIMENTO,
+       DT_PAGAMENTO AS DT_PAGAMENTO_PREVISTO, TP_FORMA_PAGAMENTO
+FROM DESPESA
+WHERE DT_PAGAMENTO > '2026-10-26'
+ORDER BY DT_VENCIMENTO, DS_TITULO;
 
--- G18 — Qual foi o resultado de caixa de cada mês (entradas recebidas
--- menos despesas pagas)?
--- Atende: K14 (resultado mensal)
-WITH movimento AS (
-  SELECT DATE_FORMAT(DT_PAGAMENTO, '%Y-%m') AS MES, VL_PAGAMENTO AS VL_ENTRADA, 0 AS VL_SAIDA
-  FROM PAGAMENTO
-  UNION ALL
-  SELECT DATE_FORMAT(DT_RECEBIMENTO, '%Y-%m'), VL_GUIA, 0 FROM GUIA WHERE DT_RECEBIMENTO IS NOT NULL
-  UNION ALL
-  SELECT DATE_FORMAT(DT_PAGAMENTO, '%Y-%m'), 0, VL_DESPESA FROM DESPESA WHERE DT_PAGAMENTO <= @DATA_REF
-)
-SELECT MES, SUM(VL_ENTRADA) AS VL_ENTRADAS, SUM(VL_SAIDA) AS VL_SAIDAS,
-       SUM(VL_ENTRADA) - SUM(VL_SAIDA) AS VL_RESULTADO
-FROM movimento
-WHERE MES >= '2026-08'
-GROUP BY MES
-ORDER BY MES;
+-- G18 (1/3) — Resultado de caixa de setembro/2026: entradas de pagamentos
+-- particulares.
+-- Atende: K14 (resultado mensal = entradas das partes 1 e 2 − saídas da parte 3)
+SELECT SUM(VL_PAGAMENTO) AS VL_ENTRADAS_PARTICULAR
+FROM PAGAMENTO
+WHERE DT_PAGAMENTO BETWEEN '2026-09-01' AND '2026-09-30';
 
--- G19 — Em que a clínica gastou no último mês fechado e quanto foi de
--- repasse a cada dentista?
+-- G18 (2/3) — Entradas de guias recebidas dos convênios em setembro/2026.
+SELECT SUM(VL_GUIA) AS VL_ENTRADAS_CONVENIO
+FROM GUIA
+WHERE DT_RECEBIMENTO BETWEEN '2026-09-01' AND '2026-09-30';
+
+-- G18 (3/3) — Saídas: despesas pagas em setembro/2026.
+SELECT SUM(VL_DESPESA) AS VL_SAIDAS
+FROM DESPESA
+WHERE DT_PAGAMENTO BETWEEN '2026-09-01' AND '2026-09-30';
+
+-- G19 — Em que a clínica gastou em setembro/2026 e quanto foi de repasse
+-- a cada dentista? (dentista vazio = despesa que não é repasse)
 -- Atende: K13, controle do repasse (valor combinado não era registrado)
-SELECT d.TP_CATEGORIA, COALESCE(dt.NM_DENTISTA, '—') AS NM_DENTISTA,
+SELECT d.TP_CATEGORIA, dt.NM_DENTISTA,
        COUNT(*) AS QT_LANCAMENTOS, SUM(d.VL_DESPESA) AS VL_PAGO
 FROM DESPESA d
 LEFT JOIN DENTISTA dt ON dt.ID_DENTISTA = d.ID_DENTISTA
-WHERE d.DT_PAGAMENTO BETWEEN @MES_ANT_INI AND @MES_ANT_FIM
+WHERE d.DT_PAGAMENTO BETWEEN '2026-09-01' AND '2026-09-30'
 GROUP BY d.TP_CATEGORIA, dt.NM_DENTISTA
 ORDER BY VL_PAGO DESC;
 
--- G20 — Qual foi a ocupação de cada sala no último mês fechado (minutos
--- atendidos ÷ minutos disponíveis nos dias úteis, sem feriados)?
--- Atende: K15 (ocupação das salas; Sala 01 só à tarde)
-WITH RECURSIVE dias AS (
-  SELECT CAST(@MES_ANT_INI AS DATE) AS DIA
-  UNION ALL
-  SELECT DATE_ADD(DIA, INTERVAL 1 DAY) FROM dias WHERE DIA < @MES_ANT_FIM
-),
-uteis AS (
-  SELECT COUNT(*) AS QT_DIAS FROM dias
-  WHERE DAYOFWEEK(DIA) BETWEEN 2 AND 6
-    AND DIA NOT IN ('2026-01-01', '2026-04-03', '2026-04-21', '2026-05-01', '2026-07-09',
-                    '2026-09-07', '2026-10-12', '2026-11-02', '2026-11-20', '2026-12-25')
-)
-SELECT s.NM_SALA, u.QT_DIAS AS QT_DIAS_UTEIS,
-       u.QT_DIAS * (TIME_TO_SEC(s.HR_FECHAMENTO) - TIME_TO_SEC(s.HR_ABERTURA)) / 60 AS QT_MIN_DISPONIVEIS,
-       COALESCE(SUM(c.QT_DURACAO_MIN), 0) AS QT_MIN_ATENDIDOS,
-       ROUND(100.0 * COALESCE(SUM(c.QT_DURACAO_MIN), 0)
-             / (u.QT_DIAS * (TIME_TO_SEC(s.HR_FECHAMENTO) - TIME_TO_SEC(s.HR_ABERTURA)) / 60), 1) AS PC_OCUPACAO
-FROM SALA s
-CROSS JOIN uteis u
-LEFT JOIN CONSULTA c ON c.ID_SALA = s.ID_SALA AND c.TP_SITUACAO = 'FINALIZADO'
-                    AND DATE(c.DT_HR_INICIO) BETWEEN @MES_ANT_INI AND @MES_ANT_FIM
-GROUP BY s.ID_SALA, s.NM_SALA, s.HR_ABERTURA, s.HR_FECHAMENTO, u.QT_DIAS
+-- G20 — Quantos minutos cada sala foi usada em atendimentos em
+-- setembro/2026?
+-- Atende: K15 (ocupação das salas). Setembro/2026 teve 21 dias úteis
+-- (sem o feriado de 07/09). Minutos disponíveis: Sala 02 (8h–18h) =
+-- 21 × 600 = 12.600; Sala 01 (14h–18h) = 21 × 240 = 5.040.
+-- Ocupação = QT_MIN_ATENDIDOS ÷ minutos disponíveis.
+SELECT s.NM_SALA, s.HR_ABERTURA, s.HR_FECHAMENTO,
+       COUNT(*) AS QT_ATENDIMENTOS, SUM(c.QT_DURACAO_MIN) AS QT_MIN_ATENDIDOS
+FROM CONSULTA c
+JOIN SALA s ON s.ID_SALA = c.ID_SALA
+WHERE c.TP_SITUACAO = 'FINALIZADO'
+  AND c.DT_HR_INICIO BETWEEN '2026-09-01 00:00:00' AND '2026-09-30 23:59:59'
+GROUP BY s.NM_SALA, s.HR_ABERTURA, s.HR_FECHAMENTO
 ORDER BY s.NM_SALA;
 
 -- ---------------------------------------------------------------------
@@ -6975,32 +6881,27 @@ ORDER BY s.NM_SALA;
 -- A01 — Algum paciente foi atendido sem Ficha de Anamnese registrada ou com
 -- a ficha preenchida depois do atendimento?
 -- Verifica: RN01
-SELECT p.ID_PACIENTE, p.NM_PACIENTE, p.DT_CADASTRO,
-       MIN(DATE(c.DT_HR_INICIO)) AS DT_PRIMEIRO_ATENDIMENTO, a.DT_PREENCHIMENTO
+SELECT DISTINCT p.ID_PACIENTE, p.NM_PACIENTE, p.DT_CADASTRO, a.DT_PREENCHIMENTO
 FROM CONSULTA c
 JOIN PACIENTE p ON p.ID_PACIENTE = c.ID_PACIENTE
 LEFT JOIN ANAMNESE a ON a.ID_PACIENTE = c.ID_PACIENTE
 WHERE c.TP_SITUACAO = 'FINALIZADO'
-  AND (a.ID_PACIENTE IS NULL OR a.DT_PREENCHIMENTO > DATE(c.DT_HR_INICIO))
-GROUP BY p.ID_PACIENTE, p.NM_PACIENTE, p.DT_CADASTRO, a.DT_PREENCHIMENTO
+  AND (a.ID_PACIENTE IS NULL OR a.DT_PREENCHIMENTO > c.DT_HR_INICIO)
 ORDER BY p.ID_PACIENTE;
 
--- A02 — Há paciente menor de idade sem responsável legal, ou ficha assinada
--- pelo próprio paciente quando ele era menor (idade na data da ficha)?
+-- A02 — Há paciente menor de idade (nascido depois de 26/10/2008) sem
+-- responsável legal, ou com a ficha assinada por ele mesmo?
 -- Verifica: RN02
-SELECT p.ID_PACIENTE, p.NM_PACIENTE,
-       TIMESTAMPDIFF(YEAR, p.DT_NASCIMENTO, @DATA_REF) AS QT_IDADE_HOJE,
-       TIMESTAMPDIFF(YEAR, p.DT_NASCIMENTO, a.DT_PREENCHIMENTO) AS QT_IDADE_NA_FICHA,
-       CASE WHEN TIMESTAMPDIFF(YEAR, p.DT_NASCIMENTO, @DATA_REF) < 18 AND p.NM_RESPONSAVEL_LEGAL IS NULL
-            THEN 'MENOR SEM RESPONSÁVEL' ELSE 'FICHA ASSINADA PELO MENOR' END AS DS_PROBLEMA
+SELECT p.ID_PACIENTE, p.NM_PACIENTE, p.DT_NASCIMENTO, p.NM_RESPONSAVEL_LEGAL,
+       a.TP_ASSINANTE
 FROM PACIENTE p
 LEFT JOIN ANAMNESE a ON a.ID_PACIENTE = p.ID_PACIENTE
-WHERE (TIMESTAMPDIFF(YEAR, p.DT_NASCIMENTO, @DATA_REF) < 18 AND p.NM_RESPONSAVEL_LEGAL IS NULL)
-   OR (TIMESTAMPDIFF(YEAR, p.DT_NASCIMENTO, a.DT_PREENCHIMENTO) < 18 AND a.TP_ASSINANTE = 'PACIENTE')
+WHERE p.DT_NASCIMENTO > '2008-10-26'
+  AND (p.NM_RESPONSAVEL_LEGAL IS NULL OR a.TP_ASSINANTE = 'PACIENTE')
 ORDER BY p.ID_PACIENTE;
 
 -- A03 — Desde a regra de outubro/2026, alguma guia foi assinada depois de o
--- paciente entrar na sala?
+-- paciente entrar na sala (ou não foi assinada)?
 -- Verifica: RN05
 SELECT g.ID_GUIA, p.NM_PACIENTE, c.DT_HR_INICIO, g.DT_HR_ASSINATURA
 FROM GUIA g
@@ -7008,7 +6909,7 @@ JOIN CONSULTA c  ON c.ID_CONSULTA = g.ID_CONSULTA
 JOIN PACIENTE p  ON p.ID_PACIENTE = c.ID_PACIENTE
 WHERE g.DT_EMISSAO >= '2026-10-01'
   AND (g.DT_HR_ASSINATURA IS NULL OR g.DT_HR_ASSINATURA > c.DT_HR_INICIO)
-  AND c.DT_HR_INICIO < @AGORA_REF
+  AND c.DT_HR_INICIO < '2026-10-26 13:00:00'
 ORDER BY g.ID_GUIA;
 
 -- A04 — Alguma prova ou instalação de peça foi feita enquanto a peça ainda
@@ -7025,65 +6926,47 @@ JOIN CONSULTA cp ON cp.ID_PACIENTE = co.ID_PACIENTE AND cp.ID_DENTISTA = co.ID_D
 JOIN PROCEDIMENTO_REALIZADO r ON r.ID_CONSULTA = cp.ID_CONSULTA
 JOIN PROCEDIMENTO pr ON pr.ID_PROCEDIMENTO = r.ID_PROCEDIMENTO AND pr.TP_PROCEDIMENTO = 'PROVA_PECA'
 JOIN PACIENTE p  ON p.ID_PACIENTE = co.ID_PACIENTE
-WHERE pl.DT_CHEGADA IS NULL OR DATE(cp.DT_HR_INICIO) < pl.DT_CHEGADA
+WHERE pl.DT_CHEGADA IS NULL OR cp.DT_HR_INICIO < pl.DT_CHEGADA
 ORDER BY pl.ID_PEDIDO;
 
--- A05 — Algum atendimento particular foi feito sem pagamento antes da
--- consulta? (ortodontia: pagamento do mês; demais: orçamento da mesma
--- especialidade pago nos 180 dias anteriores)
+-- A05 — Algum paciente de ortodontia particular foi atendido em
+-- outubro/2026 sem orçamento aprovado (pago) no mês? Na clínica, o
+-- orçamento só fica APROVADO ou FINALIZADO depois de pago, antes da sala.
+-- O LEFT JOIN procura esse orçamento; se não achar, a consulta aparece.
 -- Verifica: RN07, RN15
-SELECT c.ID_CONSULTA, c.DT_HR_INICIO, p.NM_PACIENTE, d.NM_DENTISTA, e.NM_ESPECIALIDADE
+SELECT c.ID_CONSULTA, c.DT_HR_INICIO, p.NM_PACIENTE, d.NM_DENTISTA
 FROM CONSULTA c
 JOIN PACIENTE p      ON p.ID_PACIENTE = c.ID_PACIENTE
 JOIN DENTISTA d      ON d.ID_DENTISTA = c.ID_DENTISTA
 JOIN ESPECIALIDADE e ON e.ID_ESPECIALIDADE = d.ID_ESPECIALIDADE
-WHERE c.TP_ATENDIMENTO = 'PARTICULAR' AND c.TP_SITUACAO = 'FINALIZADO'
-  AND NOT EXISTS (
-    SELECT 1
-    FROM PAGAMENTO pg
-    JOIN ORCAMENTO o      ON o.ID_ORCAMENTO = pg.ID_ORCAMENTO
-    JOIN ITEM_ORCAMENTO i ON i.ID_ORCAMENTO = o.ID_ORCAMENTO
-    JOIN PROCEDIMENTO pr  ON pr.ID_PROCEDIMENTO = i.ID_PROCEDIMENTO
-    WHERE o.ID_PACIENTE = c.ID_PACIENTE
-      AND pr.ID_ESPECIALIDADE = d.ID_ESPECIALIDADE
-      AND pg.DT_PAGAMENTO <= DATE(c.DT_HR_INICIO)
-      AND pg.DT_PAGAMENTO >= CASE WHEN e.NM_ESPECIALIDADE = 'Ortodontia'
-                                  THEN CAST(DATE_FORMAT(c.DT_HR_INICIO, '%Y-%m-01') AS DATE)
-                                  ELSE DATE_SUB(DATE(c.DT_HR_INICIO), INTERVAL 180 DAY) END)
+LEFT JOIN ORCAMENTO o ON o.ID_PACIENTE = c.ID_PACIENTE
+                     AND o.DT_ORCAMENTO BETWEEN '2026-10-01' AND '2026-10-31'
+                     AND o.TP_SITUACAO IN ('APROVADO', 'FINALIZADO')
+WHERE e.NM_ESPECIALIDADE = 'Ortodontia'
+  AND c.TP_ATENDIMENTO = 'PARTICULAR' AND c.TP_SITUACAO = 'FINALIZADO'
+  AND c.DT_HR_INICIO BETWEEN '2026-10-01 00:00:00' AND '2026-10-31 23:59:59'
+  AND o.ID_ORCAMENTO IS NULL
 ORDER BY c.DT_HR_INICIO;
 
--- A06 — Alguma consulta foi cobrada do jeito errado (particular com guia,
--- convênio finalizado sem guia, ou convênio que também recebeu pagamento
--- particular da mesma especialidade no mesmo dia)?
+-- A06 (1/2) — Alguma consulta PARTICULAR tem guia de convênio?
 -- Verifica: RN09
-SELECT c.ID_CONSULTA, c.DT_HR_INICIO, p.NM_PACIENTE, c.TP_ATENDIMENTO,
-       'PARTICULAR COM GUIA' AS DS_PROBLEMA
+SELECT c.ID_CONSULTA, c.DT_HR_INICIO, p.NM_PACIENTE, c.TP_ATENDIMENTO, g.ID_GUIA
 FROM CONSULTA c
 JOIN GUIA g     ON g.ID_CONSULTA = c.ID_CONSULTA
 JOIN PACIENTE p ON p.ID_PACIENTE = c.ID_PACIENTE
 WHERE c.TP_ATENDIMENTO = 'PARTICULAR'
-UNION ALL
-SELECT c.ID_CONSULTA, c.DT_HR_INICIO, p.NM_PACIENTE, c.TP_ATENDIMENTO,
-       'CONVÊNIO SEM GUIA'
+ORDER BY c.DT_HR_INICIO;
+
+-- A06 (2/2) — Alguma consulta de CONVÊNIO já realizada ficou sem guia?
+-- (Na massa, esta parte volta vazia: a regra é cumprida; o erro proposital
+-- da RN09 aparece na parte 1.)
+SELECT c.ID_CONSULTA, c.DT_HR_INICIO, p.NM_PACIENTE, c.TP_ATENDIMENTO
 FROM CONSULTA c
 JOIN PACIENTE p ON p.ID_PACIENTE = c.ID_PACIENTE
+LEFT JOIN GUIA g ON g.ID_CONSULTA = c.ID_CONSULTA
 WHERE c.TP_ATENDIMENTO = 'CONVENIO' AND c.TP_SITUACAO = 'FINALIZADO'
-  AND NOT EXISTS (SELECT 1 FROM GUIA g WHERE g.ID_CONSULTA = c.ID_CONSULTA)
-UNION ALL
-SELECT c.ID_CONSULTA, c.DT_HR_INICIO, p.NM_PACIENTE, c.TP_ATENDIMENTO,
-       'CONVÊNIO COM PAGAMENTO PARTICULAR'
-FROM CONSULTA c
-JOIN PACIENTE p ON p.ID_PACIENTE = c.ID_PACIENTE
-JOIN DENTISTA d ON d.ID_DENTISTA = c.ID_DENTISTA
-WHERE c.TP_ATENDIMENTO = 'CONVENIO'
-  AND EXISTS (SELECT 1 FROM PAGAMENTO pg
-              JOIN ORCAMENTO o      ON o.ID_ORCAMENTO = pg.ID_ORCAMENTO
-              JOIN ITEM_ORCAMENTO i ON i.ID_ORCAMENTO = o.ID_ORCAMENTO
-              JOIN PROCEDIMENTO pr  ON pr.ID_PROCEDIMENTO = i.ID_PROCEDIMENTO
-              WHERE o.ID_PACIENTE = c.ID_PACIENTE
-                AND pr.ID_ESPECIALIDADE = d.ID_ESPECIALIDADE
-                AND pg.DT_PAGAMENTO = DATE(c.DT_HR_INICIO))
-ORDER BY DT_HR_INICIO;
+  AND g.ID_GUIA IS NULL
+ORDER BY c.DT_HR_INICIO;
 
 -- A07 — Alguma receita foi emitida para consulta que não foi realizada?
 -- Verifica: RN10
@@ -7096,31 +6979,31 @@ JOIN MEDICAMENTO m ON m.ID_MEDICAMENTO = rc.ID_MEDICAMENTO
 WHERE c.TP_SITUACAO <> 'FINALIZADO'
 ORDER BY c.DT_HR_INICIO;
 
--- A08 — Há duas consultas ativas ao mesmo tempo na mesma sala (uma cadeira
--- por sala) ou com o mesmo dentista?
+-- A08 — Há duas consultas ativas marcadas no mesmo horário na mesma sala
+-- (uma cadeira por sala) ou com o mesmo dentista?
 -- Verifica: RN11
 SELECT a.ID_CONSULTA AS ID_CONSULTA_1, b.ID_CONSULTA AS ID_CONSULTA_2,
-       a.DT_HR_INICIO AS DT_HR_1, b.DT_HR_INICIO AS DT_HR_2,
-       CASE WHEN a.ID_SALA = b.ID_SALA THEN 'MESMA SALA' ELSE 'MESMO DENTISTA' END AS DS_CONFLITO
+       a.DT_HR_INICIO, a.ID_SALA AS SALA_1, b.ID_SALA AS SALA_2,
+       a.ID_DENTISTA AS DENTISTA_1, b.ID_DENTISTA AS DENTISTA_2
 FROM CONSULTA a
 JOIN CONSULTA b ON a.ID_CONSULTA < b.ID_CONSULTA
+               AND a.DT_HR_INICIO = b.DT_HR_INICIO
                AND (a.ID_SALA = b.ID_SALA OR a.ID_DENTISTA = b.ID_DENTISTA)
-               AND DATE(a.DT_HR_INICIO) = DATE(b.DT_HR_INICIO)
-               AND b.DT_HR_INICIO < DATE_ADD(a.DT_HR_INICIO, INTERVAL a.QT_DURACAO_MIN MINUTE)
-               AND a.DT_HR_INICIO < DATE_ADD(b.DT_HR_INICIO, INTERVAL b.QT_DURACAO_MIN MINUTE)
 WHERE a.TP_SITUACAO <> 'CANCELADA' AND b.TP_SITUACAO <> 'CANCELADA'
 ORDER BY a.DT_HR_INICIO;
 
--- A09 — Alguma consulta foi marcada fora do horário de uso da sala
--- (Sala 01 só das 14h às 18h)?
+-- A09 — Alguma consulta foi marcada na Sala 01 pela manhã? (a Sala 01 só
+-- abre das 14h às 18h; o LIKE procura a hora dentro da data e hora)
 -- Verifica: RN11, RP01
-SELECT c.ID_CONSULTA, c.DT_HR_INICIO, s.NM_SALA, s.HR_ABERTURA, s.HR_FECHAMENTO, d.NM_DENTISTA
+SELECT c.ID_CONSULTA, c.DT_HR_INICIO, s.NM_SALA, s.HR_ABERTURA, d.NM_DENTISTA
 FROM CONSULTA c
 JOIN SALA s     ON s.ID_SALA = c.ID_SALA
 JOIN DENTISTA d ON d.ID_DENTISTA = c.ID_DENTISTA
-WHERE c.TP_SITUACAO <> 'CANCELADA'
-  AND (TIME(c.DT_HR_INICIO) < s.HR_ABERTURA
-       OR TIME(DATE_ADD(c.DT_HR_INICIO, INTERVAL c.QT_DURACAO_MIN MINUTE)) > s.HR_FECHAMENTO)
+WHERE s.NM_SALA = 'Sala 01'
+  AND c.TP_SITUACAO <> 'CANCELADA'
+  AND (c.DT_HR_INICIO LIKE '% 08:%' OR c.DT_HR_INICIO LIKE '% 09:%'
+       OR c.DT_HR_INICIO LIKE '% 10:%' OR c.DT_HR_INICIO LIKE '% 11:%'
+       OR c.DT_HR_INICIO LIKE '% 12:%' OR c.DT_HR_INICIO LIKE '% 13:%')
 ORDER BY c.DT_HR_INICIO;
 
 -- A10 — Ficou alguma consulta de dias anteriores sem desfecho (nem
@@ -7129,22 +7012,27 @@ ORDER BY c.DT_HR_INICIO;
 SELECT c.ID_CONSULTA, c.DT_HR_INICIO, p.NM_PACIENTE, c.TP_SITUACAO
 FROM CONSULTA c
 JOIN PACIENTE p ON p.ID_PACIENTE = c.ID_PACIENTE
-WHERE c.DT_HR_INICIO < @DATA_REF
-  AND c.TP_SITUACAO NOT IN ('FINALIZADO', 'CANCELADA')
+WHERE c.DT_HR_INICIO < '2026-10-26'
+  AND c.TP_SITUACAO IN ('CONFIRMAR', 'CONFIRMADA', 'EM ATENDIMENTO')
 ORDER BY c.DT_HR_INICIO;
 
--- A11 — Algum paciente de ortodontia tem mais de um orçamento no mesmo mês?
+-- A11 — Algum paciente de ortodontia tem dois orçamentos de manutenção
+-- no mesmo mês (outubro/2026)? A tabela ORCAMENTO é ligada a ela mesma:
+-- o1 e o2 são orçamentos diferentes do mesmo paciente.
 -- Verifica: RN15
-SELECT o.ID_PACIENTE, p.NM_PACIENTE, DATE_FORMAT(o.DT_ORCAMENTO, '%Y-%m') AS MES,
-       COUNT(DISTINCT o.ID_ORCAMENTO) AS QT_ORCAMENTOS
-FROM ORCAMENTO o
-JOIN ITEM_ORCAMENTO i ON i.ID_ORCAMENTO = o.ID_ORCAMENTO
-JOIN PROCEDIMENTO pr  ON pr.ID_PROCEDIMENTO = i.ID_PROCEDIMENTO
-JOIN PACIENTE p       ON p.ID_PACIENTE = o.ID_PACIENTE
-WHERE pr.NM_PROCEDIMENTO = 'Manutenção ortodôntica'
-GROUP BY o.ID_PACIENTE, p.NM_PACIENTE, DATE_FORMAT(o.DT_ORCAMENTO, '%Y-%m')
-HAVING COUNT(DISTINCT o.ID_ORCAMENTO) > 1
-ORDER BY MES, p.NM_PACIENTE;
+SELECT DISTINCT o1.ID_PACIENTE, p.NM_PACIENTE, o1.ID_ORCAMENTO, o2.ID_ORCAMENTO AS ID_ORCAMENTO_2
+FROM ORCAMENTO o1
+JOIN ORCAMENTO o2      ON o2.ID_PACIENTE = o1.ID_PACIENTE AND o2.ID_ORCAMENTO > o1.ID_ORCAMENTO
+JOIN ITEM_ORCAMENTO i1 ON i1.ID_ORCAMENTO = o1.ID_ORCAMENTO
+JOIN ITEM_ORCAMENTO i2 ON i2.ID_ORCAMENTO = o2.ID_ORCAMENTO
+JOIN PROCEDIMENTO p1   ON p1.ID_PROCEDIMENTO = i1.ID_PROCEDIMENTO
+JOIN PROCEDIMENTO p2   ON p2.ID_PROCEDIMENTO = i2.ID_PROCEDIMENTO
+JOIN PACIENTE p        ON p.ID_PACIENTE = o1.ID_PACIENTE
+WHERE p1.NM_PROCEDIMENTO = 'Manutenção ortodôntica'
+  AND p2.NM_PROCEDIMENTO = 'Manutenção ortodôntica'
+  AND o1.DT_ORCAMENTO BETWEEN '2026-10-01' AND '2026-10-31'
+  AND o2.DT_ORCAMENTO BETWEEN '2026-10-01' AND '2026-10-31'
+ORDER BY p.NM_PACIENTE;
 
 -- A12 — Foi lançado repasse para a dentista proprietária (HOF não tem repasse)?
 -- Verifica: RN16
@@ -7153,24 +7041,14 @@ FROM DESPESA d
 JOIN DENTISTA dt ON dt.ID_DENTISTA = d.ID_DENTISTA
 WHERE d.TP_CATEGORIA = 'REPASSE' AND dt.TP_VINCULO = 'PROPRIETARIA';
 
--- A13 — Houve semana sem teste biológico aprovado da autoclave nas
--- últimas 12 semanas?
+-- A13 — Quantos testes biológicos da autoclave foram feitos nas últimas
+-- 12 semanas (03/08 a 25/10/2026), por resultado? Deve haver 12 testes
+-- APROVADOS (um por semana); menos que 12 = houve semana sem teste aprovado.
 -- Verifica: RN23
-WITH RECURSIVE semanas AS (
-  SELECT CAST(DATE_SUB(@DATA_REF, INTERVAL WEEKDAY(@DATA_REF) + 84 DAY) AS DATE) AS DT_SEGUNDA
-  UNION ALL
-  SELECT DATE_ADD(DT_SEGUNDA, INTERVAL 7 DAY) FROM semanas
-  WHERE DT_SEGUNDA < DATE_SUB(@DATA_REF, INTERVAL WEEKDAY(@DATA_REF) + 7 DAY)
-)
-SELECT s.DT_SEGUNDA, DATE_ADD(s.DT_SEGUNDA, INTERVAL 6 DAY) AS DT_DOMINGO,
-       (SELECT COUNT(*) FROM TESTE_AUTOCLAVE t
-        WHERE t.DT_TESTE BETWEEN s.DT_SEGUNDA AND DATE_ADD(s.DT_SEGUNDA, INTERVAL 6 DAY)
-          AND t.TP_RESULTADO = 'REPROVADO') AS QT_REPROVADOS
-FROM semanas s
-WHERE NOT EXISTS (SELECT 1 FROM TESTE_AUTOCLAVE t
-                  WHERE t.TP_RESULTADO = 'APROVADO'
-                    AND t.DT_TESTE BETWEEN s.DT_SEGUNDA AND DATE_ADD(s.DT_SEGUNDA, INTERVAL 6 DAY))
-ORDER BY s.DT_SEGUNDA;
+SELECT TP_RESULTADO, COUNT(*) AS QT_TESTES
+FROM TESTE_AUTOCLAVE
+WHERE DT_TESTE BETWEEN '2026-08-03' AND '2026-10-25'
+GROUP BY TP_RESULTADO;
 
 -- A14 — Há consulta de convênio, ainda sem guia, de paciente cujo cadastro
 -- está sem convênio e carteirinha (a guia não teria como ser emitida)?
@@ -7179,8 +7057,9 @@ ORDER BY s.DT_SEGUNDA;
 SELECT c.ID_CONSULTA, c.DT_HR_INICIO, p.NM_PACIENTE, c.TP_SITUACAO
 FROM CONSULTA c
 JOIN PACIENTE p ON p.ID_PACIENTE = c.ID_PACIENTE
+LEFT JOIN GUIA g ON g.ID_CONSULTA = c.ID_CONSULTA
 WHERE c.TP_ATENDIMENTO = 'CONVENIO' AND p.ID_CONVENIO IS NULL
-  AND NOT EXISTS (SELECT 1 FROM GUIA g WHERE g.ID_CONSULTA = c.ID_CONSULTA)
+  AND g.ID_GUIA IS NULL
 ORDER BY c.DT_HR_INICIO;
 
 -- A15 — Alguma radiografia de dias anteriores está sem a avaliação da Dra.?
@@ -7191,7 +7070,7 @@ JOIN PROCEDIMENTO pr ON pr.ID_PROCEDIMENTO = r.ID_PROCEDIMENTO
 JOIN CONSULTA c      ON c.ID_CONSULTA = r.ID_CONSULTA
 JOIN PACIENTE p      ON p.ID_PACIENTE = c.ID_PACIENTE
 WHERE pr.TP_PROCEDIMENTO = 'RADIOGRAFIA' AND r.DS_OBSERVACAO IS NULL
-  AND c.DT_HR_INICIO < @DATA_REF
+  AND c.DT_HR_INICIO < '2026-10-26'
 ORDER BY c.DT_HR_INICIO;
 
 -- Fim do script.

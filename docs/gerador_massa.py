@@ -899,14 +899,14 @@ for c in [c for c in finalizadas if c["DT_HR_INICIO"].date() in (D(2026, 10, 21)
 # A09 — consulta de endodontia lançada na Sala 01 pela manhã (sala fechada)
 c_fora = next(c for c in finalizadas if c["ID_DENTISTA"] == ENDO and c["DT_HR_INICIO"].date() == D(2026, 9, 24))
 c_fora["DT_HR_INICIO"] = at(D(2026, 9, 24), hm(10, 0))
-# A08 — encaixe sobreposto na Sala 01 (HOF às 14:00 e encaixe às 14:20)
+# A08 — encaixe marcado no mesmo horário de outra consulta na Sala 01 (HOF e encaixe às 14:00)
 hof_ref = next(c for c in finalizadas if c["ID_DENTISTA"] == HOF and c["DT_HR_INICIO"].date() == D(2026, 10, 14)
                and c["DT_HR_INICIO"].time() == hm(14, 0))
 pac_encaixe = random.choice(HOF_EXISTENTES)
-enc = nova_consulta(pac_encaixe, PERIO, 1, at(D(2026, 10, 14), hm(14, 20)), "PARTICULAR",
-                    registro=at(D(2026, 10, 14), hm(14, 10)), obs="Encaixe para avaliação periodontal.")
+enc = nova_consulta(pac_encaixe, PERIO, 1, at(D(2026, 10, 14), hm(14, 0)), "PARTICULAR",
+                    registro=at(D(2026, 10, 14), hm(13, 50)), obs="Encaixe para avaliação periodontal.")
 enc["TP_SITUACAO"] = "FINALIZADO"
-enc["DT_HR_CONFIRMACAO"] = at(D(2026, 10, 14), hm(14, 10))
+enc["DT_HR_CONFIRMACAO"] = at(D(2026, 10, 14), hm(13, 50))
 o_enc = novo_orc(pac_encaixe, D(2026, 10, 14), "Avaliação periodontal", [("Manutenção periodontal", "GER", 250)], "FINALIZADO")
 pagar(o_enc, D(2026, 10, 14), 250, "DEBITO", 1)
 enc["ID_ORCAMENTO"] = o_enc["ID_ORCAMENTO"]
