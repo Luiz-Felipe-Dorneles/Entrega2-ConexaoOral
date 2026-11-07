@@ -513,11 +513,11 @@ Algumas regras envolvem **mais de uma tabela, mais de uma linha ou a data atual*
 
 # 3. Script SQL Completo
 
-Arquivo: [`docs/script.sql`](docs/script.sql) — MySQL 8.0.16 ou superior. Executa do zero (`DROP DATABASE IF EXISTS`), na ordem do esqueleto: CREATE DATABASE → CREATE TABLE com constraints → INSERT (massa) → SELECT com JOIN (J01–J06) → UPDATE (U01–U05) → DELETE (D01–D04) → consultas gerenciais (G01–G20) → consultas de auditoria (A01–A15). **50 consultas no total** (algumas gerenciais e auditorias têm duas ou três partes, marcadas "(1/2)", "(2/2)"). Cada gerencial e cada auditoria tem o cabeçalho com o código, a pergunta e o que atende. O script usa só comandos vistos em aula; o que mudou na simplificação de 03/11/2026 está em [`docs/mudancas-sql.md`](docs/mudancas-sql.md).
+Arquivo: [`docs/script.sql`](docs/script.sql) — MySQL 8.0.16 ou superior. Executa do zero (`DROP DATABASE IF EXISTS`), na ordem do esqueleto: CREATE DATABASE → CREATE TABLE com constraints → INSERT (massa) → SELECT com JOIN (J01–J06) → UPDATE (U01–U05) → DELETE (D01–D04) → consultas gerenciais (G01–G20) → consultas de auditoria (A01–A15). **50 consultas no total** (algumas gerenciais e auditorias têm duas ou três partes, marcadas "(1/2)", "(2/2)"). Cada gerencial e cada auditoria tem o cabeçalho com o código, a pergunta e o que atende. Além disso, cada tabela e cada uma das 50 consultas tem uma linha `-- Resolve:` dizendo, em uma frase, qual problema da clínica (P01–P05), regra (RNxx) ou indicador (Kxx) ela resolve. O script usa só comandos vistos em aula; o que mudou na simplificação de 03/11/2026 está em [`docs/mudancas-sql.md`](docs/mudancas-sql.md).
 
 **Como executar:** no MySQL Workbench, *File › Open SQL Script* e executar tudo (raio); ou no terminal: `mysql -u root -p --default-character-set=utf8mb4 < docs/script.sql`. O "hoje" da massa é 26/10/2026, às 13h (dia da 1ª entrevista). As datas estão escritas em cada consulta (ex.: `BETWEEN '2026-09-01' AND '2026-09-30'`), e os KPIs mensais usam setembro/2026, o último mês fechado; para outro período, basta trocar as datas. Cada UPDATE e DELETE altera um registro, identificado pela chave no `WHERE`, então o *safe update mode* do Workbench não bloqueia.
 
-**Teste do zero:** **[PREENCHER: data, versão do MySQL, quem executou e a mensagem final do Workbench, ex.: "SQL Script execution completed in __s, ___ statements executed successfully"]**. A versão anterior do script (com variáveis e funções de data) foi executada sem erro em 30/10/2026 por Luiz Felipe Dorneles, no MySQL Community Server 8.0.46; a versão simplificada foi conferida de ponta a ponta num banco de teste (seção 6, Uso 6), com todas as PK, FK e CHECK ativas, e precisa ser executada de novo no MySQL. **[PREENCHER: trocar o print abaixo pelo da versão simplificada]**
+**Teste do zero:** executado em 05/11/2026 por Luiz Felipe Dorneles, no MySQL Workbench (MySQL Community Server 8.0), com o banco recriado pelo próprio script: "SQL Script execution completed in 35s. 128 statements executed successfully." Os 5 UPDATE e os 5 DELETE alteraram 1 registro cada, e todas as consultas rodaram sem erro. Depois do teste, em 06/11/2026, só foram acrescentadas as linhas de comentário `-- Resolve:`, sem mudar nenhum comando. A versão anterior do script (com variáveis e funções de data) tinha sido executada sem erro em 30/10/2026, no MySQL Community Server 8.0.46.
 
 ![Teste do script no MySQL Workbench](docs/teste_mysql.png)
 
@@ -664,6 +664,19 @@ O grupo usou o **Claude (Anthropic)**, modelo Claude Opus 5.5, nas etapas abaixo
 | **Trechos rejeitados ou corrigidos** | As falas foram ditas com as palavras de cada integrante, usando o roteiro como guia e não como texto para ler, como pede o esqueleto. |
 | **Justificativa da escolha final** | O formato de pitch apresenta o banco como solução para um problema real da clínica, segue a ordem dos 7 blocos do esqueleto e dá a cada integrante a parte que ele fez no trabalho, o que ajuda na defesa. |
 | **Reflexão crítica** | Os números mostrados vêm da massa fictícia, não da operação real da clínica (só o faturamento médio de ~R$ 90 mil foi informado por ela). O formato de pitch simplifica decisões técnicas que ficam para a defesa. A gravação, a edição e as falas foram feitas pelo grupo. |
+
+### Uso 8 — Comentários "Resolve:" no script e conferência final (06/11/2026)
+
+| Item | Registro |
+|---|---|
+| **Ferramenta e etapa** | Claude — linha de comentário `-- Resolve:` em cada tabela e em cada consulta do `script.sql`; conferência do script contra o dicionário, o modelo lógico e o DER. |
+| **Motivação** | Pedido do professor: uma linha de comentário no SQL dizendo qual problema cada consulta resolve. |
+| **Prompt(s) utilizados** | *"faltam algumas correções. e revisões que o professor falou. Uma linha de comentario no sql para dizer qual problema resolve cada consulta e coisas assim, entao coloque isso no codigo. e revise se o codigo sql bate com o dicionario, diagrama e etc. Ajustes finais!!!"* |
+| **Resposta recebida** | 79 linhas `-- Resolve:` (21 tabelas e as 58 partes das 50 consultas), cada uma citando o problema (P01–P05), a regra (RNxx) ou o indicador (Kxx), e uma explicação no cabeçalho do script. Conferência automática: 21 tabelas, 168 colunas, tipos, PK, 22 FK, 12 UNIQUE e 43 CHECK iguais no script, no dicionário, na especificação e no diagrama do modelo lógico; o DER tem todos os atributos (as FKs e o NR_ORDEM do telefone só aparecem no lógico, como deve ser). |
+| **Fontes consultadas e verificadas** | Nenhuma fonte externa. O script com os comentários foi executado de novo no banco de teste (mesmas 127 instruções, mesmos resultados), e o gerador continua reproduzindo o `script.sql`. |
+| **Trechos rejeitados ou corrigidos** | Nenhuma divergência foi encontrada entre os artefatos, então nada além dos comentários foi alterado. |
+| **Justificativa da escolha final** | Uma linha por consulta, no mesmo padrão (`-- Resolve:`), logo acima do comando, para o leitor achar o problema sem ler o cabeçalho inteiro. |
+| **Reflexão crítica** | A linha é um resumo; a ligação completa entre problema, indicador e consulta continua na tabela de rastreabilidade da seção 1.6. |
 
 # 7. Apresentação Corporativa Final
 
