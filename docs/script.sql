@@ -10,6 +10,11 @@
 -- Todos os dados são fictícios (nenhum paciente, dentista ou
 -- funcionário real). A massa (seção 4) é gerada por docs/gerador_massa.py.
 --
+-- Cada tabela e cada consulta tem uma linha "-- Resolve:" com o problema
+-- da clínica que ela resolve (P01–P05), a regra de negócio (RNxx) ou o
+-- indicador (Kxx). Problemas e regras estão no README, seção 1.1;
+-- indicadores, na seção 1.6.
+--
 -- Versão simplificada (03/11/2026): só usa comandos vistos em aula
 -- (CREATE, INSERT, SELECT com JOIN e LEFT JOIN, WHERE, BETWEEN, LIKE,
 -- IN, DISTINCT, ORDER BY, GROUP BY com COUNT/SUM, UPDATE e DELETE).
@@ -30,10 +35,12 @@ USE conexao_oral;
 -- ---------------------------------------------------------------------
 -- 2 e 3. CREATE TABLE com constraints (PK, FK, NOT NULL, UNIQUE,
 -- CHECK, DEFAULT). Os códigos RNxx/RPxx citam a regra de negócio
--- do README que cada restrição implementa.
+-- do README que cada restrição implementa. A linha "Resolve:" acima de
+-- cada tabela diz qual problema (P01–P05) ou indicador (Kxx) ela atende.
 -- ---------------------------------------------------------------------
 
 -- Catálogo das 7 especialidades em uso (hoje digitadas livremente).
+-- Resolve: padroniza a especialidade (antes digitada à mão); base do relatório K12.
 CREATE TABLE ESPECIALIDADE (
   ID_ESPECIALIDADE  INT          NOT NULL AUTO_INCREMENT,
   NM_ESPECIALIDADE  VARCHAR(40)  NOT NULL,
@@ -42,6 +49,7 @@ CREATE TABLE ESPECIALIDADE (
 );
 
 -- Dentista: 7 hoje, uma especialidade por dentista.
+-- Resolve: cadastro dos dentistas, base da agenda (RN11) e do repasse (G19).
 CREATE TABLE DENTISTA (
   ID_DENTISTA       INT          NOT NULL AUTO_INCREMENT,
   ID_ESPECIALIDADE  INT          NOT NULL,
@@ -67,6 +75,7 @@ CREATE TABLE DENTISTA (
 
 -- Funcionário (não dentista): recepcionista, auxiliar de dentista e
 -- auxiliar de limpeza. Nenhum campo é único entre funcionários.
+-- Resolve: cadastro de quem trabalha na clínica sem ser dentista (permissões: dicionário, §6).
 CREATE TABLE FUNCIONARIO (
   ID_FUNCIONARIO    INT          NOT NULL AUTO_INCREMENT,
   NM_FUNCIONARIO    VARCHAR(100) NOT NULL,
@@ -92,6 +101,7 @@ CREATE TABLE FUNCIONARIO (
 );
 
 -- Sala: 2 salas, 1 cadeira em cada, com horário de uso próprio.
+-- Resolve: horário de cada sala (RP01) e ocupação (K15).
 CREATE TABLE SALA (
   ID_SALA           INT          NOT NULL AUTO_INCREMENT,
   NM_SALA           VARCHAR(20)  NOT NULL,
@@ -104,6 +114,7 @@ CREATE TABLE SALA (
 );
 
 -- Convênio: a clínica só precisa do nome (5 convênios).
+-- Resolve: P02 — os convênios das guias e do faturamento por convênio (K06, K07).
 CREATE TABLE CONVENIO (
   ID_CONVENIO       INT          NOT NULL AUTO_INCREMENT,
   NM_CONVENIO       VARCHAR(40)  NOT NULL,
@@ -115,6 +126,7 @@ CREATE TABLE CONVENIO (
 -- Paciente: campos da Ficha de Anamnese (dados pessoais). O responsável
 -- legal do menor fica no próprio cadastro (nome e CPF), como no sistema;
 -- o cadastro do menor não é ligado ao do pai ou da mãe.
+-- Resolve: P04 — os dados pessoais da Ficha de Anamnese saem da imagem e viram campos (RN02).
 CREATE TABLE PACIENTE (
   ID_PACIENTE              INT          NOT NULL AUTO_INCREMENT,
   NM_PACIENTE              VARCHAR(100) NOT NULL,
@@ -151,6 +163,7 @@ CREATE TABLE PACIENTE (
 );
 
 -- Telefone do paciente (atributo multivalorado: até dois).
+-- Resolve: P01 — o telefone usado na confirmação por WhatsApp (G01).
 CREATE TABLE TELEFONE_PACIENTE (
   ID_PACIENTE       INT          NOT NULL,
   NR_ORDEM          TINYINT      NOT NULL,
@@ -164,6 +177,7 @@ CREATE TABLE TELEFONE_PACIENTE (
 
 -- Ficha de Anamnese: uma por paciente (1:1), com as respostas de saúde
 -- em campos próprios (P04) e o caminho da ficha escaneada (RP03).
+-- Resolve: P04 — as respostas de saúde viram campos consultáveis (G12, G13).
 CREATE TABLE ANAMNESE (
   ID_PACIENTE                   INT          NOT NULL,
   DT_PREENCHIMENTO              DATE         NOT NULL,
@@ -197,6 +211,7 @@ CREATE TABLE ANAMNESE (
 -- Catálogo de procedimentos (hoje digitados livremente). A radiografia é
 -- um procedimento de apoio, feito pela auxiliar para qualquer especialidade:
 -- é o único tipo sem especialidade.
+-- Resolve: padroniza os procedimentos (antes digitados livremente); base de orçamentos e guias.
 CREATE TABLE PROCEDIMENTO (
   ID_PROCEDIMENTO   INT          NOT NULL AUTO_INCREMENT,
   ID_ESPECIALIDADE  INT          NULL,
@@ -215,6 +230,7 @@ CREATE TABLE PROCEDIMENTO (
 -- Orçamento (plano de tratamento) feito pela Dra. responsável.
 -- O valor total não é guardado: é a soma dos itens. Para a clínica,
 -- procedimento e tratamento são a mesma coisa: cada item é um procedimento.
+-- Resolve: pagamento antes da sala (RN07) e um orçamento por mês na ortodontia (RN15).
 CREATE TABLE ORCAMENTO (
   ID_ORCAMENTO      INT          NOT NULL AUTO_INCREMENT,
   ID_PACIENTE       INT          NOT NULL,
@@ -230,6 +246,7 @@ CREATE TABLE ORCAMENTO (
 
 -- Item do orçamento: procedimento, dente e valor (entidade fraca).
 -- CD_DENTE: notação FDI (11–48) ou SUP/INF (arcada) ou GER (boca toda/face).
+-- Resolve: o total do orçamento é a soma dos itens (RN07); faturamento por especialidade (K12).
 CREATE TABLE ITEM_ORCAMENTO (
   ID_ORCAMENTO      INT           NOT NULL,
   NR_ITEM           TINYINT       NOT NULL,
@@ -248,6 +265,7 @@ CREATE TABLE ITEM_ORCAMENTO (
 -- Pagamento particular: lançado dentro do orçamento (um orçamento
 -- pode ter mais de um pagamento). Débito e PIX à vista; crédito à vista ou em
 -- 3 ou 6x sem juros. Com nota fiscal, o valor pago já tem 5% de desconto.
+-- Resolve: faturamento e ticket médio (K10, K11); regras de parcelas e nota fiscal (RN14, RN27).
 CREATE TABLE PAGAMENTO (
   ID_PAGAMENTO        INT           NOT NULL AUTO_INCREMENT,
   ID_ORCAMENTO        INT           NOT NULL,
@@ -269,6 +287,7 @@ CREATE TABLE PAGAMENTO (
 -- O atestado (no máximo um por consulta, nunca sem atendimento) fica na
 -- própria consulta: o de presença usa o horário agendado; o de dias guarda o
 -- número de dias e pode ter data posterior (o paciente esquece de pedir).
+-- Resolve: P01 (registro e confirmação) e P05 (motivo do cancelamento separa a falta).
 CREATE TABLE CONSULTA (
   ID_CONSULTA            INT          NOT NULL AUTO_INCREMENT,
   ID_PACIENTE            INT          NOT NULL,
@@ -317,6 +336,7 @@ CREATE TABLE CONSULTA (
 -- Procedimento realizado: entidade associativa CONSULTA x PROCEDIMENTO,
 -- com o dente. Preenchido depois do atendimento. O valor fica só no orçamento.
 -- Na radiografia, a observação é a avaliação da Dra. responsável (RN22).
+-- Resolve: histórico clínico por dente (RF21) e avaliação da radiografia (RN22).
 CREATE TABLE PROCEDIMENTO_REALIZADO (
   ID_CONSULTA       INT          NOT NULL,
   ID_PROCEDIMENTO   INT          NOT NULL,
@@ -333,6 +353,7 @@ CREATE TABLE PROCEDIMENTO_REALIZADO (
 -- valor e envio); paciente e procedimentos vêm da consulta. O convênio fica
 -- na guia porque o paciente pode trocar de convênio e o cadastro não guarda
 -- o antigo (visita de retorno): a guia antiga continua no convênio que a emitiu.
+-- Resolve: P02 — assinatura, envio e recebimento da guia ficam registrados.
 CREATE TABLE GUIA (
   ID_GUIA             INT           NOT NULL AUTO_INCREMENT,
   ID_CONSULTA         INT           NOT NULL,
@@ -357,6 +378,7 @@ CREATE TABLE GUIA (
 
 -- Medicamento: lista que já vem no sistema (dosagem, orientação e
 -- indicação de controlado preenchidas).
+-- Resolve: lista padronizada para a receita, com o medicamento controlado marcado.
 CREATE TABLE MEDICAMENTO (
   ID_MEDICAMENTO    INT          NOT NULL AUTO_INCREMENT,
   NM_MEDICAMENTO    VARCHAR(80)  NOT NULL,
@@ -370,6 +392,7 @@ CREATE TABLE MEDICAMENTO (
 -- Receituário: os medicamentos receitados em cada consulta (relacionamento
 -- N:N CONSULTA x MEDICAMENTO). A receita não tem número nem dado próprio:
 -- a data é a da consulta e o tipo (comum/controlada) vem do medicamento.
+-- Resolve: os medicamentos de cada receita ficam registrados (RN10).
 CREATE TABLE RECEITUARIO (
   ID_CONSULTA       INT          NOT NULL,
   ID_MEDICAMENTO    INT          NOT NULL,
@@ -381,6 +404,7 @@ CREATE TABLE RECEITUARIO (
 );
 
 -- Laboratório protético (2): contato pelo WhatsApp, prazo padrão de 7 dias.
+-- Resolve: P03 — os laboratórios e o prazo padrão de entrega.
 CREATE TABLE LABORATORIO (
   ID_LABORATORIO    INT          NOT NULL AUTO_INCREMENT,
   NM_LABORATORIO    VARCHAR(60)  NOT NULL,
@@ -394,6 +418,7 @@ CREATE TABLE LABORATORIO (
 -- Pedido ao laboratório: cada ida de uma peça protética ao laboratório
 -- (confecção, ajuste, refinamento ou refazimento) é um pedido, feito a partir de uma
 -- consulta e enviado a um único laboratório (RN08).
+-- Resolve: P03 — cada ida da peça ao laboratório, com envio, previsão e chegada.
 CREATE TABLE PEDIDO_LABORATORIO (
   ID_PEDIDO         INT          NOT NULL AUTO_INCREMENT,
   ID_CONSULTA       INT          NOT NULL,
@@ -415,6 +440,7 @@ CREATE TABLE PEDIDO_LABORATORIO (
 );
 
 -- Teste biológico semanal da autoclave (hoje anotado em caderno).
+-- Resolve: o teste semanal da autoclave sai do caderno (RN23).
 CREATE TABLE TESTE_AUTOCLAVE (
   ID_TESTE          INT          NOT NULL AUTO_INCREMENT,
   ID_FUNCIONARIO    INT          NOT NULL,
@@ -433,6 +459,7 @@ CREATE TABLE TESTE_AUTOCLAVE (
 -- dentista que recebeu. A data de pagamento já vai preenchida no lançamento
 -- (data prevista); o grupo trata como a pagar a conta cuja data de pagamento
 -- ainda não chegou (se o pagamento mudar, a data é corrigida — U04).
+-- Resolve: contas a pagar e resultado do mês (K13, K14); repasse aos dentistas (RN16).
 CREATE TABLE DESPESA (
   ID_DESPESA          INT           NOT NULL AUTO_INCREMENT,
   DS_TITULO           VARCHAR(80)   NOT NULL,
@@ -6439,6 +6466,7 @@ INSERT INTO DESPESA (ID_DESPESA, DS_TITULO, TP_CATEGORIA, VL_DESPESA, DT_VENCIME
 -- ---------------------------------------------------------------------
 
 -- J01 — Qual é a agenda de hoje (26/10/2026), por horário e sala?
+-- Resolve: P01 — a agenda do dia sai do banco, com sala, dentista e situação de cada consulta.
 SELECT c.DT_HR_INICIO, s.NM_SALA, d.NM_DENTISTA, e.NM_ESPECIALIDADE,
        p.NM_PACIENTE, c.TP_ATENDIMENTO, c.TP_SITUACAO
 FROM CONSULTA c
@@ -6451,6 +6479,7 @@ ORDER BY c.DT_HR_INICIO, s.NM_SALA;
 
 -- J02 — Qual é o histórico clínico do paciente 416, o da prótese protocolo
 -- (consultas, dentista, procedimentos e dentes)?
+-- Resolve: histórico clínico do paciente num só lugar (RF21): consultas, procedimentos e dentes.
 SELECT c.DT_HR_INICIO, d.NM_DENTISTA, c.TP_SITUACAO,
        pr.NM_PROCEDIMENTO, r.CD_DENTE
 FROM CONSULTA c
@@ -6463,6 +6492,7 @@ ORDER BY c.DT_HR_INICIO;
 -- J03 (1/2) — Quanto vale cada orçamento de tratamento (fora a ortodontia
 -- mensal)? O total é a soma dos itens. A parte 2 mostra quanto já foi pago;
 -- saldo = VL_TOTAL (parte 1) − VL_PAGO (parte 2), para o mesmo orçamento.
+-- Resolve: o total do orçamento é calculado pelos itens (RN07), sem conta feita à mão.
 SELECT o.ID_ORCAMENTO, p.NM_PACIENTE, o.DT_ORCAMENTO, o.DS_ORCAMENTO, o.TP_SITUACAO,
        COUNT(*) AS QT_ITENS, SUM(i.VL_ITEM) AS VL_TOTAL
 FROM ORCAMENTO o
@@ -6476,6 +6506,7 @@ ORDER BY o.DT_ORCAMENTO DESC, o.ID_ORCAMENTO;
 
 -- J03 (2/2) — Quanto já foi pago em cada orçamento? (pagamento com nota
 -- fiscal tem 5% de desconto — RN27 — e quita o valor cheio)
+-- Resolve: mostra o que já foi pago em cada orçamento, para saber o saldo (RN07, RN27).
 SELECT ID_ORCAMENTO, COUNT(*) AS QT_PAGAMENTOS, SUM(VL_PAGAMENTO) AS VL_PAGO
 FROM PAGAMENTO
 GROUP BY ID_ORCAMENTO
@@ -6484,6 +6515,7 @@ ORDER BY ID_ORCAMENTO;
 -- J04 — Quais guias foram emitidas em outubro/2026, com os dados de que a
 -- clínica precisa (paciente, procedimentos, valor e assinatura)?
 -- Uma linha por procedimento da guia.
+-- Resolve: P02 — reúne os dados da guia de que a clínica precisa, com a assinatura.
 SELECT g.ID_GUIA, cv.NM_CONVENIO, p.NM_PACIENTE, c.DT_HR_INICIO,
        pr.NM_PROCEDIMENTO, g.VL_GUIA, g.DT_HR_ASSINATURA, g.DT_ENVIO
 FROM GUIA g
@@ -6497,6 +6529,7 @@ ORDER BY g.ID_GUIA;
 
 -- J05 — Quais receitas foram emitidas nos últimos 30 dias, com os
 -- medicamentos e se o medicamento é controlado (IN_CONTROLADO = 1)?
+-- Resolve: controle das receitas e dos medicamentos controlados emitidos (RN10).
 SELECT c.DT_HR_INICIO AS DT_RECEITA, p.NM_PACIENTE, d.NM_DENTISTA,
        m.NM_MEDICAMENTO, m.DS_DOSAGEM, m.DS_ORIENTACAO, m.IN_CONTROLADO
 FROM RECEITUARIO rc
@@ -6509,6 +6542,7 @@ ORDER BY c.DT_HR_INICIO, p.NM_PACIENTE, m.NM_MEDICAMENTO;
 
 -- J06 — Quais pedidos foram feitos ao laboratório, para quem, por qual
 -- dentista, e quando foram enviados e chegaram?
+-- Resolve: P03 — cada ida da peça ao laboratório fica registrada, com envio e chegada.
 SELECT pl.ID_PEDIDO, pl.TP_PEDIDO, pl.DS_PECA, pl.CD_DENTE, p.NM_PACIENTE, d.NM_DENTISTA,
        l.NM_LABORATORIO, pl.DT_ENVIO, pl.DT_PREVISTA, pl.DT_CHEGADA
 FROM PEDIDO_LABORATORIO pl
@@ -6524,6 +6558,7 @@ ORDER BY pl.DT_ENVIO, pl.ID_PEDIDO;
 
 -- U01 — A recepcionista confirmou pelo WhatsApp a consulta 978, a primeira
 -- do próximo dia útil (27/10/2026, 8h) (RN13).
+-- Resolve: P01 — a confirmação da consulta fica registrada com data e hora (RN13).
 UPDATE CONSULTA
 SET TP_SITUACAO = 'CONFIRMADA', DT_HR_CONFIRMACAO = '2026-10-26 13:00:00'
 WHERE ID_CONSULTA = 978;
@@ -6531,6 +6566,7 @@ WHERE ID_CONSULTA = 978;
 -- U02 — O paciente da consulta 993 (27/10/2026, 17h) avisou com 24 horas de
 -- antecedência que não virá: a consulta fica no histórico como CANCELADA,
 -- com o motivo (RN12).
+-- Resolve: P05 — o cancelamento guarda o motivo e não se confunde com falta (RN12).
 UPDATE CONSULTA
 SET TP_SITUACAO = 'CANCELADA', TP_MOTIVO_CANCELAMENTO = 'AVISO_PACIENTE',
     DS_OBSERVACAO = 'Paciente avisou com 24 horas de antecedência; remarcar na próxima data livre.'
@@ -6539,12 +6575,14 @@ WHERE ID_CONSULTA = 993;
 
 -- U03 — O laboratório avisou que a peça do pedido 12 vai levar mais
 -- 2 dias: a previsão de chegada passa de 28/10 para 30/10/2026 (P03).
+-- Resolve: P03 — a nova previsão de chegada da peça fica registrada.
 UPDATE PEDIDO_LABORATORIO
 SET DT_PREVISTA = '2026-10-30'
 WHERE ID_PEDIDO = 12;
 
 -- U04 — A conta de água de outubro (despesa 63), vencida e programada para
 -- depois, foi paga hoje por boleto: a data de pagamento passa a ser hoje.
+-- Resolve: contas a pagar (K13) — o pagamento da despesa fica registrado com a data.
 UPDATE DESPESA
 SET DT_PAGAMENTO = '2026-10-26'
 WHERE ID_DESPESA = 63;
@@ -6552,6 +6590,7 @@ WHERE ID_DESPESA = 63;
 -- U05 — A Dra. responsável avaliou a radiografia panorâmica da consulta 926
 -- (a pendente mais antiga); a avaliação fica na observação do procedimento
 -- realizado (RN22).
+-- Resolve: a avaliação da radiografia pela Dra. fica registrada (RN22).
 UPDATE PROCEDIMENTO_REALIZADO
 SET DS_OBSERVACAO = 'Avaliação: sem alterações periapicais.'
 WHERE ID_CONSULTA = 926 AND ID_PROCEDIMENTO = 37 AND CD_DENTE = 'GER';
@@ -6564,16 +6603,19 @@ WHERE ID_CONSULTA = 926 AND ID_PROCEDIMENTO = 37 AND CD_DENTE = 'GER';
 -- ---------------------------------------------------------------------
 
 -- D01 — O segundo telefone do paciente 1 foi desativado e é removido.
+-- Resolve: P01 — o telefone desativado sai do cadastro e não recebe mais a confirmação.
 DELETE FROM TELEFONE_PACIENTE
 WHERE ID_PACIENTE = 1 AND NR_ORDEM = 2;
 
 -- D02 — O paciente desistiu do item 2 do orçamento 537 (em aberto e sem
 -- pagamento): o item é excluído (o total do orçamento é a soma dos itens).
+-- Resolve: orçamento corrigido antes do pagamento: o total volta a bater com os itens (RN07).
 DELETE FROM ITEM_ORCAMENTO
 WHERE ID_ORCAMENTO = 537 AND NR_ITEM = 2;
 
 -- D03 — A conta de luz de outubro foi lançada duas vezes: a cópia (despesa
 -- 69, ainda a pagar) é excluída.
+-- Resolve: despesa lançada em duplicidade sai, para o resultado do mês (K14) não sair errado.
 DELETE FROM DESPESA
 WHERE ID_DESPESA = 69;
 
@@ -6586,6 +6628,7 @@ WHERE ID_DESPESA = 69;
 -- Para demonstrar um CHECK (débito só à vista — RN14), este INSERT é recusado:
 -- INSERT INTO PAGAMENTO (ID_ORCAMENTO, DT_PAGAMENTO, VL_PAGAMENTO, TP_FORMA_PAGAMENTO, QT_PARCELAS)
 --   VALUES (1, '2026-10-26', 180.00, 'DEBITO', 3);
+-- Resolve: cadastro duplicado sai; a FK impede apagar paciente que tem histórico.
 DELETE FROM TELEFONE_PACIENTE
 WHERE ID_PACIENTE = 441;
 
@@ -6601,6 +6644,7 @@ WHERE ID_PACIENTE = 441;
 -- G01 — Quais consultas do próximo dia útil (27/10/2026) ainda não foram
 -- confirmadas (lista para a confirmação por WhatsApp)?
 -- Atende: P01 (consulta combinada e não registrada/confirmada), RN13
+-- Resolve: P01 — lista de quem a recepcionista precisa confirmar pelo WhatsApp.
 SELECT c.DT_HR_INICIO, s.NM_SALA, d.NM_DENTISTA, p.NM_PACIENTE, t.NR_TELEFONE
 FROM CONSULTA c
 JOIN PACIENTE p ON p.ID_PACIENTE = c.ID_PACIENTE
@@ -6615,6 +6659,7 @@ ORDER BY c.DT_HR_INICIO, s.NM_SALA;
 -- confirmadas e qual o percentual?
 -- Atende: P01, K01 (meta proposta: 95%)
 -- COUNT(*) conta todas; COUNT(DT_HR_CONFIRMACAO) só as que têm confirmação.
+-- Resolve: P01 — mede quantas consultas do mês foram confirmadas (K01).
 SELECT COUNT(*) AS QT_AGENDADAS,
        COUNT(DT_HR_CONFIRMACAO) AS QT_CONFIRMADAS,
        100.0 * COUNT(DT_HR_CONFIRMACAO) / COUNT(*) AS PC_CONFIRMADAS
@@ -6625,6 +6670,7 @@ WHERE DT_HR_INICIO BETWEEN '2026-09-01 00:00:00' AND '2026-09-30 23:59:59'
 -- G03 — Em que dias um paciente chegou para uma consulta combinada que não
 -- estava na agenda?
 -- Atende: P01, K02 (meta proposta: 0 por mês)
+-- Resolve: P01 — mostra quando uma consulta combinada não estava na agenda (K02).
 SELECT c.DT_HR_INICIO, p.NM_PACIENTE, d.NM_DENTISTA, c.DS_OBSERVACAO
 FROM CONSULTA c
 JOIN PACIENTE p ON p.ID_PACIENTE = c.ID_PACIENTE
@@ -6636,6 +6682,7 @@ ORDER BY c.DT_HR_INICIO;
 -- canceladas com aviso, sem confirmação ou falta?
 -- Atende: P05 (falta registrada igual a cancelamento), K03 e K04
 -- Taxa de cancelamento = canceladas ÷ total; taxa de faltas = FALTA ÷ total.
+-- Resolve: P05 — separa falta, cancelamento com aviso e sem confirmação (K03, K04).
 SELECT TP_SITUACAO, TP_MOTIVO_CANCELAMENTO, COUNT(*) AS QT_CONSULTAS
 FROM CONSULTA
 WHERE DT_HR_INICIO BETWEEN '2026-09-01 00:00:00' AND '2026-09-30 23:59:59'
@@ -6645,6 +6692,7 @@ ORDER BY QT_CONSULTAS DESC;
 
 -- G05 — Quais pacientes mais faltaram ou cancelaram nos últimos 90 dias?
 -- Atende: P05
+-- Resolve: P05 — mostra os pacientes que mais faltam ou cancelam.
 SELECT p.NM_PACIENTE, d.NM_DENTISTA, COUNT(*) AS QT_CANCELAMENTOS
 FROM CONSULTA c
 JOIN PACIENTE p ON p.ID_PACIENTE = c.ID_PACIENTE
@@ -6657,12 +6705,14 @@ ORDER BY QT_CANCELAMENTOS DESC, p.NM_PACIENTE;
 -- G06 (1/2) — Quantas guias foram emitidas em outubro/2026 e quantas já têm
 -- assinatura?
 -- Atende: P02 (regra de outubro/2026), K05 (meta: 100% assinadas antes)
+-- Resolve: P02 — mostra quantas guias do mês já têm assinatura (K05).
 SELECT COUNT(*) AS QT_GUIAS, COUNT(DT_HR_ASSINATURA) AS QT_ASSINADAS
 FROM GUIA
 WHERE DT_EMISSAO BETWEEN '2026-10-01' AND '2026-10-31';
 
 -- G06 (2/2) — Dessas guias, quantas foram assinadas ANTES de o paciente
 -- entrar na sala? K05 = esta quantidade ÷ QT_GUIAS da parte 1.
+-- Resolve: P02 — mostra quantas guias foram assinadas antes do atendimento (K05).
 SELECT COUNT(*) AS QT_ASSINADAS_ANTES
 FROM GUIA g
 JOIN CONSULTA c ON c.ID_CONSULTA = g.ID_CONSULTA
@@ -6672,6 +6722,7 @@ WHERE g.DT_EMISSAO BETWEEN '2026-10-01' AND '2026-10-31'
 -- G07 — Quais guias ainda não foram enviadas ao convênio? (assinatura
 -- vazia = falta assinar; assinada = falta enviar)
 -- Atende: P02, RN05, RP04
+-- Resolve: P02 — lista as guias que ainda faltam assinar ou enviar ao convênio.
 SELECT g.ID_GUIA, cv.NM_CONVENIO, p.NM_PACIENTE, g.DT_EMISSAO, g.DT_HR_ASSINATURA
 FROM GUIA g
 JOIN CONSULTA c  ON c.ID_CONSULTA = g.ID_CONSULTA
@@ -6685,6 +6736,7 @@ ORDER BY g.DT_EMISSAO;
 -- partir do dia 15, no dia 30 do mês seguinte. Então entram as guias
 -- enviadas de 15/09 a 14/10 e ainda não recebidas.
 -- Atende: RP04, K06 (valor a receber dos convênios)
+-- Resolve: mostra quanto cada convênio paga em 30/10 (K06), sem abrir os sites dos convênios.
 SELECT cv.NM_CONVENIO, COUNT(*) AS QT_GUIAS, SUM(g.VL_GUIA) AS VL_A_RECEBER
 FROM GUIA g
 JOIN CONVENIO cv ON cv.ID_CONVENIO = g.ID_CONVENIO
@@ -6694,6 +6746,7 @@ GROUP BY cv.NM_CONVENIO
 ORDER BY VL_A_RECEBER DESC;
 
 -- G08 (2/2) — E em 30/11/2026 (guias enviadas de 15/10 a 14/11)?
+-- Resolve: mostra quanto cada convênio paga em 30/11 (K06).
 SELECT cv.NM_CONVENIO, COUNT(*) AS QT_GUIAS, SUM(g.VL_GUIA) AS VL_A_RECEBER
 FROM GUIA g
 JOIN CONVENIO cv ON cv.ID_CONVENIO = g.ID_CONVENIO
@@ -6705,6 +6758,7 @@ ORDER BY VL_A_RECEBER DESC;
 -- G09 — Quanto cada convênio gerou de faturamento (guias emitidas) em
 -- setembro/2026?
 -- Atende: K07 (faturamento por convênio)
+-- Resolve: mostra o faturamento de cada convênio no mês (K07).
 SELECT cv.NM_CONVENIO, COUNT(*) AS QT_GUIAS, SUM(g.VL_GUIA) AS VL_FATURADO
 FROM GUIA g
 JOIN CONVENIO cv ON cv.ID_CONVENIO = g.ID_CONVENIO
@@ -6716,6 +6770,7 @@ ORDER BY VL_FATURADO DESC;
 -- quantos já voltaram? (tipo diferente de CONFECCAO = peça que voltou ao
 -- laboratório para ajuste, refinamento ou refazimento)
 -- Atende: P03 (pedido e chegada da peça sem registro), K08 (meta: 100% no prazo)
+-- Resolve: P03 — pedidos de cada laboratório e quantos já voltaram (K08).
 SELECT l.NM_LABORATORIO, pl.TP_PEDIDO, COUNT(*) AS QT_PEDIDOS,
        COUNT(pl.DT_CHEGADA) AS QT_CHEGARAM
 FROM PEDIDO_LABORATORIO pl
@@ -6725,6 +6780,7 @@ ORDER BY l.NM_LABORATORIO, pl.TP_PEDIDO;
 
 -- G10 (2/2) — Quantos pedidos de cada laboratório chegaram até a data
 -- prevista? K08 = esta quantidade ÷ QT_CHEGARAM da parte 1.
+-- Resolve: P03 — quantas peças chegaram no prazo, por laboratório (K08).
 SELECT l.NM_LABORATORIO, COUNT(*) AS QT_NO_PRAZO
 FROM PEDIDO_LABORATORIO pl
 JOIN LABORATORIO l ON l.ID_LABORATORIO = pl.ID_LABORATORIO
@@ -6734,6 +6790,7 @@ ORDER BY l.NM_LABORATORIO;
 
 -- G11 — Quais peças estão no laboratório agora e quando devem chegar?
 -- Atende: P03, RN06 (a prova só é marcada depois que a peça chega)
+-- Resolve: P03 — mostra as peças que estão no laboratório agora.
 SELECT pl.ID_PEDIDO, pl.TP_PEDIDO, pl.DS_PECA, p.NM_PACIENTE, l.NM_LABORATORIO,
        pl.DT_ENVIO, pl.DT_PREVISTA
 FROM PEDIDO_LABORATORIO pl
@@ -6746,6 +6803,7 @@ ORDER BY pl.DT_PREVISTA;
 -- G12 — Quais pacientes com consulta nos próximos 7 dias (de hoje, 13h,
 -- até 02/11/2026) têm alerta de saúde na Ficha de Anamnese? (1 = sim)
 -- Atende: P04 (dados de saúde só na imagem escaneada)
+-- Resolve: P04 — a dentista vê o alerta de saúde do paciente antes de atender.
 SELECT c.DT_HR_INICIO, d.NM_DENTISTA, p.NM_PACIENTE,
        a.IN_ALERGIA_MEDICAMENTO, a.IN_REACAO_ANESTESICO, a.IN_PROBLEMA_CARDIACO,
        a.IN_HIPERTENSAO, a.IN_DIABETES, a.IN_GRAVIDA_AMAMENTANDO, a.IN_HEPATITE,
@@ -6764,6 +6822,7 @@ ORDER BY c.DT_HR_INICIO;
 -- G13 — Dos pacientes atendidos em setembro/2026, quantos têm a ficha de
 -- saúde registrada em campos (e não só a imagem)?
 -- Atende: P04, K09 (meta: 100%)
+-- Resolve: P04 — mede quantas fichas de saúde estão registradas em campos (K09).
 SELECT COUNT(DISTINCT c.ID_PACIENTE) AS QT_PACIENTES,
        COUNT(DISTINCT a.ID_PACIENTE) AS QT_COM_FICHA,
        100.0 * COUNT(DISTINCT a.ID_PACIENTE) / COUNT(DISTINCT c.ID_PACIENTE) AS PC_COM_FICHA
@@ -6775,6 +6834,7 @@ WHERE c.TP_SITUACAO = 'FINALIZADO'
 -- G14 (1/2) — Quanto a clínica recebeu de pagamentos particulares em
 -- setembro/2026 e qual o ticket médio por orçamento pago?
 -- Atende: K10 (faturamento; referência informada: R$ 90 mil/mês), K11 (ticket médio)
+-- Resolve: faturamento particular e ticket médio do mês (K10, K11).
 SELECT SUM(VL_PAGAMENTO) AS VL_PARTICULAR,
        COUNT(DISTINCT ID_ORCAMENTO) AS QT_ORCAMENTOS_PAGOS,
        SUM(VL_PAGAMENTO) / COUNT(DISTINCT ID_ORCAMENTO) AS VL_TICKET_MEDIO
@@ -6783,6 +6843,7 @@ WHERE DT_PAGAMENTO BETWEEN '2026-09-01' AND '2026-09-30';
 
 -- G14 (2/2) — E quanto foi emitido em guias de convênio no mesmo mês?
 -- K10 = VL_PARTICULAR (parte 1) + VL_CONVENIO.
+-- Resolve: faturamento de convênio do mês, para fechar o faturamento total (K10).
 SELECT COUNT(*) AS QT_GUIAS, SUM(VL_GUIA) AS VL_CONVENIO
 FROM GUIA
 WHERE DT_EMISSAO BETWEEN '2026-09-01' AND '2026-09-30';
@@ -6791,6 +6852,7 @@ WHERE DT_EMISSAO BETWEEN '2026-09-01' AND '2026-09-30';
 -- setembro/2026 (soma dos itens desses orçamentos)? Especialidade vazia =
 -- radiografia (exame de apoio).
 -- Atende: K12 (faturamento por especialidade, conferido pelo sócio)
+-- Resolve: mostra quanto cada especialidade fatura (K12).
 SELECT e.NM_ESPECIALIDADE, COUNT(*) AS QT_ITENS, SUM(i.VL_ITEM) AS VL_ITENS
 FROM PAGAMENTO pg
 JOIN ITEM_ORCAMENTO i ON i.ID_ORCAMENTO = pg.ID_ORCAMENTO
@@ -6806,6 +6868,7 @@ ORDER BY VL_ITENS DESC;
 -- o paciente sair) — consulta de apoio; não responde a P nem a KPI.
 -- O LEFT JOIN procura uma consulta futura; se não achar (f.ID_CONSULTA IS
 -- NULL), o paciente está sem retorno.
+-- Resolve: paciente de ortodontia sem retorno marcado é avisado pela recepção (PR04).
 SELECT DISTINCT p.NM_PACIENTE, t.NR_TELEFONE
 FROM CONSULTA c
 JOIN PACIENTE p ON p.ID_PACIENTE = c.ID_PACIENTE
@@ -6824,6 +6887,7 @@ ORDER BY p.NM_PACIENTE;
 -- G17 — Quais contas estão a pagar (data de pagamento prevista depois de
 -- hoje, 26/10/2026)? Vencimento antes de hoje = conta vencida.
 -- Atende: K13 (contas a pagar acompanhadas pelo sócio)
+-- Resolve: contas a pagar e vencidas acompanhadas pelo sócio (K13).
 SELECT DS_TITULO, TP_CATEGORIA, VL_DESPESA, DT_VENCIMENTO,
        DT_PAGAMENTO AS DT_PAGAMENTO_PREVISTO, TP_FORMA_PAGAMENTO
 FROM DESPESA
@@ -6833,16 +6897,19 @@ ORDER BY DT_VENCIMENTO, DS_TITULO;
 -- G18 (1/3) — Resultado de caixa de setembro/2026: entradas de pagamentos
 -- particulares.
 -- Atende: K14 (resultado mensal = entradas das partes 1 e 2 − saídas da parte 3)
+-- Resolve: resultado de caixa do mês — entradas particulares (K14).
 SELECT SUM(VL_PAGAMENTO) AS VL_ENTRADAS_PARTICULAR
 FROM PAGAMENTO
 WHERE DT_PAGAMENTO BETWEEN '2026-09-01' AND '2026-09-30';
 
 -- G18 (2/3) — Entradas de guias recebidas dos convênios em setembro/2026.
+-- Resolve: resultado de caixa do mês — entradas dos convênios (K14).
 SELECT SUM(VL_GUIA) AS VL_ENTRADAS_CONVENIO
 FROM GUIA
 WHERE DT_RECEBIMENTO BETWEEN '2026-09-01' AND '2026-09-30';
 
 -- G18 (3/3) — Saídas: despesas pagas em setembro/2026.
+-- Resolve: resultado de caixa do mês — saídas (K14).
 SELECT SUM(VL_DESPESA) AS VL_SAIDAS
 FROM DESPESA
 WHERE DT_PAGAMENTO BETWEEN '2026-09-01' AND '2026-09-30';
@@ -6850,6 +6917,7 @@ WHERE DT_PAGAMENTO BETWEEN '2026-09-01' AND '2026-09-30';
 -- G19 — Em que a clínica gastou em setembro/2026 e quanto foi de repasse
 -- a cada dentista? (dentista vazio = despesa que não é repasse)
 -- Atende: K13, controle do repasse (valor combinado não era registrado)
+-- Resolve: gastos do mês e repasse a cada dentista, que antes não eram registrados.
 SELECT d.TP_CATEGORIA, dt.NM_DENTISTA,
        COUNT(*) AS QT_LANCAMENTOS, SUM(d.VL_DESPESA) AS VL_PAGO
 FROM DESPESA d
@@ -6864,6 +6932,7 @@ ORDER BY VL_PAGO DESC;
 -- (sem o feriado de 07/09). Minutos disponíveis: Sala 02 (8h–18h) =
 -- 21 × 600 = 12.600; Sala 01 (14h–18h) = 21 × 240 = 5.040.
 -- Ocupação = QT_MIN_ATENDIDOS ÷ minutos disponíveis.
+-- Resolve: mostra a ocupação das salas no mês (K15).
 SELECT s.NM_SALA, s.HR_ABERTURA, s.HR_FECHAMENTO,
        COUNT(*) AS QT_ATENDIMENTOS, SUM(c.QT_DURACAO_MIN) AS QT_MIN_ATENDIDOS
 FROM CONSULTA c
@@ -6881,6 +6950,7 @@ ORDER BY s.NM_SALA;
 -- A01 — Algum paciente foi atendido sem Ficha de Anamnese registrada ou com
 -- a ficha preenchida depois do atendimento?
 -- Verifica: RN01
+-- Resolve: P04 — detecta paciente atendido sem ficha de saúde registrada (RN01).
 SELECT DISTINCT p.ID_PACIENTE, p.NM_PACIENTE, p.DT_CADASTRO, a.DT_PREENCHIMENTO
 FROM CONSULTA c
 JOIN PACIENTE p ON p.ID_PACIENTE = c.ID_PACIENTE
@@ -6892,6 +6962,7 @@ ORDER BY p.ID_PACIENTE;
 -- A02 — Há paciente menor de idade (nascido depois de 26/10/2008) sem
 -- responsável legal, ou com a ficha assinada por ele mesmo?
 -- Verifica: RN02
+-- Resolve: detecta menor de idade sem responsável na ficha (RN02).
 SELECT p.ID_PACIENTE, p.NM_PACIENTE, p.DT_NASCIMENTO, p.NM_RESPONSAVEL_LEGAL,
        a.TP_ASSINANTE
 FROM PACIENTE p
@@ -6903,6 +6974,7 @@ ORDER BY p.ID_PACIENTE;
 -- A03 — Desde a regra de outubro/2026, alguma guia foi assinada depois de o
 -- paciente entrar na sala (ou não foi assinada)?
 -- Verifica: RN05
+-- Resolve: P02 — detecta guia assinada depois do atendimento ou sem assinatura (RN05).
 SELECT g.ID_GUIA, p.NM_PACIENTE, c.DT_HR_INICIO, g.DT_HR_ASSINATURA
 FROM GUIA g
 JOIN CONSULTA c  ON c.ID_CONSULTA = g.ID_CONSULTA
@@ -6917,6 +6989,7 @@ ORDER BY g.ID_GUIA;
 -- dentista e pela data (não há chave entre os dois): se o mesmo paciente
 -- tiver duas peças ao mesmo tempo com o mesmo dentista, pode haver alarme falso.
 -- Verifica: RN06
+-- Resolve: P03 — detecta prova de peça feita antes de a peça chegar (RN06).
 SELECT pl.ID_PEDIDO, pl.TP_PEDIDO, pl.DS_PECA, p.NM_PACIENTE, pl.DT_ENVIO, pl.DT_CHEGADA,
        cp.DT_HR_INICIO AS DT_HR_PROVA, pr.NM_PROCEDIMENTO
 FROM PEDIDO_LABORATORIO pl
@@ -6934,6 +7007,7 @@ ORDER BY pl.ID_PEDIDO;
 -- orçamento só fica APROVADO ou FINALIZADO depois de pago, antes da sala.
 -- O LEFT JOIN procura esse orçamento; se não achar, a consulta aparece.
 -- Verifica: RN07, RN15
+-- Resolve: detecta atendimento sem pagamento antes da sala (RN07).
 SELECT c.ID_CONSULTA, c.DT_HR_INICIO, p.NM_PACIENTE, d.NM_DENTISTA
 FROM CONSULTA c
 JOIN PACIENTE p      ON p.ID_PACIENTE = c.ID_PACIENTE
@@ -6950,6 +7024,7 @@ ORDER BY c.DT_HR_INICIO;
 
 -- A06 (1/2) — Alguma consulta PARTICULAR tem guia de convênio?
 -- Verifica: RN09
+-- Resolve: P02 — detecta consulta particular com guia de convênio (RN09).
 SELECT c.ID_CONSULTA, c.DT_HR_INICIO, p.NM_PACIENTE, c.TP_ATENDIMENTO, g.ID_GUIA
 FROM CONSULTA c
 JOIN GUIA g     ON g.ID_CONSULTA = c.ID_CONSULTA
@@ -6960,6 +7035,7 @@ ORDER BY c.DT_HR_INICIO;
 -- A06 (2/2) — Alguma consulta de CONVÊNIO já realizada ficou sem guia?
 -- (Na massa, esta parte volta vazia: a regra é cumprida; o erro proposital
 -- da RN09 aparece na parte 1.)
+-- Resolve: P02 — detecta consulta de convênio sem guia (RN09).
 SELECT c.ID_CONSULTA, c.DT_HR_INICIO, p.NM_PACIENTE, c.TP_ATENDIMENTO
 FROM CONSULTA c
 JOIN PACIENTE p ON p.ID_PACIENTE = c.ID_PACIENTE
@@ -6970,6 +7046,7 @@ ORDER BY c.DT_HR_INICIO;
 
 -- A07 — Alguma receita foi emitida para consulta que não foi realizada?
 -- Verifica: RN10
+-- Resolve: detecta receita emitida sem atendimento (RN10).
 SELECT c.ID_CONSULTA, c.DT_HR_INICIO, p.NM_PACIENTE, m.NM_MEDICAMENTO,
        c.TP_SITUACAO, c.TP_MOTIVO_CANCELAMENTO
 FROM RECEITUARIO rc
@@ -6982,6 +7059,7 @@ ORDER BY c.DT_HR_INICIO;
 -- A08 — Há duas consultas ativas marcadas no mesmo horário na mesma sala
 -- (uma cadeira por sala) ou com o mesmo dentista?
 -- Verifica: RN11
+-- Resolve: P01 — detecta duas consultas na mesma cadeira ou com o mesmo dentista (RN11).
 SELECT a.ID_CONSULTA AS ID_CONSULTA_1, b.ID_CONSULTA AS ID_CONSULTA_2,
        a.DT_HR_INICIO, a.ID_SALA AS SALA_1, b.ID_SALA AS SALA_2,
        a.ID_DENTISTA AS DENTISTA_1, b.ID_DENTISTA AS DENTISTA_2
@@ -6995,6 +7073,7 @@ ORDER BY a.DT_HR_INICIO;
 -- A09 — Alguma consulta foi marcada na Sala 01 pela manhã? (a Sala 01 só
 -- abre das 14h às 18h; o LIKE procura a hora dentro da data e hora)
 -- Verifica: RN11, RP01
+-- Resolve: detecta consulta fora do horário da sala (RN11, RP01).
 SELECT c.ID_CONSULTA, c.DT_HR_INICIO, s.NM_SALA, s.HR_ABERTURA, d.NM_DENTISTA
 FROM CONSULTA c
 JOIN SALA s     ON s.ID_SALA = c.ID_SALA
@@ -7009,6 +7088,7 @@ ORDER BY c.DT_HR_INICIO;
 -- A10 — Ficou alguma consulta de dias anteriores sem desfecho (nem
 -- finalizada, nem cancelada)?
 -- Verifica: RN12, RN13
+-- Resolve: P05 — detecta consulta antiga sem desfecho: nem atendida, nem cancelada (RN12, RN13).
 SELECT c.ID_CONSULTA, c.DT_HR_INICIO, p.NM_PACIENTE, c.TP_SITUACAO
 FROM CONSULTA c
 JOIN PACIENTE p ON p.ID_PACIENTE = c.ID_PACIENTE
@@ -7020,6 +7100,7 @@ ORDER BY c.DT_HR_INICIO;
 -- no mesmo mês (outubro/2026)? A tabela ORCAMENTO é ligada a ela mesma:
 -- o1 e o2 são orçamentos diferentes do mesmo paciente.
 -- Verifica: RN15
+-- Resolve: detecta ortodontia cobrada duas vezes no mesmo mês (RN15).
 SELECT DISTINCT o1.ID_PACIENTE, p.NM_PACIENTE, o1.ID_ORCAMENTO, o2.ID_ORCAMENTO AS ID_ORCAMENTO_2
 FROM ORCAMENTO o1
 JOIN ORCAMENTO o2      ON o2.ID_PACIENTE = o1.ID_PACIENTE AND o2.ID_ORCAMENTO > o1.ID_ORCAMENTO
@@ -7036,6 +7117,7 @@ ORDER BY p.NM_PACIENTE;
 
 -- A12 — Foi lançado repasse para a dentista proprietária (HOF não tem repasse)?
 -- Verifica: RN16
+-- Resolve: detecta repasse lançado por engano para a proprietária (RN16).
 SELECT d.ID_DESPESA, d.DS_TITULO, d.VL_DESPESA, d.DT_PAGAMENTO, dt.NM_DENTISTA
 FROM DESPESA d
 JOIN DENTISTA dt ON dt.ID_DENTISTA = d.ID_DENTISTA
@@ -7045,6 +7127,7 @@ WHERE d.TP_CATEGORIA = 'REPASSE' AND dt.TP_VINCULO = 'PROPRIETARIA';
 -- 12 semanas (03/08 a 25/10/2026), por resultado? Deve haver 12 testes
 -- APROVADOS (um por semana); menos que 12 = houve semana sem teste aprovado.
 -- Verifica: RN23
+-- Resolve: detecta semana sem teste da autoclave, antes anotado em caderno (RN23).
 SELECT TP_RESULTADO, COUNT(*) AS QT_TESTES
 FROM TESTE_AUTOCLAVE
 WHERE DT_TESTE BETWEEN '2026-08-03' AND '2026-10-25'
@@ -7054,6 +7137,7 @@ GROUP BY TP_RESULTADO;
 -- está sem convênio e carteirinha (a guia não teria como ser emitida)?
 -- Consultas que já têm guia ficam de fora: a guia guarda o convênio da época.
 -- Verifica: RN24, RN09
+-- Resolve: detecta consulta de convênio de paciente sem convênio no cadastro (RN24).
 SELECT c.ID_CONSULTA, c.DT_HR_INICIO, p.NM_PACIENTE, c.TP_SITUACAO
 FROM CONSULTA c
 JOIN PACIENTE p ON p.ID_PACIENTE = c.ID_PACIENTE
@@ -7064,6 +7148,7 @@ ORDER BY c.DT_HR_INICIO;
 
 -- A15 — Alguma radiografia de dias anteriores está sem a avaliação da Dra.?
 -- Verifica: RN22
+-- Resolve: detecta radiografia sem a avaliação da Dra. (RN22).
 SELECT c.ID_CONSULTA, c.DT_HR_INICIO, pr.NM_PROCEDIMENTO, r.CD_DENTE, p.NM_PACIENTE
 FROM PROCEDIMENTO_REALIZADO r
 JOIN PROCEDIMENTO pr ON pr.ID_PROCEDIMENTO = r.ID_PROCEDIMENTO
