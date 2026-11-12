@@ -697,7 +697,7 @@ A apresentação final é um **vídeo de 8 minutos**.
 
 **Link do vídeo:** [https://youtu.be/Q4-R0ejPn4A](https://youtu.be/Q4-R0ejPn4A)
 
-**Slides:** [docs/slide_conexao_oral.pdf](docs/slides_conexao_oral.pdf)
+**Slides:** [docs/slide_conexao_oral.pdf](docs/slide_conexao_oral.pdf)
 
 O vídeo é narrado pelos cinco integrantes sobre os 16 slides da apresentação. A narração segue o roteiro registrado no Uso 9 de IA.
 
