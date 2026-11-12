@@ -572,7 +572,7 @@ evidencias/                        fotos JPG/PNG
 
 # 6. Uso de Inteligência Artificial
 
-O grupo usou o **Claude (Anthropic)**, modelo Claude Opus 5.5, nas etapas abaixo. Os prompts estão transcritos. Nenhum integrante usou outra ferramenta de IA. Foram feitas sem IA as duas entrevistas, as fotos, o teste no MySQL, a gravação do vídeo e as decisões do grupo registradas em cada uso. O roteiro do vídeo foi feito com o Claude (Uso 7).
+O grupo usou o **Claude (Anthropic)**, modelo Claude Opus 5.5, nas etapas abaixo. Os prompts estão transcritos. Nenhum integrante usou outra ferramenta de IA. Foram feitas sem IA as duas entrevistas, as fotos, o teste no MySQL, a gravação do vídeo e as decisões do grupo registradas em cada uso. O roteiro do vídeo foi feito com o Claude (Usos 7 e 9), e os slides também (Uso 9); as vozes e a edição do vídeo são do grupo.
 
 ### Uso 1 — Rascunho da E2 antes da entrevista
 
@@ -678,20 +678,37 @@ O grupo usou o **Claude (Anthropic)**, modelo Claude Opus 5.5, nas etapas abaixo
 | **Justificativa da escolha final** | Uma linha por consulta, no mesmo padrão (`-- Resolve:`), logo acima do comando, para o leitor achar o problema sem ler o cabeçalho inteiro. |
 | **Reflexão crítica** | A linha é um resumo; a ligação completa entre problema, indicador e consulta continua na tabela de rastreabilidade da seção 1.6. |
 
+### Uso 9 — Slides e novo roteiro do vídeo (10 e 11/11/2026)
+
+| Item | Registro |
+|---|---|
+| **Ferramenta e etapa** | Claude — slides da apresentação, com o visual da clínica (depois editados pelo grupo); novo roteiro de narração do vídeo, em estilo de pitch e ligado aos slides; 5 slides novos (a clínica em números, o que mudou desde a E1, DER, script simplificado e G01 por dentro); depois, a marcação dos trechos a cortar do áudio. |
+| **Motivação** | O vídeo é só voz sobre os slides. A primeira gravação deu 5 min 47 s; a segunda, com o roteiro novo, deu quase 11 min. |
+| **Prompt(s) utilizados** | *"consegue fazer os slides para o video?"* (com a escolha "Visual próprio da clínica"); depois: *"Esse roteiro ficou muito ruim. Quero um roteiro melhor. e é no ESTILO shark tank, e nao para apresentar literalmente no shark tank. como vamos gravar so a voz e o slide de fundo, crie o roteiro CONECTADO com o slide. Contendo falas como "como podem ver no slide" e coisas assim. Com o ultimo roteiro que fez, gravamos dessa forma que estou falando e deu 5 minutos e 47 segundos, entao tendo isso em mente aumente o roteiro para dar 8 minutos. Lembre-se de usar tudo de atual no repertorio, e o que mudou tambem."*; depois: *"Gravamos os áudios e deu quase 11 minutos de áudio. O que eu faço?"* e *"cara nao da tempo de regravar"* |
+| **Resposta recebida** | Deck de slides com a paleta e o logotipo da clínica, que o grupo editou e reorganizou em 11 slides. Depois, narração para 16 slides, com o tempo e o integrante de cada slide e falas que apontam para o que está na tela; o mesmo texto nas notas dos slides. Depois da segunda gravação, a lista de trechos que podiam ser apagados do áudio já gravado (de 1.769 para 1.269 palavras), sem regravar. |
+| **Fontes consultadas e verificadas** | Nenhuma fonte externa: README, levantamento, `docs/mudancas-sql.md` e os resultados do script. |
+| **Trechos rejeitados ou corrigidos** | A primeira versão do roteiro ficou longa demais (quase 11 min); o grupo cortou do áudio os trechos marcados para caber em 8 min. |
+| **Justificativa da escolha final** | Como o vídeo é só voz sobre os slides, cada fala cita o que está na tela; a ordem segue os 7 itens do pitch pedidos no esqueleto. Cortar o áudio gravado foi mais rápido que regravar. |
+| **Reflexão crítica** | Os números das consultas e dos indicadores são da massa de teste, não da operação real. As vozes, a gravação e a edição do vídeo são do grupo. |
+
 # 7. Apresentação Corporativa Final
 
 A apresentação final é um **vídeo de 8 minutos**.
 
-**Link do vídeo:** *(colar aqui o link do vídeo quando ele for publicado)*
+**Link do vídeo:** [https://youtu.be/Q4-R0ejPn4A](https://youtu.be/Q4-R0ejPn4A)
+
+**Slides:** [docs/slides_conexao_oral.pdf](docs/slides_conexao_oral.pdf)
+
+O vídeo é narrado pelos cinco integrantes sobre os 16 slides da apresentação. A narração segue o roteiro registrado no Uso 9 de IA.
 
 O vídeo segue os 7 blocos do esqueleto, nesta ordem:
 
 | Bloco | Conteúdo | Demonstração |
 |---|---|---|
-| 1. Problema | P01–P05 com números do levantamento (1 consulta não registrada por semana; 10 guias pendentes por mês até set/2026; saúde só na imagem; falta igual a cancelamento) | — |
+| 1. Problema | A clínica em números; as duas entrevistas e o que mudou desde a Entrega 1; P01–P05 com números do levantamento (1 consulta não registrada por semana; 10 guias pendentes por mês até set/2026; saúde só na imagem; falta igual a cancelamento) | — |
 | 2. Solução | Um banco com toda a operação da clínica, do agendamento às despesas | — |
-| 3. Modelo lógico | Diagrama do modelo lógico, destaque para CONSULTA, ORCAMENTO/PAGAMENTO e GUIA; como o DER foi de 35 para 18 relacionamentos | — |
-| 4. Implementação | Execução do script do zero; tentativa de apagar paciente com histórico (bloqueada pela FK) e de inserir pagamento em débito parcelado (bloqueado pelo CHECK) | script.sql |
-| 5. Consultas | G01 (lista de confirmação), G04 (faltas × cancelamentos), G08 (a receber dos convênios), G12 (alertas de saúde), A05/A08 (auditoria) | script.sql |
-| 6. BI e IA | KPIs K01–K15, previsão de faltas | — |
+| 3. Modelo lógico | DER conceitual (como foi de 35 para 18 relacionamentos) e diagrama do modelo lógico, com destaque para CONSULTA, ORCAMENTO e GUIA | — |
+| 4. Implementação | Teste do script do zero no MySQL (128 instruções, 35 s, sem erros); FK impedindo apagar paciente com histórico e CHECK recusando débito parcelado; o que mudou na simplificação do script e as linhas `-- Resolve:` | script.sql, teste_mysql.png |
+| 5. Consultas | Código e resultado da G01 (lista de confirmação); G04, G06, G08, G11 e G12 (gerenciais); A05, A08, A12 e A13 (auditoria) | script.sql |
+| 6. BI e IA | KPIs K01–K15 (quatro de setembro/2026 no vídeo) e previsão de faltas com IA | — |
 | 7. Benefícios | O que a responsável e o sócio passam a saber sem abrir cinco sites e uma pilha de imagens | — |
